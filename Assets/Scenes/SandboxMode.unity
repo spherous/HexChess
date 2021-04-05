@@ -11325,7 +11325,7 @@ GameObject:
   - component: {fileID: 643187462}
   - component: {fileID: 643187464}
   - component: {fileID: 643187460}
-  - component: {fileID: 643187461}
+  - component: {fileID: 643187465}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11391,8 +11391,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643187455}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6, y: 18, z: 7.7942286}
+  m_LocalRotation: {x: 0.7071007, y: 0, z: 0, w: 0.70711297}
+  m_LocalPosition: {x: 6, y: 19, z: 7.9996867}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11474,8 +11474,8 @@ MonoBehaviour:
     m_ActionName: Keyboard/Mouse/MouseClick[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 643187461}
-        m_TargetAssemblyTypeName: OrbitalCamera, Assembly-CSharp
+      - m_Target: {fileID: 643187465}
+        m_TargetAssemblyTypeName: SmoothHalfOrbitalCamera, Assembly-CSharp
         m_MethodName: RightClick
         m_Mode: 0
         m_Arguments:
@@ -11488,25 +11488,27 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: eaa2624b-b875-4938-b7e2-87ef5604de32
     m_ActionName: Keyboard/Mouse/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 643187465}
+        m_TargetAssemblyTypeName: SmoothHalfOrbitalCamera, Assembly-CSharp
+        m_MethodName: ResetRotation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 77200880-3e4b-4865-859a-576ab90d57c2
+    m_ActionName: Keyboard/Mouse/Reset Camera[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard/Mouse
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &643187461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643187455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d83e4609a3a4b9b4aa55b0a794518045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distance: 18
-  orbitSpeed: 5
 --- !u!114 &643187462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11586,6 +11588,23 @@ MonoBehaviour:
   previewColor: {r: 0.8773585, g: 0.42442012, b: 0.086908154, a: 1}
   okayColor: {r: 0.1254895, g: 0.5660378, b: 0.1254895, a: 1}
   errColor: {r: 0.6226415, g: 0.085172676, b: 0.085172676, a: 1}
+--- !u!114 &643187465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643187455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21664bec7b37f36429e26399d3c3c260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraDistance: 18
+  origin: {x: 6, y: 1, z: 8}
+  speed: 0.15
+  transitionTime: 0.25
+  defaultRotation: {x: 90, y: 0}
 --- !u!1 &646453043
 GameObject:
   m_ObjectHideFlags: 0
