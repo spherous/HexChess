@@ -4,6 +4,12 @@ using Extensions;
 
 public static class MoveGenerator
 {
+    public static bool IsPromotionRank(Team team, Index target)
+    {
+        HexNeighborDirection forward = team == Team.White ? HexNeighborDirection.Up : HexNeighborDirection.Down;
+        return !target.TryGetNeighbor(forward, out Index _);
+    }
+
     public static readonly Piece[] DefendableTypes = new Piece[]
     {
         Piece.King,

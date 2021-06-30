@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Extensions
@@ -35,5 +29,11 @@ namespace Extensions
         };
 
         public static bool IsPawn(this Piece piece) => piece >= Piece.Pawn1;
+        public static bool IsBishop(this Piece piece) => piece == Piece.KingsBishop || piece == Piece.QueensBishop;
+        public static bool IsRook(this Piece piece) => piece == Piece.KingsRook || piece == Piece.QueensRook;
+        public static bool IsKnight(this Piece piece) => piece == Piece.KingsKnight || piece == Piece.QueensKnight;
+        public static bool IsSquire(this Piece piece) => piece == Piece.WhiteSquire || piece == Piece.GraySquire || piece == Piece.BlackSquire;
+
+        public static Team Enemy(this Team team) => team == Team.White ? Team.Black : Team.White;
     }
 }

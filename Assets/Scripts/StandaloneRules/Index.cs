@@ -8,6 +8,8 @@ public struct Index
     public const int rows = 19;
     public const int maxRow = rows - 1;
 
+    public static Index invalid => new Index(-1, -1);
+
     public int row;
     public int col;
 
@@ -21,7 +23,7 @@ public struct Index
         bool tallFile = file == 'B' || file == 'D' || file == 'F' || file == 'H';
 
         if (rank == 10 && !tallFile)
-            throw new ArgumentOutOfRangeException(nameof(file), "Only valid rank 10 files are B, D, F, H");
+            throw new ArgumentOutOfRangeException(nameof(file), $"Only valid rank 10 files are B, D, F, H, not {file}");
 
         this.col = file switch {
             'A' => 0,
@@ -46,6 +48,16 @@ public struct Index
         this.col = col;
     }
 
+    public Index this[HexNeighborDirection dir]
+    {
+        get
+        {
+            if (TryGetNeighbor(dir, out Index neighbor))
+                return neighbor;
+            return Index.invalid;
+        }
+    }
+
     public bool IsInBounds
     {
         get
@@ -60,20 +72,20 @@ public struct Index
 
     public int GetNumber() => (row / 2) + 1;
 
-    public string GetLetter()
+    public char GetLetter()
     {
         bool isEven = row % 2 == 0;
 
         return col switch {
-            0 when !isEven => "A", 0 when isEven => "B",
-            1 when !isEven => "C", 1 when isEven => "D",
-            2 when !isEven => "E", 2 when isEven => "F",
-            3 when !isEven => "G", 3 when isEven => "H",
-            4 => "I", _ => ""
+            0 when !isEven => 'A', 0 when isEven => 'B',
+            1 when !isEven => 'C', 1 when isEven => 'D',
+            2 when !isEven => 'E', 2 when isEven => 'F',
+            3 when !isEven => 'G', 3 when isEven => 'H',
+            4 => 'I', _ => 'J'
         };
     }
 
-    public Index? GetNeighborAt(HexNeighborDirection dir)
+    public bool TryGetNeighbor(HexNeighborDirection dir, out Index neighbor)
     {
         bool isEven = row % 2 == 0;
         (int row, int col) offsets = dir switch
@@ -87,9 +99,15 @@ public struct Index
             _ => (-100, -100)
         };
 
-        Index neighbor = new Index(row + offsets.row, col + offsets.col);
-        if (neighbor.IsInBounds)
+        neighbor = new Index(row + offsets.row, col + offsets.col);
+        return neighbor.IsInBounds;
+    }
+
+    public Index? GetNeighborAt(HexNeighborDirection dir)
+    {
+        if (TryGetNeighbor(dir, out Index neighbor))
             return neighbor;
+
         return null;
     }
 
@@ -110,5 +128,4 @@ public struct Index
 
     public static bool operator ==(Index a, Index b) => a.row == b.row && a.col == b.col;
     public static bool operator !=(Index a, Index b) => !(a==b);
-
 }
