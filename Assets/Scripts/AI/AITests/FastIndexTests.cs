@@ -123,6 +123,38 @@ public class FastIndexTests
         Assert.AreEqual(Indexes.H10, Indexes.I9[HexNeighborDirection.UpLeft]);
     }
 
+    [Test]
+    public void MirrorTests()
+    {
+        Assert.AreEqual(Indexes.E5, Indexes.E5.Mirror());
+
+        Assert.AreEqual(Indexes.A1, Indexes.A9.Mirror());
+        Assert.AreEqual(Indexes.A2, Indexes.A8.Mirror());
+        Assert.AreEqual(Indexes.A5, Indexes.A5.Mirror());
+        Assert.AreEqual(Indexes.A8, Indexes.A2.Mirror());
+        Assert.AreEqual(Indexes.A9, Indexes.A1.Mirror());
+
+        Assert.AreEqual(Indexes.B1, Indexes.B10.Mirror());
+        Assert.AreEqual(Indexes.B2, Indexes.B9.Mirror());
+        Assert.AreEqual(Indexes.B5, Indexes.B6.Mirror());
+        Assert.AreEqual(Indexes.B6, Indexes.B5.Mirror());
+        Assert.AreEqual(Indexes.B9, Indexes.B2.Mirror());
+        Assert.AreEqual(Indexes.B10, Indexes.B1.Mirror());
+
+        Assert.AreEqual(Indexes.H1, Indexes.H10.Mirror());
+        Assert.AreEqual(Indexes.H2, Indexes.H9.Mirror());
+        Assert.AreEqual(Indexes.H5, Indexes.H6.Mirror());
+        Assert.AreEqual(Indexes.H6, Indexes.H5.Mirror());
+        Assert.AreEqual(Indexes.H9, Indexes.H2.Mirror());
+        Assert.AreEqual(Indexes.H10, Indexes.H1.Mirror());
+
+        Assert.AreEqual(Indexes.I1, Indexes.I9.Mirror());
+        Assert.AreEqual(Indexes.I2, Indexes.I8.Mirror());
+        Assert.AreEqual(Indexes.I5, Indexes.I5.Mirror());
+        Assert.AreEqual(Indexes.I8, Indexes.I2.Mirror());
+        Assert.AreEqual(Indexes.I9, Indexes.I1.Mirror());
+    }
+
     public static class Indexes
     {
         public static readonly FastIndex A1 = new FastIndex(new Index(1, 'A'));
@@ -132,6 +164,8 @@ public class FastIndexTests
         public static readonly FastIndex A9 = new FastIndex(new Index(9, 'A'));
         public static readonly FastIndex B1 = new FastIndex(new Index(1, 'B'));
         public static readonly FastIndex B2 = new FastIndex(new Index(2, 'B'));
+        public static readonly FastIndex B5 = new FastIndex(new Index(5, 'B'));
+        public static readonly FastIndex B6 = new FastIndex(new Index(6, 'B'));
         public static readonly FastIndex B9 = new FastIndex(new Index(9, 'B'));
         public static readonly FastIndex B10 = new FastIndex(new Index(10, 'B'));
         public static readonly FastIndex C1 = new FastIndex(new Index(1, 'C'));
@@ -145,6 +179,8 @@ public class FastIndexTests
         public static readonly FastIndex G9 = new FastIndex(new Index(9, 'G'));
         public static readonly FastIndex H1 = new FastIndex(new Index(1, 'H'));
         public static readonly FastIndex H2 = new FastIndex(new Index(2, 'H'));
+        public static readonly FastIndex H5 = new FastIndex(new Index(5, 'H'));
+        public static readonly FastIndex H6 = new FastIndex(new Index(6, 'H'));
         public static readonly FastIndex H9 = new FastIndex(new Index(9, 'H'));
         public static readonly FastIndex H10 = new FastIndex(new Index(10, 'H'));
         public static readonly FastIndex I1 = new FastIndex(new Index(1, 'I'));

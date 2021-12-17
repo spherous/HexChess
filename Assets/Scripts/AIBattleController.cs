@@ -6,11 +6,7 @@ using Extensions;
 
 public class AIBattleController : MonoBehaviour
 {
-    // Turn to false for easier debugging
-    public static bool asyncMove = true;
-    
     public bool debugControls = false;
-
     public float MinimumTurnTimeSec = 1f;
     private Board board;
     private IHexAI whiteAI;
@@ -74,10 +70,33 @@ public class AIBattleController : MonoBehaviour
             StartGame();
         }
 
-        GUI.enabled = needsReset;
+        GUI.enabled = true;
         if (GUILayout.Button("Reset"))
         {
             board.Reset();
+        }
+
+        if (isGameRunning)
+        {
+            if (whiteAI != null)
+            {
+                GUILayout.BeginHorizontal();
+                var whiteLines = whiteAI.GetDiagnosticInfo();
+                if (whiteLines != null)
+                    foreach (var line in whiteLines)
+                        GUILayout.Label(line);
+                GUILayout.EndHorizontal();
+            }
+            if (blackAI != null)
+            {
+                GUILayout.BeginHorizontal();
+                var blackLines = blackAI.GetDiagnosticInfo();
+                if (blackLines != null)
+                    foreach (var line in blackLines)
+                        GUILayout.Label(line);
+                GUILayout.EndHorizontal();
+            }
+
         }
     }
 
@@ -137,15 +156,7 @@ public class AIBattleController : MonoBehaviour
 
             moveRequestedAt = Time.timeSinceLevelLoad;
             moveRequestedFor = currentMoveFor;
-
-            if (!asyncMove)
-            {
-                pendingMove = Task.FromResult(ai.GetMove(board.currentGame));
-            }
-            else
-            {
-                pendingMove = Task.Run(() => ai.GetMove(board.currentGame));
-            }
+            pendingMove = ai.GetMove(board.currentGame);
         }
     }
 
@@ -158,6 +169,17 @@ public class AIBattleController : MonoBehaviour
         {
             Debug.Log("Game Completed!");
             isGameRunning = false;
+            return;
+        }
+
+        if (pendingMove != null)
+        {
+            Debug.LogWarning($"Clearning pending move for {moveRequestedFor}");
+            pendingMove = null;
+            if (moveRequestedFor == Team.White && whiteAI != null)
+                whiteAI.CancelMove();
+            else if (moveRequestedFor == Team.Black && blackAI != null)
+                blackAI.CancelMove();
         }
     }
 
@@ -231,4 +253,12 @@ public class AIBattleController : MonoBehaviour
         return;
     }
     #endregion
+
+    private void OnDestroy()
+    {
+        if (whiteAI != null)
+            whiteAI.CancelMove();
+        if (blackAI != null)
+            blackAI.CancelMove();
+    }
 }

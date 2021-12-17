@@ -259,7 +259,6 @@ public class BitsboardTests
             original[index] = true;
 
             var expected = index[direction];
-            UnityEngine.Debug.Log($"Shifting {index} {direction} should result in {expected}");
             var shifted = original.Shift(direction);
             if (expected.IsInBounds)
                 AssertOnlyIndexSet(shifted, expected);

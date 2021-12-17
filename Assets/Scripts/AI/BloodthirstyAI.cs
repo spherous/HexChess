@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Extensions;
 
 public class BloodthirstyAI : IHexAI
 {
     System.Random random = new System.Random();
 
-    public HexAIMove GetMove(Game game)
+    public Task<HexAIMove> GetMove(Game game)
     {
         var moves = HexAIMove.GenerateAllValidMoves(game).ToArray();
-        return moves
-            .OrderByDescending(move => Evaluate(move, game))
-            .First();
+        return Task.FromResult(moves.OrderByDescending(move => Evaluate(move, game)).First());
     }
 
     const int CheckBonus = 50;
@@ -98,6 +97,16 @@ public class BloodthirstyAI : IHexAI
             default:
                 return 1;
         }
+    }
+
+    public void CancelMove()
+    {
+        return;
+    }
+
+    public IEnumerable<string> GetDiagnosticInfo()
+    {
+        return null;
     }
 }
 

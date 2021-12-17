@@ -9,13 +9,10 @@ sealed public class FastBoardNode
     public Team currentMove = Team.None;
     public FastIndex whiteKing = FastIndex.Invalid;
     public FastIndex blackKing = FastIndex.Invalid;
+    public FastIndex passantableIndex = FastIndex.Invalid;
+    public int plySincePawnMovedOrPieceTaken = 0;
     public readonly (Team team, FastPiece piece)[] positions = new (Team team, FastPiece piece)[85];
 
-    public int PlySincePawnMovedOrPieceTaken => plySincePawnMovedOrPieceTaken;
-    public FastIndex PassantableIndex => passantableIndex;
-
-    private int plySincePawnMovedOrPieceTaken = 0;
-    private FastIndex passantableIndex = FastIndex.Invalid;
     private readonly Stack<(Team team, FastPiece piece)> captureHistory = new Stack<(Team team, FastPiece piece)>(10);
     private readonly Stack<int> fiftyMoveRuleHistory = new Stack<int>(10);
     private readonly Stack<FastIndex> passantableHistory = new Stack<FastIndex>(10);
@@ -42,58 +39,59 @@ sealed public class FastBoardNode
     
     public FastBoardNode(Game game) : this(game.GetCurrentBoardState(), game.promotions){}
 
-    /// <summary>
-    /// Is a piece from <paramref name="checkForTeam"/> attacking the enemy king?
-    /// </summary>
-    /// <param name="checkForTeam"></param>
-    /// <returns>true if the enemy king is threatened</returns>
-    public bool IsChecking(Team checkForTeam)
+    public FastBoardNode()
     {
-        Team enemy = checkForTeam.Enemy();
-        FastIndex enemyKingLoc = enemy == Team.White ? whiteKing : blackKing;
+    }
+
+    /// <summary>
+    /// Is a piece from <paramref name="attacker"/> attacking the enemy king?
+    /// </summary>
+    /// <param name="attacker"></param>
+    /// <returns>true if the enemy king is threatened</returns>
+    public bool IsChecking(Team attacker)
+    {
+        Team defender = attacker.Enemy();
+        FastIndex defenderKingLoc = defender == Team.White ? whiteKing : blackKing;
 
         // Rook/Queen checks
-        var rookRays = PrecomputedMoveData.rookRays[enemyKingLoc.ToByte()];
+        var rookRays = PrecomputedMoveData.rookRays[defenderKingLoc.ToByte()];
         foreach (var rookRay in rookRays)
         {
-            if (IsCheckingRay(enemy, rookRay, FastPiece.Rook))
+            if (IsCheckingRay(defender, rookRay, FastPiece.Rook))
                 return true;
         }
 
         // Bishop/Queen checks
-        var bishopRays = PrecomputedMoveData.bishopRays[enemyKingLoc.ToByte()];
+        var bishopRays = PrecomputedMoveData.bishopRays[defenderKingLoc.ToByte()];
         foreach (var bishopRay in bishopRays)
         {
-            if (IsCheckingRay(enemy, bishopRay, FastPiece.Bishop))
+            if (IsCheckingRay(defender, bishopRay, FastPiece.Bishop))
                 return true;
         }
 
         // Squire checks
-        FastIndex start = FastIndex.FromByte(enemyKingLoc.ToByte());
-        (Team team, FastPiece piece) attacker = (checkForTeam, FastPiece.Squire);
-        foreach (var possibleMove in PrecomputedMoveData.squireMoves[start.ToByte()])
+        foreach (var possibleMove in PrecomputedMoveData.squireMoves[defenderKingLoc.ToByte()])
         {
-            if (TryGetPiece(possibleMove, out (Team team, FastPiece piece) occupier) && occupier.team == attacker.team && occupier.piece == attacker.piece)
+            if (TryGetPiece(possibleMove, out (Team team, FastPiece piece) occupier) && occupier.team == attacker && occupier.piece == FastPiece.Squire)
                 return true;
         }
 
         // Knight checks
-        attacker = (checkForTeam, FastPiece.Knight);
-        foreach (var possibleMove in PrecomputedMoveData.knightMoves[start.ToByte()])
+        foreach (var possibleMove in PrecomputedMoveData.knightMoves[defenderKingLoc.ToByte()])
         {
-            if (TryGetPiece(possibleMove, out (Team team, FastPiece piece) occupier) && occupier.team == attacker.team && occupier.piece == attacker.piece)
+            if (TryGetPiece(possibleMove, out (Team team, FastPiece piece) occupier) && occupier.team == attacker && occupier.piece == FastPiece.Knight)
                 return true;
         }
 
         // Pawn & King checks
         foreach (var direction in PrecomputedMoveData.AllDirections)
         {
-            var index = start[direction];
+            var index = defenderKingLoc[direction];
             if (!index.IsInBounds)
                 continue;
 
             var occupant = this[index];
-            if (occupant.team != checkForTeam)
+            if (occupant.team != attacker)
                 continue;
 
             if (occupant.piece == FastPiece.King)
@@ -101,7 +99,7 @@ sealed public class FastBoardNode
 
             if (occupant.piece == FastPiece.Pawn)
             {
-                if (checkForTeam == Team.White)
+                if (attacker == Team.White)
                 {
                     if (direction == HexNeighborDirection.DownLeft || direction == HexNeighborDirection.DownRight)
                         return true;
@@ -195,8 +193,8 @@ sealed public class FastBoardNode
     }
     private void DoDefend(FastMove move)
     {
-        byte position1 = move.start.ToByte();
-        byte position2 = move.target.ToByte();
+        byte position1 = move.start.HexId;
+        byte position2 = move.target.HexId;
         var piece1 = this[position1];
         var piece2 = this[position2];
         this[position1] = piece2;
@@ -296,19 +294,17 @@ sealed public class FastBoardNode
     public (Team team, FastPiece piece) this[Index index]
     {
         get => positions[index.ToByte()];
-        private set { this[index.ToByte()] = value; }
+        set { this[index.ToByte()] = value; }
     }
     public (Team team, FastPiece piece) this[FastIndex index]
     {
-        get => positions[index.ToByte()];
-        private set { this[index.ToByte()] = value; }
+        get => positions[index.HexId];
+        set { this[index.HexId] = value; }
     }
     public (Team team, FastPiece piece) this[byte index]
     {
         get => positions[index];
-        private set {
-            positions[index] = value;
-        }
+        set { positions[index] = value; }
     }
 
     public bool TryGetPiece(FastIndex index, out (Team team, FastPiece piece) piece)
@@ -381,11 +377,12 @@ sealed public class FastBoardNode
     {
         for (byte i = 0; i < positions.Length; i++)
         {
-            FastIndex index = FastIndex.FromByte(i);
             var piece = positions[i];
+            if (piece.team != team)
+                continue;
 
-            if (piece.team == team)
-                FastPossibleMoveGenerator.AddAllPossibleMoves(moves, index, piece.piece, team, this, generateQuiet);
+            FastIndex index = FastIndex.FromByte(i);
+            FastPossibleMoveGenerator.AddAllPossibleMoves(moves, index, piece.piece, team, this, generateQuiet);
         }
     }
 

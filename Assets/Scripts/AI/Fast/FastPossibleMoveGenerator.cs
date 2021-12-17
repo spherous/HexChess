@@ -176,7 +176,7 @@ public static class FastPossibleMoveGenerator
             }
             if (leftVictim.team == Team.None)
             {
-                if (start.TryGetNeighbor(leftPassantDir, out var leftPassant) && boardNode.PassantableIndex == leftPassant)
+                if (start.TryGetNeighbor(leftPassantDir, out var leftPassant) && boardNode.passantableIndex == leftPassant)
                 {
                     moves.Add(new FastMove(start, leftAttack, MoveType.EnPassant));
                 }
@@ -192,7 +192,7 @@ public static class FastPossibleMoveGenerator
             }
             if (rightVictim.team == Team.None)
             {
-                if (start.TryGetNeighbor(rightPassantDir, out var rightPassant) && boardNode.PassantableIndex == rightPassant)
+                if (start.TryGetNeighbor(rightPassantDir, out var rightPassant) && boardNode.passantableIndex == rightPassant)
                 {
                     moves.Add(new FastMove(start, rightAttack, MoveType.EnPassant));
                 }

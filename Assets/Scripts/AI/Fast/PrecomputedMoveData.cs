@@ -11,6 +11,10 @@ public static class PrecomputedMoveData
     public static readonly FastIndex[][][] rookRays = new FastIndex[85][][];
     public static readonly FastIndex[][][] bishopRays = new FastIndex[85][][];
 
+    public static readonly BitsBoard[] kingThreats = new BitsBoard[85];
+    public static readonly BitsBoard[] squireThreats = new BitsBoard[85];
+    public static readonly BitsBoard[] knightThreats = new BitsBoard[85];
+
     public static readonly HexNeighborDirection[] AllDirections = new HexNeighborDirection[] {
         HexNeighborDirection.Up,
         HexNeighborDirection.UpRight,
@@ -22,6 +26,8 @@ public static class PrecomputedMoveData
 
     static PrecomputedMoveData()
     {
+        BitsBoard threats;
+
         for (byte b = 0; b < NUM_HEXES; b++)
         {
             var start = FastIndex.FromByte(b);
@@ -30,6 +36,27 @@ public static class PrecomputedMoveData
             squireMoves[b] = GenerateAllPossibleSquireMoves(start).ToArray();
             rookRays[b] = GenerateAllPossibleRookRays(start).ToArray();
             bishopRays[b] = GenerateAllPossibleBishopRays(start).ToArray();
+
+            threats = new BitsBoard();
+            foreach (var move in kingMoves[b])
+            {
+                threats[move] = true;
+            }
+            kingThreats[b] = threats;
+
+            threats = new BitsBoard();
+            foreach (var move in squireMoves[b])
+            {
+                threats[move] = true;
+            }
+            squireThreats[b] = threats;
+
+            threats = new BitsBoard();
+            foreach (var move in knightMoves[b])
+            {
+                threats[move] = true;
+            }
+            knightThreats[b] = threats;
         }
     }
 
