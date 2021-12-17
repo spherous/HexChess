@@ -270,7 +270,7 @@ public class Game
     }
 
     public int GetTurnCount() => 
-        endType == GameEndType.Draw && turnHistory[turnHistory.Count - 2].currentMove == Team.White 
+        (endType == GameEndType.Draw || endType == GameEndType.Checkmate || endType == GameEndType.Stalemate) && turnHistory[turnHistory.Count - 2].currentMove == Team.White
             ? ((float)turnHistory.Count / 2f).FloorToInt() - 1 
             : ((float)turnHistory.Count / 2f).FloorToInt();
     public BoardState GetCurrentBoardState() => turnHistory[turnHistory.Count - 1];
