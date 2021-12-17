@@ -23,6 +23,7 @@ public class SelectPiece : MonoBehaviour
     [SerializeField] private PromotionDialogue promotionDialogue;
     [SerializeField] private TurnHistoryPanel historyPanel;
     [SerializeField] public ArrowTool arrowTool;
+    [SerializeField] private AIBattleController aiController;
     public AudioClip cancelNoise;
     public AudioClip pickupNoise;
     public IPiece selectedPiece {get; private set;}
@@ -117,14 +118,25 @@ public class SelectPiece : MonoBehaviour
     {
         if(onMouse.isPickedUp || cursor == null)
             return;
+
+        Team currentTurn = board.GetCurrentTurn();
         
         // Not this player's turn
-        if(multiplayer != null && multiplayer.gameParams.localTeam != board.GetCurrentTurn())
+        if(multiplayer != null && multiplayer.gameParams.localTeam != currentTurn)
             return;
         
         // Previewing an old move, don't make the player think they can play a move by giving hand cursor
         if(historyPanel.panelPointer != historyPanel.currentTurnPointer)
             return;
+        
+        // If it's the AI's turn, don't show the player the hand cursor
+        if(aiController != null)
+        {
+            if(aiController.WhiteAIEnabled() && currentTurn == Team.White)
+                return;
+            if(aiController.BlackAIEnabled() && currentTurn == Team.Black)
+                return;
+        }
 
         if(Physics.Raycast(cam.ScreenPointToRay(mouse.position.ReadValue()), out RaycastHit hit, 100, hexMask))
         {
@@ -562,9 +574,19 @@ public class SelectPiece : MonoBehaviour
 
     private void MouseDown(BoardState currentBoardState)
     {
+        Team currentTurn = board.GetCurrentTurn();
         // Later allow players to queue a move, but for now, just prevent even clicking a piece when not their turn
-        if(multiplayer != null && multiplayer.gameParams.localTeam != board.GetCurrentTurn())
+        if(multiplayer != null && multiplayer.gameParams.localTeam != currentTurn)
             return;
+        
+        // If AI is enabled, return if it's the AI's turn
+        if(aiController != null)
+        {
+            if(aiController.WhiteAIEnabled() && currentTurn == Team.White)
+                return;
+            if(aiController.BlackAIEnabled() && currentTurn == Team.Black)
+                return;
+        }
 
         // If the game is over, prevent any further moves
         if(board.currentGame.endType != GameEndType.Pending)

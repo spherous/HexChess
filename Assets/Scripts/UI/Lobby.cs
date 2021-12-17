@@ -182,8 +182,15 @@ public class Lobby : MonoBehaviour
     public void StartAIGame(Scene arg0, Scene arg1)
     {
         AIBattleController aiController = GameObject.FindObjectOfType<AIBattleController>();
-        aiController.SetAI(AITeam, aiDifficultySlider.AILevel);
-        aiController.SetAI(AITeam.Enemy(), 0); // 0 is None, meaning the player can play that team
+        
+        // 0 is None, meaning the player can play that team
+        if(AITeam == Team.White)
+            aiController.SetAI(aiDifficultySlider.AILevel, 0);
+        else if(AITeam == Team.Black)
+            aiController.SetAI(0, aiDifficultySlider.AILevel);
+        else // If AITeam somehow comes in as Team.None, there is nothing to do here.
+            return;
+
         aiController.StartGame();
 
         SceneManager.activeSceneChanged -= StartAIGame;

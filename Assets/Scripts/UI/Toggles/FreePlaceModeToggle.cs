@@ -20,4 +20,6 @@ public class FreePlaceModeToggle : MonoBehaviour
             kingsOnlyButton.gameObject.SetActive(newVal);
         });
     }
+
+    public void Disable() => gameObject.SetActive(false);
 }

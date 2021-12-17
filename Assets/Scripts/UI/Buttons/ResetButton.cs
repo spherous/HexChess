@@ -23,8 +23,7 @@ public class ResetButton : MonoBehaviour
             {
                 Board b = GameObject.FindObjectOfType<Board>();
                 AIBattleController aiController = b?.GetComponent<AIBattleController>();
-                aiController?.SetAI(Team.Black, blackAI);
-                aiController?.SetAI(Team.White, whiteAI);
+                aiController?.SetAI(whiteAI, blackAI);
                 aiController?.StartGame();
                 SceneManager.activeSceneChanged -= ResetAI;
             }

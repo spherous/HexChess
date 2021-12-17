@@ -17,6 +17,5 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
     public void OnPointerEnter(PointerEventData eventData) => toggle.image.sprite = hovered;
-
     public void OnPointerExit(PointerEventData eventData) => toggle.image.sprite = toggle.isOn ? on : off;
 }

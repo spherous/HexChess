@@ -6,6 +6,7 @@ using Extensions;
 
 public class AIBattleController : MonoBehaviour
 {
+    [SerializeField] private FreePlaceModeToggle freePlaceToggle;
     public bool debugControls = false;
     public float MinimumTurnTimeSec = 1f;
     private Board board;
@@ -100,6 +101,9 @@ public class AIBattleController : MonoBehaviour
         }
     }
 
+    public bool WhiteAIEnabled() => selectedWhiteAI > 0;
+    public bool BlackAIEnabled() => selectedBlackAI > 0;
+
     public void StartGame()
     {
         whiteAI = AIOptions[selectedWhiteAI].factory();
@@ -109,7 +113,7 @@ public class AIBattleController : MonoBehaviour
         needsReset = true;
     }
 
-    public void SetAI(Team team, int aiID)
+    private void SetAI(Team team, int aiID)
     {
         if(team == Team.None)
             return;
@@ -117,6 +121,15 @@ public class AIBattleController : MonoBehaviour
             selectedWhiteAI = aiID;
         else
             selectedBlackAI = aiID;
+    }
+
+    public void SetAI(int whiteAIid, int blackAIid)
+    {
+        SetAI(Team.White, whiteAIid);
+        SetAI(Team.Black, blackAIid);
+        
+        // Disable freeplace mode so players can't cheat
+        freePlaceToggle?.Disable();
     }
 
     void Update()

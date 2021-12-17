@@ -210,8 +210,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280452863
+  m_fontColor: {r: 1, g: 0.5254902, b: 0.13333334, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 7183697247186828357}
   - component: {fileID: 2094002564208531870}
   - component: {fileID: 6204506533331727982}
+  - component: {fileID: 1651872029682190070}
   m_Layer: 5
   m_Name: Approve Button
   m_TagString: Untagged
@@ -446,7 +447,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -475,7 +476,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 0.32156864, g: 0.30980393, b: 0.2901961, a: 1}
     m_HighlightedColor: {r: 1, g: 0.5254902, b: 0.13333334, a: 1}
@@ -613,6 +614,22 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
+--- !u!114 &1651872029682190070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7183697247186828363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e71e1bd0d0e134fa0f42105233674f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 7183697247186828357}
+  on: {fileID: 21300000, guid: 08f04f4bd9f1d8c4bbdee4f6c921dc3d, type: 3}
+  off: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
+  hovered: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
 --- !u!1 &7183697247369843789
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,6 +644,7 @@ GameObject:
   - component: {fileID: 7183697247369843791}
   - component: {fileID: 5988461960543931768}
   - component: {fileID: 4980414189632164378}
+  - component: {fileID: 1458608760146671083}
   m_Layer: 5
   m_Name: Deny Button
   m_TagString: Untagged
@@ -682,7 +700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -711,7 +729,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 0.32156864, g: 0.30980393, b: 0.2901961, a: 1}
     m_HighlightedColor: {r: 1, g: 0.5254902, b: 0.13333334, a: 1}
@@ -849,6 +867,22 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
+--- !u!114 &1458608760146671083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7183697247369843789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e71e1bd0d0e134fa0f42105233674f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 7183697247369843791}
+  on: {fileID: 21300000, guid: 08f04f4bd9f1d8c4bbdee4f6c921dc3d, type: 3}
+  off: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
+  hovered: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
 --- !u!1 &7183697247660123793
 GameObject:
   m_ObjectHideFlags: 0

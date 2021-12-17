@@ -4341,6 +4341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7709c30a4a6e04fa363a60ecabd019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freePlaceToggle: {fileID: 1094600928}
   debugControls: 0
   MinimumTurnTimeSec: 1
 --- !u!21 &163229609
@@ -29327,6 +29328,11 @@ PrefabInstance:
       objectReference: {fileID: 1100316983}
     - target: {fileID: 748795983797158538, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
+      propertyPath: aiController
+      value: 
+      objectReference: {fileID: 155833293}
+    - target: {fileID: 748795983797158538, guid: 8fd76f948b50e39459a9eff1ef0d957b,
+        type: 3}
       propertyPath: historyPanel
       value: 
       objectReference: {fileID: 1937464022}
@@ -29877,6 +29883,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: History Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6802989490077302408, guid: b6bcf1806d96b11469ade51d987fdd11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6802989490077302409, guid: b6bcf1806d96b11469ade51d987fdd11,
         type: 3}
