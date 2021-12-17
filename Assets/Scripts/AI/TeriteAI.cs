@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Extensions;
 
 public class TeriteAI : IHexAI
 {
@@ -23,10 +22,6 @@ public class TeriteAI : IHexAI
     FastMove bestMove;
     int currentDepth;
 
-    public TeriteAI() : this(4)
-    {
-    }
-
     public TeriteAI(int maxSearchDepth = 4)
     {
         this.maxSearchDepth = maxSearchDepth;
@@ -35,7 +30,8 @@ public class TeriteAI : IHexAI
         for (int i = 0; i < moveCache.Length; i++)
             moveCache[i] = new List<FastMove>(100);
     }
-    public Task<HexAIMove> GetMove(Game game)
+
+    Task<HexAIMove> IHexAI.GetMove(Game game)
     {
         var root = new FastBoardNode(game);
         return Task.Run(() =>
@@ -43,28 +39,35 @@ public class TeriteAI : IHexAI
             return GetMove(root).ToHexMove();
         });
     }
+    void IHexAI.CancelMove()
+    {
+        cancellationRequested = true;
+    }
+
+    IEnumerable<string> IHexAI.GetDiagnosticInfo()
+    {
+        yield return $"Cancellation requested: {cancellationRequested}";
+        yield return $"bestMove: {bestMove}";
+        yield return $"currentDepth: {currentDepth}";
+    }
 
     public FastMove GetMove(FastBoardNode root)
     {
         diagnostics.Reset();
         diagnostics.getMoveTimer.Start();
+        previousScores.Clear();
 
         int color = (root.currentMove == Team.White) ? 1 : -1;
-
-        bestMove = FastMove.Invalid;
         int minSearchDepth = iterativeDeepeningEnabled ? 1 : maxSearchDepth;
+        bestMove = FastMove.Invalid;
         currentDepth = minSearchDepth;
         cancellationRequested = false;
-
-        previousScores.Clear();
 
         for (; currentDepth <= maxSearchDepth; currentDepth++)
         {
             int alpha = -CheckmateValue * 2; // Best move for current player
             int beta = CheckmateValue * 2; // Best move our opponent will let us have
-
             (int moveValue, FastMove move) = Search(root, currentDepth, 0, alpha, beta, color);
-
             bestMove = move;
 
             if (moveValue >= (CheckmateValue - currentDepth))
@@ -156,7 +159,8 @@ public class TeriteAI : IHexAI
     int QuiescenceSearch(FastBoardNode node, int plyFromRoot, int alpha, int beta, int color)
     {
         if (!quiescenceSearchEnabled)
-            return color * EvaluateMaybeTerminalBoard(node, plyFromRoot);
+            using (diagnostics.MeasureEval())
+                return color * EvaluateBoard(node, plyFromRoot);
 
         var moves = new List<FastMove>(10);
         using (diagnostics.MeasureMoveGen())
@@ -205,7 +209,8 @@ public class TeriteAI : IHexAI
 
         if (maybeTerminal)
         {
-            return color * EvaluateMaybeTerminalBoard(node, plyFromRoot);
+            using (diagnostics.MeasureEval())
+                return color * EvaluateBoard(node, plyFromRoot);
         }
 
         return value;
@@ -299,70 +304,61 @@ public class TeriteAI : IHexAI
     }
     public int EvaluateBoard(FastBoardNode node, int plyFromRoot)
     {
-        return EvaluateMaybeTerminalBoard(node, plyFromRoot);
-    }
-
-    public int EvaluateMaybeTerminalBoard(FastBoardNode node, int plyFromRoot)
-    {
         diagnostics.boardEvaluations++;
+        if (node.plySincePawnMovedOrPieceTaken >= 100)
+            return 0; // automatic draw due to 50 move rule.
 
-        using (diagnostics.MeasureEval())
+        int boardValue = 0;
+        bool whiteIsChecking = node.currentMove != Team.White && node.IsChecking(Team.White);
+        if (whiteIsChecking)
         {
-            if (node.plySincePawnMovedOrPieceTaken >= 100)
-                return 0; // automatic draw due to 50 move rule.
-
-            int boardValue = 0;
-            bool whiteIsChecking = node.currentMove != Team.White && node.IsChecking(Team.White);
-            if (whiteIsChecking)
-            {
-                boardValue += CheckBonusValue;
-            }
-
-            bool blackIsChecking = node.currentMove != Team.Black && node.IsChecking(Team.Black);
-            if (blackIsChecking)
-            {
-                boardValue -= CheckBonusValue;
-            }
-
-            if (!node.HasAnyValidMoves(node.currentMove))
-            {
-                if (whiteIsChecking)
-                    return CheckmateValue - plyFromRoot;
-                else if (blackIsChecking)
-                    return -CheckmateValue + plyFromRoot;
-                else
-                    return DrawValue;
-            }
-
-            for (byte i = 0; i < node.positions.Length; i++)
-            {
-                var piece = node.positions[i];
-                if (piece.team == Team.None)
-                    continue;
-
-                var valuedPosition = FastIndex.FromByte(i);
-                if (piece.team == Team.Black)
-                    valuedPosition = valuedPosition.Mirror();
-
-                int pieceValue = GetPieceValue(piece.piece);
-
-                if (pawnValueMapEnabled && piece.piece == FastPiece.Pawn)
-                {
-                    pieceValue += pawnValueMap[valuedPosition.HexId];
-                }
-
-                boardValue += TeamMults[(byte)piece.team] * pieceValue;
-            }
-
-            using (diagnostics.MeasureEvalThreats())
-            {
-                evaluationData.Prepare(node);
-                boardValue += evaluationData.WhiteThreats.Count - evaluationData.BlackThreats.Count;
-                boardValue += (evaluationData.WhitePawnThreats.Count * 2) - (evaluationData.BlackPawnThreats.Count * 2);
-            }
-
-            return boardValue;
+            boardValue += CheckBonusValue;
         }
+
+        bool blackIsChecking = node.currentMove != Team.Black && node.IsChecking(Team.Black);
+        if (blackIsChecking)
+        {
+            boardValue -= CheckBonusValue;
+        }
+
+        if (!node.HasAnyValidMoves(node.currentMove))
+        {
+            if (whiteIsChecking)
+                return CheckmateValue - plyFromRoot;
+            else if (blackIsChecking)
+                return -CheckmateValue + plyFromRoot;
+            else
+                return DrawValue;
+        }
+
+        for (byte i = 0; i < node.positions.Length; i++)
+        {
+            var piece = node.positions[i];
+            if (piece.team == Team.None)
+                continue;
+
+            var valuedPosition = FastIndex.FromByte(i);
+            if (piece.team == Team.Black)
+                valuedPosition = valuedPosition.Mirror();
+
+            int pieceValue = GetPieceValue(piece.piece);
+
+            if (pawnValueMapEnabled && piece.piece == FastPiece.Pawn)
+            {
+                pieceValue += pawnValueMap[valuedPosition.HexId];
+            }
+
+            boardValue += TeamMults[(byte)piece.team] * pieceValue;
+        }
+
+        using (diagnostics.MeasureEvalThreats())
+        {
+            evaluationData.Prepare(node);
+            boardValue += evaluationData.WhiteThreats.Count - evaluationData.BlackThreats.Count;
+            boardValue += (evaluationData.WhitePawnThreats.Count * 2) - (evaluationData.BlackPawnThreats.Count * 2);
+        }
+
+        return boardValue;
     }
 
     static int GetPieceValue(FastPiece piece)
@@ -394,19 +390,6 @@ public class TeriteAI : IHexAI
     }
 
     #endregion
-
-    public void CancelMove()
-    {
-        cancellationRequested = true;
-    }
-
-    public IEnumerable<string> GetDiagnosticInfo()
-    {
-        yield return $"Cancellation requested: {cancellationRequested}";
-        yield return $"bestMove: {bestMove}";
-        yield return $"currentDepth: {currentDepth}";
-    }
-
 
     #region Static precomputation
 
@@ -471,7 +454,7 @@ public class TeriteAI : IHexAI
 
         public struct Measurer : IDisposable
         {
-            Stopwatch stopwatch;
+            readonly Stopwatch stopwatch;
             public Measurer(Stopwatch stopwatch)
             {
                 stopwatch.Start();
