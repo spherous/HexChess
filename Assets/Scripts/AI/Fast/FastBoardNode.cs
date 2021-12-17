@@ -343,8 +343,22 @@ sealed public class FastBoardNode
     }
     public bool HasAnyValidMoves(Team team)
     {
-        foreach (var move in GetAllValidMoves(team))
-            return true;
+        var moves = new List<FastMove>(10);
+        for (byte i = 0; i < positions.Length; i++)
+        {
+            var piece = positions[i];
+            if (piece.team != team)
+                continue;
+
+            FastIndex index = FastIndex.FromByte(i);
+            FastPossibleMoveGenerator.AddAllPossibleMoves(moves, index, piece.piece, team, this, true);
+
+            foreach (var possibleMove in moves)
+                if (IsMoveValid(possibleMove))
+                    return true;
+
+            moves.Clear();
+        }
 
         return false;
     }
@@ -352,14 +366,9 @@ sealed public class FastBoardNode
     private bool IsMoveValid(FastMove move)
     {
         DoMove(move);
-        try
-        {
-            return !IsChecking(currentMove);
-        }
-        finally
-        {
-            UndoMove(move);
-        }
+        var isValid = !IsChecking(currentMove);
+        UndoMove(move);
+        return isValid;
     }
 
     public List<FastMove> GetAllPossibleMoves()

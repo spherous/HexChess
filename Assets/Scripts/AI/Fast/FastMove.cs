@@ -67,12 +67,15 @@ public readonly struct FastMove
         return $"{moveType}({((Index)start).GetKey()} -> {((Index)target).GetKey()}){promoteMsg}";
     }
 
-    public static explicit operator FastMove(HexAIMove move) => new FastMove(move);
-    public static explicit operator HexAIMove(FastMove move) => move.ToHexMove();
+    public override int GetHashCode()
+    {
+        int num = (start.HexId << 24) | (target.HexId << 16) | ((int)moveType << 8) | (int)promoteTo;
+        return num.GetHashCode();
+    }
 
     public string ToString(FastBoardNode node)
     {
-        string promoteMsg = promoteTo == FastPiece.Pawn ? string.Empty : $"to {promoteTo}";
+        string promoteMsg = promoteTo == FastPiece.Pawn ? string.Empty : $" to {promoteTo}";
         string sFrom = ((Index)start).GetKey() + $"({node[start]})";
         string sTo = ((Index)target).GetKey();
         if (moveType == MoveType.Attack || moveType == MoveType.Defend)

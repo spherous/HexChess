@@ -52,11 +52,10 @@ public class EvaluationData
             }
             else
             {
-                var threats = CalculateThreats(node, b);
                 if (piece.team == Team.White)
-                    whiteThreats |= threats;
+                    AddThreats(ref whiteThreats, node, b);
                 else
-                    blackThreats |= threats;
+                    AddThreats(ref blackThreats, node, b);
             }
         }
 
@@ -76,40 +75,39 @@ public class EvaluationData
         BlackPawnThreats = blackPawnThreats;
     }
 
-    static BitsBoard CalculateThreats(FastBoardNode node, byte index)
+    static void AddThreats(ref BitsBoard threats, FastBoardNode node, byte index)
     {
         var piece = node[index];
-        BitsBoard threats;
         switch (piece.piece)
         {
             case FastPiece.King:
-                return PrecomputedMoveData.kingThreats[index];
+                threats = threats | PrecomputedMoveData.kingThreats[index];
+                return;
 
             case FastPiece.Knight:
-                return PrecomputedMoveData.knightThreats[index];
+                threats = threats | PrecomputedMoveData.knightThreats[index];
+                return;
 
             case FastPiece.Squire:
-                return PrecomputedMoveData.squireThreats[index];
+                threats = threats | PrecomputedMoveData.squireThreats[index];
+                return;
 
             case FastPiece.Bishop:
-                threats = default;
                 AddThreatRays(ref threats, node, PrecomputedMoveData.bishopRays[index]);
-                return threats;
+                return;
             case FastPiece.Rook:
-                threats = default;
                 AddThreatRays(ref threats, node, PrecomputedMoveData.rookRays[index]);
-                return threats;
+                return;
 
             case FastPiece.Queen:
-                threats = default;
                 AddThreatRays(ref threats, node, PrecomputedMoveData.bishopRays[index]);
                 AddThreatRays(ref threats, node, PrecomputedMoveData.rookRays[index]);
-                return threats;
+                return;
 
             case FastPiece.None:
             case FastPiece.Pawn: // Pawn handled by caller
             default:
-                return default;
+                return;
         }
     }
 

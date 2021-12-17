@@ -151,16 +151,12 @@ public class TeriteAITests
             (defender, Piece.King, new Index(6, 'H')),
         });
 
-        UnityEngine.Debug.Log($"{board.currentMove} has {board.GetAllValidMoves().Count()} moves");
-
         var foundMove = ai.GetMove(board);
         FastMove expected = new FastMove(new Index(10, 'F'), new Index(6, 'F'), MoveType.Move);
         Assert.AreEqual(expected, foundMove);
         board.DoMove(expected);
 
         // Defender can only retreat to I5 or I6
-        UnityEngine.Debug.Log($"{board.currentMove} has {board.GetAllValidMoves().Count()} moves");
-
         var defenderMoves = board.GetAllValidMoves().ToArray();
         Assert.AreEqual(new[] {
             new FastMove(new Index(6, 'H'), new Index(6, 'I'), MoveType.Move),
@@ -188,15 +184,12 @@ public class TeriteAITests
             (defender, Piece.King, new Index(8, 'I')),
         });
 
-        UnityEngine.Debug.Log($"{board.currentMove} has {board.GetAllValidMoves().Count()} moves");
-
         var foundMove = ai.GetMove(board);
         // FastMove expected = new FastMove(new Index(10, 'F'), new Index(6, 'F'), MoveType.Move);
         // Assert.AreEqual(expected, foundMove);
         board.DoMove(foundMove);
 
         var defenderMoves = board.GetAllValidMoves().ToArray();
-        UnityEngine.Debug.Log($"{board.currentMove} has {defenderMoves.Length} moves");
         // Assert.AreEqual(new[] {
         //     new FastMove(new Index(6, 'H'), new Index(6, 'I'), MoveType.Move),
         //     new FastMove(new Index(6, 'H'), new Index(5, 'I'), MoveType.Move),
@@ -312,16 +305,11 @@ public class TeriteAITests
         });
 
         var value1 = ai.EvaluateBoard(board, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 1 valued at {value1}");
-        UnityEngine.Debug.Log("-----------");
-
         // Promote to queen
         board.DoMove(new FastMove(new Index(9, 'H'), new Index(10, 'H'), MoveType.Move, FastPiece.Queen));
         Assert.AreEqual((attacker, FastPiece.Queen), board[new Index(10, 'H')]);
 
         var value2 = ai.EvaluateBoard(board, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 2 valued at {value2}");
-
         Assert.Greater(value2, value1);
     }
     [Test]
@@ -347,12 +335,7 @@ public class TeriteAITests
         });
 
         var value1 = ai.EvaluateBoard(board1, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 1 valued at {value1}");
-        UnityEngine.Debug.Log("-----------");
-
         var value2 = ai.EvaluateBoard(board2, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 2 valued at {value2}");
-
         Assert.Greater(value1, value2);
     }
 
@@ -386,15 +369,10 @@ public class TeriteAITests
         });
 
         var value1 = ai.EvaluateBoard(board, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 1 valued at {value1}");
-        UnityEngine.Debug.Log("-----------");
-
         board.DoMove(new FastMove(pawnPos, nextPawnPos, MoveType.Move));
         Assert.AreEqual((attacker, FastPiece.Pawn), board[nextPawnPos]);
 
         var value2 = ai.EvaluateBoard(board, 1) * perspective;
-        UnityEngine.Debug.Log($"Board 2 valued at {value2}");
-
         Assert.Greater(value2, value1);
     }
 
