@@ -331,7 +331,6 @@ public class Board : SerializedMonoBehaviour
                 }
                 break;
             case GameEndType.Draw:
-                
                 if(multiplayer)
                     EndGame(currentGame.CurrentTime, currentGame.endType, currentGame.winner);
                 break;
@@ -424,7 +423,7 @@ public class Board : SerializedMonoBehaviour
             {
                 IPiece occupyingIPiece = activePieces[occupyingPiece];
                 // Capture the enemy IPiece
-                jails[(int)occupyingPiece.type].Enprison(occupyingIPiece);
+                jails[(int)occupyingPiece.team].Enprison(occupyingIPiece);
                 activePieces.Remove(occupyingPiece);
             }
         }
@@ -453,7 +452,6 @@ public class Board : SerializedMonoBehaviour
             int promoTurnCount = currentGame.GetTurnCount() + 1; // +1 because we haven't yet applied the move to the game
             action?.Invoke(pieceType);
 
-            // Multiplayer multiplayer = GameObject.FindObjectOfType<Multiplayer>();
             multiplayer?.SendPromote(new Promotion(pawn.team, pawn.piece, pieceType, promoTurnCount));
         });
     }
