@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
@@ -17,7 +18,7 @@ public class TurnHistoryPanel : MonoBehaviour
     [SerializeField] private ArrowTool arrowTool;
     MovePanel startPanel;
     MovePanel lastMovePanel;
-    private List<MovePanel> panels = new List<MovePanel>();
+    [ShowInInspector, ReadOnly] private List<MovePanel> panels = new List<MovePanel>();
 
     private float whiteTotal = 0;
     private float blackTotal = 0;

@@ -38,13 +38,13 @@ public class MovePanel : MonoBehaviour
     public void SetIndex(int index) => this.index = index;
     public void SetMove(BoardState state, Move move, NotationType notationType)
     {
-        if(move.lastTeam == Team.White)
+        if(move.lastTeam == Team.White && !whiteSet)
         {
             whiteSet = true;
             whiteState = state;
             whiteMove = move;
         }
-        else if(move.lastTeam == Team.Black)
+        else if(move.lastTeam == Team.Black && !blackSet)
         {
             blackSet = true;
             blackState = state;

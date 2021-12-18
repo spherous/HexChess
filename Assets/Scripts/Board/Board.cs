@@ -104,8 +104,7 @@ public class Board : SerializedMonoBehaviour
             
             // It might need to be promoted.
             // Do that before moving to avoid opening the promotion dialogue when the pawn is moved to the promotion position
-            if(newState.currentMove == piece.team.Enemy())
-                piece = GetPromotedPieceIfNeeded(piece, turn);
+            piece = GetPromotedPieceIfNeeded(piece, turn);
             
             // If the piece is on the board, place it at the correct location
             if(newState.TryGetIndex(prefab.Key, out Index newLoc))
@@ -432,7 +431,7 @@ public class Board : SerializedMonoBehaviour
 
         piece.MoveTo(targetLocation, (Piece promoteTo) => {
             Piece realPiece = currentGame.GetRealPiece((piece.team, piece.piece));
-            var newStateWithPromos = currentGame.QueryMove((piece.team, realPiece), (targetLocation.index, MoveType.Move), boardState, promoteTo, currentGame.GetTurnCount() + 1);
+            var newStateWithPromos = currentGame.QueryMove((piece.team, realPiece), (targetLocation.index, MoveType.Move), boardState, promoteTo, currentGame.GetTurnCount());
             currentGame.SetPromotions(newStateWithPromos.promotions);
             AdvanceTurn(newStateWithPromos.newState);
             moveTracker.UpdateText(currentGame.GetLastMove(isFreeplaced));
@@ -477,7 +476,10 @@ public class Board : SerializedMonoBehaviour
         {
             Piece p = pawn.piece;
 
-            if(currentGame.TryGetApplicablePromo((piece.team, piece.piece), turn.HasValue ? turn.Value + (piece.team == Team.Black ? 1 : 0) : int.MaxValue, out Promotion promo))
+            // if(currentGame.TryGetApplicablePromo((piece.team, piece.piece), turn.HasValue ? turn.Value + (piece.team == Team.Black ? 1 : 0) : int.MaxValue, out Promotion promo))
+            if(turn.HasValue)
+                Debug.Log(turn.Value);
+            if(currentGame.TryGetApplicablePromo((piece.team, piece.piece), turn.HasValue ? turn.Value : int.MaxValue, out Promotion promo))
                 p = promo.to;
 
             if(p != pawn.piece)

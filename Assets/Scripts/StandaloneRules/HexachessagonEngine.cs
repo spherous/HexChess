@@ -176,7 +176,7 @@ public static class HexachessagonEngine
 
     public static (BoardState newState, List<Promotion> promotions) QueryMove((Team team, Piece piece) teamedPiece, (Index target, MoveType moveType) move, BoardState state, Piece promoteTo, List<Promotion> promotions, int turnNumber = 1)
     {
-        switch (move.moveType)
+        switch(move.moveType)
         {
             case MoveType.Move:
             case MoveType.Attack:
@@ -202,6 +202,8 @@ public static class HexachessagonEngine
         if(!promoteTo.IsPawn() && MoveGenerator.IsPromotionRank(teamedPiece.team, move.target))
         {
             newPromotions = (promotions == null) ? new List<Promotion>(1) : new List<Promotion>(promotions);
+            // Since we're simulating a move early (a query), if it was white's turn, we need to increment the turn number to have a correct promotion turn
+            turnNumber = state.currentMove == Team.White ? turnNumber + 1 : turnNumber;
             newPromotions.Add(new Promotion(teamedPiece.team, teamedPiece.piece, promoteTo, turnNumber));
         }
         else
