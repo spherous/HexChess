@@ -70,14 +70,10 @@ public class Networker : MonoBehaviour
         // To track latency, every pingDelay seconds we ping the socket, we expect back a pong in a timely fashion
         if(Time.realtimeSinceStartup >= pingAtTime && connected && pongReceived)
         {
-            try {
-                SendMessage(new Message(MessageType.Ping));
-                pingedAtTime = Time.realtimeSinceStartup;
-                pingAtTime = Time.realtimeSinceStartup + pingDelay;
-                pongReceived = false;
-            } catch (Exception e) {
-                Debug.LogWarning($"Failed to write ping to socket with error:\n{e}");
-            }
+            SendMessage(new Message(MessageType.Ping));
+            pingedAtTime = Time.realtimeSinceStartup;
+            pingAtTime = Time.realtimeSinceStartup + pingDelay;
+            pongReceived = false;
         }
     }
 
@@ -97,14 +93,7 @@ public class Networker : MonoBehaviour
         if(isHost)
             server?.Stop();
         else if(client != null && client.Connected)
-        {
-            // Write disconnect to socket
-            try {
-                SendMessage(new Message(MessageType.Disconnect));
-            } catch (Exception e) {
-                Debug.LogWarning($"Failed to write to socket with error:\n{e}");
-            }
-        }
+            SendMessage(new Message(MessageType.Disconnect));
 
         stream?.Close();
         client?.Close();
@@ -282,13 +271,17 @@ public class Networker : MonoBehaviour
     // Both client + server
     public void SendMessage(Message message)
     {
-        if(connected)
-        {
-            byte[] messageData = message.Serialize();
-            stream.Write(messageData, 0, messageData.Length);
+        try {
+            if(connected)
+            {
+                byte[] messageData = message.Serialize();
+                stream.Write(messageData, 0, messageData.Length);
+            }
+            else
+                Debug.LogWarning($"No stream, cannot send message: {message}");
+        } catch(Exception e) {
+            Debug.LogWarning($"Failed to write to socket with error:\n{e}");
         }
-        else
-            Debug.LogWarning($"No stream, cannot send message: {message}");
     }
     
     private void ReceiveMessage(IAsyncResult ar)
@@ -392,7 +385,7 @@ public class Networker : MonoBehaviour
             },
             MessageType.Disconnect when isHost => PlayerDisconnected,
             MessageType.Disconnect when !isHost => lobby == null ? (Action)Disconnect : (Action)Shutdown,
-            MessageType.Ping => ReceivePing,
+            MessageType.Ping => () => SendMessage(new Message(MessageType.Pong)),
             MessageType.Pong => ReceivePong,
             MessageType.ProposeTeamChange => ReceiveTeamChangeProposal,
             MessageType.ApproveTeamChange => () => mainThreadActions.Enqueue(SwapTeams),
@@ -420,16 +413,6 @@ public class Networker : MonoBehaviour
         };
 
         action?.Invoke();
-    }
-
-    private void ReceivePing()
-    {
-        // All pings should get a pong in response
-        try {
-            SendMessage(new Message(MessageType.Pong));
-        } catch (Exception e) {
-            Debug.LogWarning($"Failed to write to socket with error:\n{e}");
-        }
     }
 
     private void ReceivePong()
@@ -493,11 +476,7 @@ public class Networker : MonoBehaviour
         if(client == null)
             return;
 
-        try {
-            SendMessage(new Message(MessageType.ProposeTeamChange));
-        } catch (Exception e) {
-            Debug.LogWarning($"Failed to write to socket with error:\n{e}");
-        }
+        SendMessage(new Message(MessageType.ProposeTeamChange));
     }
 
     private void ReceiveTeamChangeProposal() => mainThreadActions.Enqueue(() => lobby?.QueryTeamChange());
@@ -507,11 +486,7 @@ public class Networker : MonoBehaviour
         if(lobby == null)
             return;
 
-        try {
-            SendMessage(new Message(answer));
-        } catch (Exception e) {
-            Debug.LogWarning($"Failed to write to socket with error:\n{e}");
-        }
+        SendMessage(new Message(answer));
         
         if(answer == MessageType.ApproveTeamChange)
             SwapTeams();
@@ -614,11 +589,7 @@ public class Networker : MonoBehaviour
             Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(timestamp))
         );
 
-        try {
-            SendMessage(response);
-        } catch (Exception e) {
-            Debug.LogWarning($"Failed to write to socket with error:\n{e}");
-        }
+        SendMessage(response);
     }
 
     public void UpdateName(string newName)
@@ -633,7 +604,6 @@ public class Networker : MonoBehaviour
             Player p = player.Value;
             p.name = newName;
             player = p;
-            // lobby.UpdatePlayerName(p);
         }
 
         if(connected)
