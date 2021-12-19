@@ -14,6 +14,13 @@ namespace Extensions
         public static int Saturate(this int val) => (int)Mathf.Clamp01(val);
         public static float Saturate(this float val) => Mathf.Clamp01(val);
 
+        public static string GetText(this ReadyStartObjectButton.Mode modeToGet) => modeToGet switch{
+            ReadyStartObjectButton.Mode.NotReady => "Not Ready",
+            ReadyStartObjectButton.Mode.Ready => "Ready",
+            ReadyStartObjectButton.Mode.Start => "Start Match",
+            _ => ""
+        };
+
         public static void ForEach<T>(this IEnumerable<T> source, System.Action<T> action)
         {
             foreach(T item in source)

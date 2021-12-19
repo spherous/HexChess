@@ -17,9 +17,8 @@ public class Lobby : MonoBehaviour
     [SerializeField] private GroupFader aiSettingsFader;
     [SerializeField] private TextMeshProUGUI opponentSearchingText;
     [SerializeField] public IPPanel ipPanel;
-    [SerializeField] public ReadyButton readyToggle;
-    [SerializeField] public StartMatchButton startButton;
-    [SerializeField] private TextMeshProUGUI readyButtonContextText;
+    [SerializeField] private ReadyStartObjectButton readyStartButton;
+    [SerializeField] private TextMeshProUGUI readyText;
     [SerializeField] private TextMeshProUGUI proposeTeamChangeText;
     [SerializeField] private TextMeshProUGUI youPlayTeamText;
 
@@ -27,7 +26,6 @@ public class Lobby : MonoBehaviour
     [SerializeField] private GroupFader opponentNameFader;
     [SerializeField] private GroupFader blackOpponentIconFader;
     [SerializeField] private GroupFader whiteOpponentIconFader;
-    [SerializeField] private GroupFader readyFader;
     [SerializeField] private GroupFader aiWarningText;
 
     [SerializeField] private TextMeshProUGUI opponentName;
@@ -46,12 +44,16 @@ public class Lobby : MonoBehaviour
 
     [SerializeField] private AIDifficultySlider aiDifficultySlider;
     [SerializeField] private SliderTicks sliderTicks;
+    [SerializeField] private Latency latency;
 
     private bool opponentSearching = true;
 
     public Type lobbyType {get; private set;} = Type.None;
 
     private Team AITeam = Team.None;
+
+    public Color readyColor;
+    public Color notReadyColor;
 
     private void Awake()
     {
@@ -63,8 +65,7 @@ public class Lobby : MonoBehaviour
 
     private void ListenForClock()
     {
-        clockToggle.onValueChanged.AddListener((isOn) =>
-        {
+        clockToggle.onValueChanged.AddListener((isOn) => {
             if(isOn)
             {
                 timerToggle.isOn = false;
@@ -79,8 +80,7 @@ public class Lobby : MonoBehaviour
 
     private void ListenForTimer()
     {
-        timerToggle.onValueChanged.AddListener((isOn) =>
-        {
+        timerToggle.onValueChanged.AddListener((isOn) => {
             if(isOn)
             {
                 clockToggle.isOn = false;
@@ -115,7 +115,7 @@ public class Lobby : MonoBehaviour
             },
             Type.AI => () => {
                 SetAIPanel();
-                startButton.ShowEnabledButton();
+                readyStartButton.SetMode(ReadyStartObjectButton.Mode.Start);
             },
             _ => null
         };
@@ -155,18 +155,7 @@ public class Lobby : MonoBehaviour
         if(teamChangePanel != null && teamChangePanel.isOpen)
             teamChangePanel.Close();
 
-        opponentSearching = true;
-
-        readyButtonContextText.text = "";
-        ResetToSearchingPanel();
-
-        if(lobbyType == Type.Host)
-            startButton.HideButton();
-        else if(lobbyType == Type.Client)
-        {
-            readyToggle?.Hide();
-            readyToggle?.gameObject.SetActive(false);
-        }
+        OpponentSearching();
     }
 
     public void LoadAIGame()
@@ -235,70 +224,13 @@ public class Lobby : MonoBehaviour
 
     public void OpponentSearching()
     {
-        opponentSearching = true;
-        readyToggle.Hide();
-        readyToggle.gameObject.SetActive(false);
-        readyButtonContextText.text = "";
-
-        if(readyFader.visible)
-            readyFader.FadeOut();
-        
-        ResetToSearchingPanel();
-
         Debug.Log("Opponent Searching...");
-    }
-    public void OpponentFound(Player host)
-    {
-        opponentSearching = false;
-        if(lobbyType == Type.Client)
-        {
-            if(!readyToggle.gameObject.activeSelf)
-                readyToggle.gameObject.SetActive(true);
-            readyToggle.Show();
-        }
-        else
-            startButton.ShowDisabledButton();
 
-        readyButtonContextText.text = lobbyType == Type.Host ? "Waiting for opponent to ready up" : "";
+        opponentSearching = true;
 
-        if(!opponentSearchingPanel.visible)
-            opponentSearchingPanel.FadeIn();
-        
-        if(readyFader.visible)
-            readyFader.FadeOut();
+        readyText.text = "";
+        readyText.color = notReadyColor;
 
-        opponentSearchingText.text = "Opponent Found!";
-        opponentLoadingFader.FadeOut();
-
-        opponentNameFader.FadeIn();
-        blackOpponentIconFader.FadeIn();
-
-        UpdateTeam(host);
-
-        Debug.Log("Opponent Found!");
-    }
-
-    public void ReadyRecieved()
-    {
-        Debug.Log("Ready Recieved");
-        if(lobbyType == Type.Host)
-            startButton.ShowEnabledButton();
-        readyButtonContextText.text = "";
-        if(!readyFader.visible)
-            readyFader.FadeIn();
-    }
-    public void UnreadyRecieved()
-    {
-        Debug.Log("Unready Recieved");
-        if(lobbyType == Type.Host)
-            startButton.ShowDisabledButton();
-        readyButtonContextText.text = opponentSearching ? "" : "Waiting for opponent to ready up";
-        if(readyFader.visible)
-            readyFader.FadeOut();
-    }
-
-    private void ResetToSearchingPanel()
-    {
         // This is going to be called when the networker recieves a disconnect or is destroyed.
         // We destroy the networker when loading an AI lobby.
         // AI is never searching for an opponent, just leave.
@@ -307,7 +239,10 @@ public class Lobby : MonoBehaviour
 
         if(!opponentSearchingPanel.visible)
             opponentSearchingPanel.FadeIn();
-            
+        
+        // When searching for an opponent, the player should not be able to ready or start the game.
+        readyStartButton.SetMode(ReadyStartObjectButton.Mode.None);
+
         SetSearchingText();
 
         if(!opponentLoadingFader.visible)
@@ -319,14 +254,63 @@ public class Lobby : MonoBehaviour
             blackOpponentIconFader.FadeOut();
         if(whiteOpponentIconFader.visible)
             whiteOpponentIconFader.FadeOut();
+        
+        if(teamChangePanel != null && teamChangePanel.isOpen)
+            teamChangePanel.Close();
+    }
 
-        if(readyFader.visible)
-            readyFader.FadeOut();
+    public void OpponentFound(Player host)
+    {
+        opponentSearching = false;
+        if(lobbyType == Type.Client)
+            readyStartButton.ToggleReady(false);
+        else
+            readyStartButton.SetMode(ReadyStartObjectButton.Mode.None);
+
+        readyText.text = lobbyType == Type.Host ? "Waiting for opponent to ready up" : "";
+        readyText.color = notReadyColor;
+
+        if(!opponentSearchingPanel.visible)
+            opponentSearchingPanel.FadeIn();
+        
+        opponentSearchingText.text = "Opponent Found!";
+        opponentLoadingFader.FadeOut();
+
+        opponentNameFader.FadeIn();
+        blackOpponentIconFader.FadeIn();
+
+        UpdateTeam(host);
+
+        Debug.Log("Opponent Found!");
+    }
+
+    public void ReadyLocal(bool val)
+    {
+        readyText.text = val ? "Waiting for opponent to start match" : "Waiting for opponent to ready up";
+        readyText.color = val ? readyColor : notReadyColor;
+    }
+
+    public void ReadyRecieved()
+    {
+        Debug.Log("Ready Recieved");
+        if(lobbyType == Type.Host)
+            readyStartButton.SetMode(ReadyStartObjectButton.Mode.Start);
+        
+        readyText.text = "Opponent Ready";
+        readyText.color = readyColor;
+    }
+    public void UnreadyRecieved()
+    {
+        Debug.Log("Unready Recieved");
+        if(lobbyType == Type.Host)
+            readyStartButton.SetMode(ReadyStartObjectButton.Mode.None);
+
+        readyText.text = opponentSearching ? "" : "Waiting for opponent to ready up";
+        readyText.color = notReadyColor;
     }
 
     private void SetAIPanel()
     {
-        
         SetSearchingText();
 
         if(!opponentSearchingPanel.visible)
@@ -347,11 +331,15 @@ public class Lobby : MonoBehaviour
 
         ipPanel?.FadeOut();
 
+        if(latency != null)
+            Destroy(latency.gameObject);
+
         opponentLoadingFader.Disable();
 
         AITeam = Team.Black;
 
-        readyButtonContextText.text = "";
+        readyText.text = "";
+        readyText.color = notReadyColor;
         proposeTeamChangeText.text = "SWAP TEAMS";
     }
 
@@ -367,8 +355,8 @@ public class Lobby : MonoBehaviour
     {
         if(lobbyType == Type.Client)
         {
-            if(readyToggle.toggle.isOn)
-                readyToggle.toggle.isOn = false;
+            if(readyStartButton.mode == ReadyStartObjectButton.Mode.Ready)
+                readyStartButton.ToggleReady(false, true);
         }
         teamChangePanel?.Query();
     }

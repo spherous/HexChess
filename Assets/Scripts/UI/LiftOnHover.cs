@@ -18,6 +18,12 @@ public class LiftOnHover : MonoBehaviour
     public float from = 1f;
     public float to = 3f;
 
+    public bool isUp => transform.localPosition.y == to;
+    public bool isDown => transform.localPosition.y == from;
+
+    public bool lockedUp {get; private set;} = false;
+    public bool lockedDown {get; private   set;} = false;
+
     private void Update()
     {
         if(transitioning)
@@ -43,9 +49,38 @@ public class LiftOnHover : MonoBehaviour
         }
     }
 
+    public void LockUp()
+    {
+        if(lockedDown)
+            Unlock();
+        lockedUp = true;
+    }
+    public void LockDown()
+    {
+        if(lockedUp)
+            Unlock();
+        lockedDown = true;
+        if(isUp)
+            Reset();
+    }
+
+    public void Unlock()
+    {
+        lockedUp = false;
+        lockedDown = false;
+    }
+
     public void Lift()
     {
+        if(!this.enabled || lockedDown)
+            return;
+
+        // If the hex is locked up and is up, we still want to play the mouse over audio
         source.PlayOneShot(clips.ChooseRandom());
+        
+        if(lockedUp && isUp)
+            return;
+
         transitioning = true;
         mode = TransitionMode.In;
         orgColor = hex.GetOutlineColor();
@@ -54,6 +89,12 @@ public class LiftOnHover : MonoBehaviour
 
     public void Reset()
     {
+        if(lockedUp)
+            return;
+        
+        if(lockedDown && isDown)
+            return;
+
         transitioning = true;
         if(ellapsedDuration == 0)
             ellapsedDuration = raiseDuration;

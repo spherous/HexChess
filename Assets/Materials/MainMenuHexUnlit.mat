@@ -86,6 +86,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Height: 1
+    - _HighlightEdges: 0
     - _HighlightPower: 0
     - _Metallic: 0
     - _MouseRingSize: 0.003

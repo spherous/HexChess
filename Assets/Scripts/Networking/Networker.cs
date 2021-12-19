@@ -201,10 +201,10 @@ public class Networker : MonoBehaviour
             
             lobby?.OpponentFound(host);
             lobby?.UpdateTeam(player.Value);
-
-            SendMessage(new Message(MessageType.Connect, Encoding.UTF8.GetBytes(host.name)));
-            SendMessage(new Message(MessageType.OpponentFound));
         });
+
+        SendMessage(new Message(MessageType.Connect, Encoding.UTF8.GetBytes(host.name)));
+        SendMessage(new Message(MessageType.OpponentFound));
 
         readBuffer = new byte[messageMaxSize];
         readBufferStart = 0;
@@ -367,6 +367,9 @@ public class Networker : MonoBehaviour
 
     private void Dispatch(Message completeMessage)
     {
+        if(completeMessage.type != MessageType.Ping && completeMessage.type != MessageType.Pong)
+            Debug.Log($"Recieved message of type {completeMessage.type}");
+
         Action action = completeMessage.type switch {
             MessageType.Connect when !isHost => () => {
                 string hostName = Encoding.UTF8.GetString(completeMessage.data);
@@ -408,7 +411,7 @@ public class Networker : MonoBehaviour
             MessageType.Checkmate when multiplayer => () => multiplayer.ReceiveCheckmate(BitConverter.ToSingle(completeMessage.data, 0)),
             MessageType.Stalemate when multiplayer => () => multiplayer.ReceiveStalemate(BitConverter.ToSingle(completeMessage.data, 0)),
             MessageType.OpponentSearching when lobby && !isHost => lobby.OpponentSearching,
-            MessageType.OpponentFound when lobby && !isHost => () => lobby.OpponentFound(host),
+            MessageType.OpponentFound when lobby && !isHost => () => mainThreadActions.Enqueue(() => lobby.OpponentFound(host)),
             _ => () => Debug.LogWarning($"Ignoring unhandled message {completeMessage.type}"),
         };
 

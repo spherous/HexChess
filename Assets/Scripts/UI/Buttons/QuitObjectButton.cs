@@ -10,4 +10,6 @@ public class QuitObjectButton : MonoBehaviour, IObjectButton
         Application.Quit();
 #endif
     }
+    public void HoverEnter(){}
+    public void HoverExit(){}
 }

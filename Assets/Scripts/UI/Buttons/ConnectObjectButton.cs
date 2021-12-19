@@ -10,4 +10,6 @@ public class ConnectObjectButton : MonoBehaviour, IObjectButton
         if(!networker.attemptingConnection)
             networker.TryConnectClient(ipInput.text, networker.port);
     }
+    public void HoverEnter(){}
+    public void HoverExit(){}
 }

@@ -13,4 +13,7 @@ public class LoadSceneObjectButton : MonoBehaviour, IObjectButton
         else
             SceneManager.LoadScene($"{sceneToLoad}");
     }
+
+    public void HoverEnter(){}
+    public void HoverExit(){}
 }

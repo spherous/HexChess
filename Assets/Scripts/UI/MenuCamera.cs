@@ -17,29 +17,37 @@ public class MenuCamera : MonoBehaviour
             {
                 if(lastHovered != null)
                 {
+                    if(lastHovered.gameObject.TryGetComponent<IObjectButton>(out IObjectButton objectButton))
+                        objectButton.HoverExit();
                     lastHovered.Reset();
                     lastHovered = null;
                 }
                 return;
             }
             
-            if(hit.collider.gameObject.TryGetComponent<LiftOnHover>(out LiftOnHover hithoverer))
+            if(hit.collider.gameObject.TryGetComponent<LiftOnHover>(out LiftOnHover hithoverer) && hithoverer.enabled)
             {
                 if(hithoverer != lastHovered)
                 {
                     lastHovered?.Reset();
                     hithoverer.Lift();
+                    if(hithoverer.gameObject.TryGetComponent<IObjectButton>(out IObjectButton objectButton))
+                        objectButton.HoverEnter();
                     lastHovered = hithoverer;
                 }
             }
             else if(lastHovered != null)
             {
+                if(lastHovered.gameObject.TryGetComponent<IObjectButton>(out IObjectButton objectButton))
+                    objectButton.HoverExit();
                 lastHovered.Reset();
                 lastHovered = null;
             }
         }
         else if(lastHovered != null)
         {
+            if(lastHovered.gameObject.TryGetComponent<IObjectButton>(out IObjectButton objectButton))
+                objectButton.HoverExit();
             lastHovered.Reset();
             lastHovered = null;
         }

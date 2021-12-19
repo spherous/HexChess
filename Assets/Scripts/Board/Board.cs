@@ -476,9 +476,6 @@ public class Board : SerializedMonoBehaviour
         {
             Piece p = pawn.piece;
 
-            // if(currentGame.TryGetApplicablePromo((piece.team, piece.piece), turn.HasValue ? turn.Value + (piece.team == Team.Black ? 1 : 0) : int.MaxValue, out Promotion promo))
-            if(turn.HasValue)
-                Debug.Log(turn.Value);
             if(currentGame.TryGetApplicablePromo((piece.team, piece.piece), turn.HasValue ? turn.Value : int.MaxValue, out Promotion promo))
                 p = promo.to;
 

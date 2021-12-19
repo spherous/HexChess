@@ -4,6 +4,7 @@ public class FindMatchButton : TwigglyButton
 {
     [SerializeField] private Networker networker;
     [SerializeField] private ModeText modeText;
+    [SerializeField] private IPPanel ipPanel;
     public string dns;
     private new void Awake()
     {
@@ -14,5 +15,6 @@ public class FindMatchButton : TwigglyButton
     {
         modeText.Show("Quick Play");
         networker.TryConnectClient(dns, networker.port, true);
+        ipPanel?.FadeOut();
     }
 }

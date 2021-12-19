@@ -8,4 +8,6 @@ public class KillNetworkerObjectButton : MonoBehaviour, IObjectButton
         if(networker != null)
             Destroy(networker.gameObject);
     }
+    public void HoverEnter(){}
+    public void HoverExit(){}
 }

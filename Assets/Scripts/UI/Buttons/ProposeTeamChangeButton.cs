@@ -20,9 +20,9 @@ public class ProposeTeamChangeButton : MonoBehaviour
             else if(!networker.isHost)
             {
                 // This is a client
-                ReadyButton ready = GameObject.FindObjectOfType<ReadyButton>();
-                if(ready != null && ready.toggle.isOn)
-                    ready.toggle.isOn = false;
+                ReadyStartObjectButton ready = GameObject.FindObjectOfType<ReadyStartObjectButton>();
+                if(ready != null && ready.mode == ReadyStartObjectButton.Mode.Ready)
+                    ready.ToggleReady(false, true);
             }
 
             EventSystem.current.Deselect();
