@@ -130,6 +130,7 @@ public class TeriteAI : IHexAI
 
             isTerminal = false;
             (int currentValue, FastMove _) = Search(node, searchDepth - 1, plyFromRoot + 1, -beta, -alpha, -color);
+            currentValue = -currentValue;
 
             if (previousOrderingEnabled && plyFromRoot == 0)
                 previousScores[move] = currentValue;
@@ -137,7 +138,6 @@ public class TeriteAI : IHexAI
             using (diagnostics.MeasureApply())
                 node.UndoMove(move);
 
-            currentValue = -currentValue;
             if (currentValue > value)
             {
                 bestMove = move;
@@ -192,12 +192,11 @@ public class TeriteAI : IHexAI
             }
 
             maybeTerminal = false;
-            int currentValue = QuiescenceSearch(node, plyFromRoot + 1, -beta, -alpha, -color);
+            int currentValue = -QuiescenceSearch(node, plyFromRoot + 1, -beta, -alpha, -color);
 
             using (diagnostics.MeasureApply())
                 node.UndoMove(move);
 
-            currentValue = -currentValue;
             if (currentValue > value)
             {
                 value = currentValue;
