@@ -219,25 +219,49 @@ public class TeriteAI : IHexAI
 
     #region Move Ordering
 
+    public readonly struct ScoredMove : IComparable<ScoredMove>
+    {
+        public readonly FastMove move;
+        public readonly int score;
+        public ScoredMove(FastMove move, int score)
+        {
+            this.move = move;
+            this.score = score;
+        }
+
+        public int CompareTo(ScoredMove other)
+        {
+            return other.score - score; // descending
+        }
+    }
+
+
+    List<ScoredMove> sortCache = new List<ScoredMove>(100);
     private void OrderMoves(FastBoardNode node, List<FastMove> moves, int plyFromRoot)
     {
+        var scoredMoves = sortCache;
+        scoredMoves.Clear();
+
         if (previousOrderingEnabled && plyFromRoot == 0 && previousScores.Count > 0)
         {
-            moves.Sort((FastMove a, FastMove b) =>
+            foreach (var move in moves)
             {
-                previousScores.TryGetValue(a, out int aValue);
-                previousScores.TryGetValue(b, out int bValue);
-                return bValue - aValue; // descending
-            });
+                previousScores.TryGetValue(move, out int score);
+                scoredMoves.Add(new ScoredMove(move, score));
+            }
         }
         else
         {
-            moves.Sort((FastMove a, FastMove b) =>
+            foreach (var move in moves)
             {
-                int valueA = MoveValuer(node, a);
-                int valueB = MoveValuer(node, b);
-                return (valueB - valueA); // descending
-            });
+                scoredMoves.Add(new ScoredMove(move, MoveValuer(node, move)));
+            }
+        }
+
+        scoredMoves.Sort();
+        for (int i = 0; i < moves.Count; i++)
+        {
+            moves[i] = scoredMoves[i].move;
         }
     }
 
