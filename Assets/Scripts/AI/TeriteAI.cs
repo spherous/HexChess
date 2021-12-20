@@ -439,6 +439,7 @@ public class TeriteAI : IHexAI
             evalThreatsTimer.Reset();
             applyTimer.Reset();
             getMoveTimer.Reset();
+            quiescenceTimer.Reset();
             boardEvaluations = 0;
             invalidMoves = 0;
         }
