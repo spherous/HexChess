@@ -33,7 +33,7 @@ public class HexachessagonEngineTests
 
         (BoardState newState, List<Promotion> promotions) = HexachessagonEngine.QueryMove(new Index(8, 'E'), (new Index(9, 'E'), MoveType.Move), bs, Piece.Queen, null);
 
-        Assert.AreEqual(promotions[0], new Promotion(Team.White, Piece.Pawn1, Piece.Queen, 1));
+        Assert.AreEqual(promotions[0], new Promotion(Team.White, Piece.Pawn1, Piece.Queen, 2));
         Assert.AreEqual(1, promotions.Count);
 
         Assert.NotNull(promotions);
