@@ -107,10 +107,10 @@ public readonly struct FastIndex : IEquatable<FastIndex>
 
     public override bool Equals(Object obj)
     {
-        if (obj == null || !(obj is FastIndex index))
-            return false;
-        else
+        if (obj is FastIndex index)
             return HexId == index.HexId;
+        else
+            return false;
     }
 
     public static explicit operator FastIndex(Index index) => new FastIndex(index);

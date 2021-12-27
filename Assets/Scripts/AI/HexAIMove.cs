@@ -31,6 +31,16 @@ public readonly struct HexAIMove
         return game.QueryMove(start, (target, moveType), game.GetCurrentBoardState(), promoteTo);
     }
 
+    public void ApplyTo(Game game)
+    {
+        BoardState oldState = game.GetCurrentBoardState();
+
+        var result = game.QueryMove(start, (target, moveType), oldState, promoteTo);
+
+        game.SetPromotions(result.promotions);
+        game.AdvanceTurn(result.newState, false, true);
+    }
+
     public override string ToString()
     {
         return $"{moveType}({start.GetKey()} -> {target.GetKey()})";

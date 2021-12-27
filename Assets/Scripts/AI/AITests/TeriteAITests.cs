@@ -4,6 +4,7 @@ using Extensions;
 using Unity.PerformanceTesting;
 using System;
 using System.Collections.Generic;
+using UnityEngine.TestTools;
 
 public class TeriteAITests
 {
@@ -312,6 +313,7 @@ public class TeriteAITests
         var value2 = ai.EvaluateBoard(board, 1) * perspective;
         Assert.Greater(value2, value1);
     }
+
     [Test]
     public void EvaluationValuesFreedom([ValueSource(nameof(Teams))]Team toMove)
     {
@@ -458,21 +460,22 @@ public class TeriteAITests
 
     private void LogDiagnostics(TeriteAI.DiagnosticInfo ai)
     {
-        var evalPerSecond = (ai.boardEvaluations / ai.evalTimer.Elapsed.TotalSeconds);
-        var nodePerSecond = (ai.boardEvaluations / ai.getMoveTimer.Elapsed.TotalSeconds);
-
         string[] lines = {
-            $"{ai.boardEvaluations} nodes in {ai.getMoveTimer.Elapsed.TotalMilliseconds} ms: {Math.Floor(nodePerSecond)} NPS",
-            $"EVAL PER SECOND: {Math.Floor(evalPerSecond)}",
-            $"Evaluated {ai.terminalBoardEvaluations} TERMINAL board positions",
-            $"Generated {ai.invalidMoves} invalid moves",
-            $"Generating moves took {ai.moveGenTimer.ElapsedMilliseconds} ms",
-            $"Sorting moves took {ai.moveSortTimer.ElapsedMilliseconds} ms",
-            $"Validating moves took {ai.moveValidateTimer.ElapsedMilliseconds} ms",
-            $"Applying moves took {ai.applyTimer.ElapsedMilliseconds} ms",
-            $"Quiescence search took {ai.quiescenceTimer.ElapsedMilliseconds} ms",
-            $"Evaluating boards took {ai.evalTimer.ElapsedMilliseconds} ms",
-            $"  Evaluating board threats took {ai.evalThreatsTimer.ElapsedMilliseconds} ms",
+            $"getMove: {ai.getMove}",
+            $"Evaluated {ai.terminalBoardEvaluations:N0} TERMINAL board positions",
+            $"Generated {ai.invalidMoves:N0} invalid moves",
+            $"Cutoffs:  {ai.searchCutoff:N0} search, {ai.quiescenceCutoff:N0} quiescence",
+            $"Generating moves: {ai.moveGen}",
+            $"Sorting moves: {ai.moveSort}",
+            $"Validating moves: {ai.moveValidate}",
+            $"Applying moves: {ai.apply}",
+            $"Quiescence search: {ai.quiescence}",
+            $"  move gen: {ai.quiescenceMoveGen}",
+            $"  move sort: {ai.quiescenceMoveSort}",
+            $"  move validate: {ai.quiescenceMoveValidate}",
+            $"  apply: {ai.quiescenceApply}",
+            $"  eval: {ai.quiescenceEval}",
+            $"    threats: {ai.evalThreats}",
         };
 
         UnityEngine.Debug.Log(string.Join("\n", lines));
@@ -526,7 +529,6 @@ public class TeriteAITests
                 (defender, Piece.King, new Index(9, 'E')),
                 (defender, Piece.Pawn1, new Index(8, 'E')),
             }),
-            // ExpectedMove = new FastMove(new Index(3, 'A'), new Index(7, 'A'), MoveType.Move),
             ExpectedMove = new FastMove(new Index(3, 'A'), new Index(7, 'I'), MoveType.Move),
             ToMove = attacker,
         };
@@ -566,6 +568,109 @@ public class TeriteAITests
         Assert.True(info.Board.IsChecking(attacker));
         Assert.False(info.Board.HasAnyValidMoves(defender));
         Assert.AreEqual(info.ExpectedMove, foundMove);
+    }
+
+    [UnityTest, Performance]
+    public System.Collections.IEnumerator PlayGameVsRandom([ValueSource(nameof(Teams))] Team playAs)
+    {
+        var game = Game.CreateNewGame();
+        IHexAI teriteAI = new TeriteAI();
+        IHexAI randomAI = new RandomAI(seed: 1337);
+
+        int i = 0;
+        while (game.winner == Winner.Pending)
+        {
+            var toMove = game.GetCurrentTurn();
+            var ai = toMove == playAs ? teriteAI : randomAI;
+
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var moveTask = ai.GetMove(game);
+
+            while (!moveTask.IsCompleted)
+                yield return null;
+
+            var move = moveTask.Result;
+            var elapsed = sw.Elapsed;
+
+            // if (elapsed.TotalMilliseconds > 4000)
+            // {
+            //     UnityEngine.Debug.LogWarning($"Move took a while!!!");
+            //     LogBoard(game);
+            // }
+
+            move.ApplyTo(game);
+            UnityEngine.Debug.Log($"{game.GetTurnCount()}: {toMove} played {move} after {Math.Round(elapsed.TotalMilliseconds)} ms");
+
+            if (i++ > 100)
+                throw new Exception("Game went on too long");
+        }
+
+        UnityEngine.Debug.Log($"After {game.GetTurnCount()} turns, endType:{game.endType} winner:{game.winner}");
+    }
+
+    [Test, Performance]
+    public void SlowMove()
+    {
+        var ai = new TeriteAI();
+        var node = CreateBoardNode(Team.Black, new[]
+        {
+            (Team.White, Piece.King, new Index(3, 'G')),
+            (Team.White, Piece.KingsRook, new Index(2, 'I')),
+            (Team.White, Piece.KingsKnight, new Index(2, 'H')),
+            (Team.White, Piece.KingsBishop, new Index(2, 'F')),
+            (Team.White, Piece.QueensBishop, new Index(2, 'D')),
+            (Team.White, Piece.WhiteSquire, new Index(1, 'E')),
+            (Team.White, Piece.GraySquire, new Index(2, 'E')),
+            (Team.White, Piece.Pawn1, new Index(2, 'A')),
+            (Team.White, Piece.Pawn3, new Index(3, 'C')),
+            (Team.White, Piece.Pawn4, new Index(5, 'D')),
+            (Team.White, Piece.Pawn5, new Index(4, 'F')),
+            (Team.Black, Piece.QueensKnight, new Index(5, 'G')),
+            (Team.White, Piece.Pawn8, new Index(3, 'I')),
+            (Team.Black, Piece.King, new Index(9, 'G')),
+            (Team.Black, Piece.Queen, new Index(9, 'C')),
+            (Team.Black, Piece.KingsRook, new Index(9, 'I')),
+            (Team.Black, Piece.QueensRook, new Index(9, 'A')),
+            (Team.Black, Piece.KingsKnight, new Index(7, 'D')),
+            (Team.Black, Piece.KingsBishop, new Index(9, 'F')),
+            (Team.Black, Piece.QueensBishop, new Index(9, 'D')),
+            (Team.Black, Piece.WhiteSquire, new Index(7, 'E')),
+            (Team.Black, Piece.GraySquire, new Index(8, 'E')),
+            (Team.Black, Piece.BlackSquire, new Index(9, 'E')),
+            (Team.Black, Piece.Pawn1, new Index(8, 'A')),
+            (Team.Black, Piece.Pawn2, new Index(8, 'B')),
+            (Team.Black, Piece.Pawn3, new Index(8, 'C')),
+            (Team.Black, Piece.Pawn4, new Index(6, 'D')),
+            (Team.Black, Piece.Pawn5, new Index(8, 'F')),
+            (Team.Black, Piece.Pawn6, new Index(8, 'G')),
+            (Team.Black, Piece.Pawn7, new Index(6, 'H')),
+            (Team.Black, Piece.Pawn8, new Index(7, 'I')),
+        });
+
+        var move = ai.GetMove(node);
+        UnityEngine.Debug.Log(move);
+        LogDiagnostics(ai.diagnostics);
+    }
+
+    static void LogBoard(Game game)
+    {
+        var state = game.GetCurrentBoardState();
+        var lines = new List<string>();
+
+        foreach (var kvp in state.allPiecePositions)
+        {
+            var team = kvp.Key.team;
+            var piece = kvp.Key.piece;
+            var position = kvp.Value;
+            lines.Add($"(Team.{team}, Piece.{piece}, new Index({position.GetNumber()}, '{position.GetLetter()}')),");
+        }
+
+        foreach (var p in game.promotions)
+        {
+            lines.Add($"new Promotion(Team.{p.team}, Piece.{p.from}, Piece.{p.to}, {p.turnNumber}),");
+        }
+
+        UnityEngine.Debug.Log($"PRINT BOARD\n{string.Join("\n", lines)}");
     }
 }
 

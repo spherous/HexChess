@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class TeriteAI : IHexAI
 {
-    public readonly DiagnosticInfo diagnostics = new DiagnosticInfo();
+    public DiagnosticInfo diagnostics = new DiagnosticInfo();
 
     readonly int maxSearchDepth;
     readonly bool quiescenceSearchEnabled = true;
@@ -53,32 +53,32 @@ public class TeriteAI : IHexAI
 
     public FastMove GetMove(FastBoardNode root)
     {
-        diagnostics.Reset();
-        diagnostics.getMoveTimer.Start();
-        previousScores.Clear();
-
-        int color = (root.currentMove == Team.White) ? 1 : -1;
-        int minSearchDepth = iterativeDeepeningEnabled ? 1 : maxSearchDepth;
-        bestMove = FastMove.Invalid;
-        currentDepth = minSearchDepth;
-        cancellationRequested = false;
-
-        for (; currentDepth <= maxSearchDepth; currentDepth++)
+        diagnostics = new DiagnosticInfo();
+        using (diagnostics.getMove.Measure())
         {
-            int alpha = -CheckmateValue * 2; // Best move for current player
-            int beta = CheckmateValue * 2; // Best move our opponent will let us have
-            (int moveValue, FastMove move) = Search(root, currentDepth, 0, alpha, beta, color);
-            bestMove = move;
+            previousScores.Clear();
 
-            if (moveValue >= (CheckmateValue - currentDepth))
+            int color = (root.currentMove == Team.White) ? 1 : -1;
+            int minSearchDepth = iterativeDeepeningEnabled ? 1 : maxSearchDepth;
+            bestMove = FastMove.Invalid;
+            currentDepth = minSearchDepth;
+            cancellationRequested = false;
+
+            for (; currentDepth <= maxSearchDepth; currentDepth++)
             {
-                diagnostics.getMoveTimer.Stop();
-                return bestMove;
-            }
-        }
+                int alpha = -CheckmateValue * 2; // Best move for current player
+                int beta = CheckmateValue * 2; // Best move our opponent will let us have
+                (int moveValue, FastMove move) = Search(root, currentDepth, 0, alpha, beta, color);
+                bestMove = move;
 
-        diagnostics.getMoveTimer.Stop();
-        return bestMove;
+                if (moveValue >= (CheckmateValue - currentDepth))
+                {
+                    return bestMove;
+                }
+            }
+
+            return bestMove;
+        }
     }
 
     #region Searching
@@ -87,19 +87,19 @@ public class TeriteAI : IHexAI
     {
         if (searchDepth == 0)
         {
-            using (diagnostics.MeasureQuiescence())
+            using (diagnostics.quiescence.Measure())
                 return (QuiescenceSearch(node, plyFromRoot, alpha, beta, color), FastMove.Invalid);
         }
 
         List<FastMove> moves;
-        using (diagnostics.MeasureMoveGen())
+        using (diagnostics.moveGen.Measure())
         {
             moves = moveCache[searchDepth];
             moves.Clear();
             node.AddAllPossibleMoves(moves, node.currentMove);
         }
 
-        using (diagnostics.MeasureMoveSort())
+        using (diagnostics.moveSort.Measure())
         {
             OrderMoves(node, moves, plyFromRoot);
         }
@@ -113,17 +113,17 @@ public class TeriteAI : IHexAI
             if (cancellationRequested)
                 return (0, FastMove.Invalid);
 
-            using (diagnostics.MeasureApply())
+            using (diagnostics.apply.Measure())
                 node.DoMove(move);
 
             bool isKingVulnerable;
-            using (diagnostics.MeasureMoveValidate())
+            using (diagnostics.moveValidate.Measure())
                 isKingVulnerable = node.IsChecking(node.currentMove);
 
             if (isKingVulnerable)
             {
                 diagnostics.invalidMoves++;
-                using (diagnostics.MeasureApply())
+                using (diagnostics.apply.Measure())
                     node.UndoMove(move);
                 continue;
             }
@@ -135,7 +135,7 @@ public class TeriteAI : IHexAI
             if (previousOrderingEnabled && plyFromRoot == 0)
                 previousScores[move] = currentValue;
 
-            using (diagnostics.MeasureApply())
+            using (diagnostics.apply.Measure())
                 node.UndoMove(move);
 
             if (currentValue > value)
@@ -145,7 +145,10 @@ public class TeriteAI : IHexAI
             }
             alpha = Math.Max(alpha, value);
             if (alpha >= beta)
+            {
+                diagnostics.searchCutoff++;
                 break;
+            }
         }
 
         if (isTerminal)
@@ -158,15 +161,30 @@ public class TeriteAI : IHexAI
 
     int QuiescenceSearch(FastBoardNode node, int plyFromRoot, int alpha, int beta, int color)
     {
+        int eval;
+        using (diagnostics.quiescenceEval.Measure())
+            eval = color * EvaluateBoard(node, plyFromRoot);
+
         if (!quiescenceSearchEnabled)
-            using (diagnostics.MeasureEval())
-                return color * EvaluateBoard(node, plyFromRoot);
+            return eval;
 
-        var moves = new List<FastMove>(10);
-        using (diagnostics.MeasureMoveGen())
+        if (eval >= beta)
+        {
+            diagnostics.quiescenceCutoff++;
+            return beta;
+        }
+
+        if (eval > alpha)
+            alpha = eval;
+
+        List<FastMove> moves;
+        using (diagnostics.quiescenceMoveGen.Measure())
+        {
+            moves = new List<FastMove>(10);
             node.AddAllPossibleMoves(moves, node.currentMove, generateQuiet: false);
+        }
 
-        using (diagnostics.MeasureMoveSort())
+        using (diagnostics.quiescenceMoveSort.Measure())
             OrderMoves(node, moves, -1);
 
         bool maybeTerminal = true;
@@ -177,16 +195,16 @@ public class TeriteAI : IHexAI
             if (cancellationRequested)
                 return 0;
 
-            using (diagnostics.MeasureApply())
+            using (diagnostics.quiescenceApply.Measure())
                 node.DoMove(move);
 
             bool isKingVulnerable;
-            using (diagnostics.MeasureMoveValidate())
+            using (diagnostics.quiescenceMoveValidate.Measure())
                 isKingVulnerable = node.IsChecking(node.currentMove);
             if (isKingVulnerable)
             {
                 diagnostics.invalidMoves++;
-                using (diagnostics.MeasureApply())
+                using (diagnostics.quiescenceApply.Measure())
                     node.UndoMove(move);
                 continue;
             }
@@ -194,7 +212,7 @@ public class TeriteAI : IHexAI
             maybeTerminal = false;
             int currentValue = -QuiescenceSearch(node, plyFromRoot + 1, -beta, -alpha, -color);
 
-            using (diagnostics.MeasureApply())
+            using (diagnostics.quiescenceApply.Measure())
                 node.UndoMove(move);
 
             if (currentValue > value)
@@ -203,14 +221,15 @@ public class TeriteAI : IHexAI
             }
             alpha = Math.Max(alpha, value);
             if (alpha >= beta)
+            {
+                diagnostics.quiescenceCutoff++;
                 break;
+            }
         }
 
+        // No non-quiet moves were found from this position
         if (maybeTerminal)
-        {
-            using (diagnostics.MeasureEval())
-                return color * EvaluateBoard(node, plyFromRoot);
-        }
+            return eval;
 
         return value;
     }
@@ -284,9 +303,7 @@ public class TeriteAI : IHexAI
         else if (move.moveType == MoveType.Attack)
         {
             var victim = node[move.target];
-
             int attackValue = GetPieceValue(victim.piece) - attackerValue;
-
             value += attackValue;
         }
         else if (move.moveType == MoveType.EnPassant)
@@ -327,7 +344,6 @@ public class TeriteAI : IHexAI
     }
     public int EvaluateBoard(FastBoardNode node, int plyFromRoot)
     {
-        diagnostics.boardEvaluations++;
         if (node.plySincePawnMovedOrPieceTaken >= 100)
             return 0; // automatic draw due to 50 move rule.
 
@@ -374,7 +390,7 @@ public class TeriteAI : IHexAI
             boardValue += TeamMults[(byte)piece.team] * pieceValue;
         }
 
-        using (diagnostics.MeasureEvalThreats())
+        using (diagnostics.evalThreats.Measure())
         {
             evaluationData.Prepare(node);
             boardValue += evaluationData.WhiteThreats.Count - evaluationData.BlackThreats.Count;
@@ -441,40 +457,72 @@ public class TeriteAI : IHexAI
 
     public class DiagnosticInfo
     {
-        public readonly Stopwatch moveGenTimer = new Stopwatch();
-        public readonly Stopwatch moveSortTimer = new Stopwatch();
-        public readonly Stopwatch moveValidateTimer = new Stopwatch();
-        public readonly Stopwatch evalTimer = new Stopwatch();
-        public readonly Stopwatch quiescenceTimer = new Stopwatch();
-        public readonly Stopwatch evalThreatsTimer = new Stopwatch();
-        public readonly Stopwatch applyTimer = new Stopwatch();
-        public readonly Stopwatch getMoveTimer = new Stopwatch();
+        public readonly Section moveGen = new Section();
+        public readonly Section moveSort = new Section();
+        public readonly Section moveValidate = new Section();
+        public readonly Section quiescenceEval = new Section();
+        public readonly Section quiescence = new Section();
+        public readonly Section quiescenceMoveSort = new Section();
+        public readonly Section quiescenceMoveGen = new Section();
+        public readonly Section quiescenceMoveValidate = new Section();
+        public readonly Section quiescenceApply = new Section();
+        public readonly Section evalThreats = new Section();
+        public readonly Section apply = new Section();
+        public readonly Section getMove = new Section();
 
-        public int boardEvaluations = 0;
         public int terminalBoardEvaluations = 0;
         public int invalidMoves = 0;
+        public int searchCutoff = 0;
+        public int quiescenceCutoff = 0;
 
-        public void Reset()
+        public class Section
         {
-            moveGenTimer.Reset();
-            moveSortTimer.Reset();
-            moveValidateTimer.Reset();
-            evalTimer.Reset();
-            evalThreatsTimer.Reset();
-            applyTimer.Reset();
-            getMoveTimer.Reset();
-            quiescenceTimer.Reset();
-            boardEvaluations = 0;
-            invalidMoves = 0;
-        }
+            public int measurements;
+            public readonly Stopwatch watch = new Stopwatch();
 
-        public Measurer MeasureMoveGen() => new Measurer(moveGenTimer);
-        public Measurer MeasureMoveSort() => new Measurer(moveSortTimer);
-        public Measurer MeasureMoveValidate() => new Measurer(moveValidateTimer);
-        public Measurer MeasureQuiescence() => new Measurer(quiescenceTimer);
-        public Measurer MeasureEval() => new Measurer(evalTimer);
-        public Measurer MeasureEvalThreats() => new Measurer(evalThreatsTimer);
-        public Measurer MeasureApply() => new Measurer(applyTimer);
+            public Measurer Measure()
+            {
+                this.measurements++;
+                return new Measurer(watch);
+            }
+
+            public override string ToString()
+            {
+                var perSecond = Math.Floor(measurements / watch.Elapsed.TotalSeconds);
+
+                double each;
+                if (measurements > 0)
+                    each = watch.Elapsed.Ticks / (double)measurements;
+                else
+                    each = 0;
+
+                return $"{perSecond:N0} per second. {measurements:N0} calls over {FormatNanos(watch.ElapsedTicks)} ({FormatNanos(each)})";
+            }
+
+            static string FormatNanos(double ticks)
+            {
+                const long TicksPerMicrosecond = TimeSpan.TicksPerMillisecond / 1000;
+
+                if ((ticks / TimeSpan.TicksPerSecond) >= 1)
+                {
+                    return $"{ticks / TimeSpan.TicksPerSecond:0.0} sec";
+                }
+                if ((ticks / TimeSpan.TicksPerMillisecond) >= 1)
+                {
+                    return $"{ticks / TimeSpan.TicksPerMillisecond:0.0} ms";
+                }
+                if ((ticks / TimeSpan.TicksPerMillisecond) >= 1)
+                {
+                    return $"{ticks / TimeSpan.TicksPerMillisecond:0.0} ms";
+                }
+                if ((ticks / TicksPerMicrosecond) >= 1)
+                {
+                    return $"{ticks / TicksPerMicrosecond:0.0} μs";
+                }
+
+                return $"{ticks * 100:0.0} ns";
+            }
+        }
 
         public struct Measurer : IDisposable
         {
