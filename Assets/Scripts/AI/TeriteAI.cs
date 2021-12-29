@@ -12,14 +12,16 @@ public class TeriteAI : IHexAI
     readonly bool quiescenceSearchEnabled = true;
     public bool iterativeDeepeningEnabled = true;
     public bool previousOrderingEnabled = true;
-    public bool pawnValueMapEnabled = true;
+    public bool pawnValueMapEnabled = false;
 
     readonly Dictionary<FastMove, int> previousScores = new Dictionary<FastMove, int>();
     readonly List<FastMove>[] moveCache;
     volatile bool cancellationRequested;
-    readonly EvaluationData evaluationData = new EvaluationData();
+
+    public readonly EvaluationData evaluationData = new EvaluationData();
 
     FastMove bestMove;
+    FastMove bestMoveThisIteration;
     int currentDepth;
 
     public TeriteAI(int maxSearchDepth = 4)
@@ -39,6 +41,7 @@ public class TeriteAI : IHexAI
             return GetMove(root).ToHexMove();
         });
     }
+
     void IHexAI.CancelMove()
     {
         cancellationRequested = true;
@@ -48,6 +51,7 @@ public class TeriteAI : IHexAI
     {
         yield return $"Cancellation requested: {cancellationRequested}";
         yield return $"bestMove: {bestMove}";
+        yield return $"bestMoveThisIteration: {bestMoveThisIteration}";
         yield return $"currentDepth: {currentDepth}";
     }
 
@@ -66,10 +70,12 @@ public class TeriteAI : IHexAI
 
             for (; currentDepth <= maxSearchDepth; currentDepth++)
             {
+                bestMoveThisIteration = FastMove.Invalid;
                 int alpha = -CheckmateValue * 2; // Best move for current player
                 int beta = CheckmateValue * 2; // Best move our opponent will let us have
-                (int moveValue, FastMove move) = Search(root, currentDepth, 0, alpha, beta, color);
-                bestMove = move;
+                int moveValue = Search(root, currentDepth, 0, alpha, beta, color);
+
+                bestMove = bestMoveThisIteration;
 
                 if (moveValue >= (CheckmateValue - currentDepth))
                 {
@@ -83,12 +89,12 @@ public class TeriteAI : IHexAI
 
     #region Searching
 
-    (int value, FastMove move) Search(FastBoardNode node, int searchDepth, int plyFromRoot, int alpha, int beta, int color)
+    int Search(FastBoardNode node, int searchDepth, int plyFromRoot, int alpha, int beta, int color)
     {
         if (searchDepth == 0)
         {
             using (diagnostics.quiescence.Measure())
-                return (QuiescenceSearch(node, plyFromRoot, alpha, beta, color), FastMove.Invalid);
+                return QuiescenceSearch(node, plyFromRoot, alpha, beta, color);
         }
 
         List<FastMove> moves;
@@ -99,6 +105,8 @@ public class TeriteAI : IHexAI
             node.AddAllPossibleMoves(moves, node.currentMove);
         }
 
+        evaluationData.Prepare(node);
+
         using (diagnostics.moveSort.Measure())
         {
             OrderMoves(node, moves, plyFromRoot);
@@ -106,12 +114,11 @@ public class TeriteAI : IHexAI
 
         bool isTerminal = true;
         int value = int.MinValue;
-        FastMove bestMove = FastMove.Invalid;
 
         foreach (var move in moves)
         {
             if (cancellationRequested)
-                return (0, FastMove.Invalid);
+                return 0;
 
             using (diagnostics.apply.Measure())
                 node.DoMove(move);
@@ -129,8 +136,7 @@ public class TeriteAI : IHexAI
             }
 
             isTerminal = false;
-            (int currentValue, FastMove _) = Search(node, searchDepth - 1, plyFromRoot + 1, -beta, -alpha, -color);
-            currentValue = -currentValue;
+            int currentValue = -Search(node, searchDepth - 1, plyFromRoot + 1, -beta, -alpha, -color);
 
             if (previousOrderingEnabled && plyFromRoot == 0)
                 previousScores[move] = currentValue;
@@ -140,7 +146,10 @@ public class TeriteAI : IHexAI
 
             if (currentValue > value)
             {
-                bestMove = move;
+                if (plyFromRoot == 0)
+                {
+                    bestMoveThisIteration = move;
+                }
                 value = currentValue;
             }
             alpha = Math.Max(alpha, value);
@@ -156,12 +165,15 @@ public class TeriteAI : IHexAI
             value = color * EvaluateTerminalBoard(node, plyFromRoot);
         }
 
-        return (value, bestMove);
+        return value;
     }
 
     int QuiescenceSearch(FastBoardNode node, int plyFromRoot, int alpha, int beta, int color)
     {
         int eval;
+
+        evaluationData.Prepare(node);
+
         using (diagnostics.quiescenceEval.Measure())
             eval = color * EvaluateBoard(node, plyFromRoot);
 
@@ -254,8 +266,7 @@ public class TeriteAI : IHexAI
         }
     }
 
-
-    List<ScoredMove> sortCache = new List<ScoredMove>(100);
+    readonly List<ScoredMove> sortCache = new List<ScoredMove>(100);
     private void OrderMoves(FastBoardNode node, List<FastMove> moves, int plyFromRoot)
     {
         var scoredMoves = sortCache;
@@ -284,27 +295,55 @@ public class TeriteAI : IHexAI
         }
     }
 
-    private static int MoveValuer(FastBoardNode node, FastMove move)
+    private int MoveValuer(FastBoardNode node, FastMove move)
     {
         int value = 1000; // Start high to always exceed invalid move scores of 0
 
-        var attacker = node[move.start];
-        int attackerValue = GetPieceValue(attacker.piece);
+        var mover = node[move.start];
+        int attackerValue = GetPieceValue(mover.piece);
 
-        // In general, value doing things with lower value pieces
-        value -= attackerValue;
+        EvaluationData.BoardCollection us;
+        EvaluationData.BoardCollection them;
+        if (node.currentMove == Team.White)
+        {
+            us = evaluationData.White;
+            them = evaluationData.Black;
+        }
+        else
+        {
+            us = evaluationData.Black;
+            them = evaluationData.White;
+        }
+
+        // Devalue moving into threatened hexes
+        if (them.Threats[move.target])
+        {
+            value -= attackerValue / 2;
+        }
+
+        // Value moving threatened pieces
+        if (them.Threats[move.start])
+        {
+            value += attackerValue / 2;
+        }
 
         if (move.moveType == MoveType.Move)
         {
-            // TODO: devalue moving into threatened hexes
-            // TODO: value moving threatened pieces
             // TODO: what else?
         }
         else if (move.moveType == MoveType.Attack)
         {
+            bool isFree = !them.Threats[move.target];
             var victim = node[move.target];
-            int attackValue = GetPieceValue(victim.piece) - attackerValue;
-            value += attackValue;
+            if (isFree)
+            {
+                value += GetPieceValue(victim.piece) / 2;
+            }
+            else
+            {
+                int attackValue = GetPieceValue(victim.piece) - attackerValue;
+                value += attackValue / 10;
+            }
         }
         else if (move.moveType == MoveType.EnPassant)
         {
@@ -342,6 +381,7 @@ public class TeriteAI : IHexAI
         // Either stalemate, or 50 move rule draw
         return DrawValue;
     }
+
     public int EvaluateBoard(FastBoardNode node, int plyFromRoot)
     {
         if (node.plySincePawnMovedOrPieceTaken >= 100)
@@ -370,6 +410,7 @@ public class TeriteAI : IHexAI
                 return DrawValue;
         }
 
+        /*
         for (byte i = 0; i < node.positions.Length; i++)
         {
             var piece = node.positions[i];
@@ -389,12 +430,25 @@ public class TeriteAI : IHexAI
 
             boardValue += TeamMults[(byte)piece.team] * pieceValue;
         }
+        */
 
         using (diagnostics.evalThreats.Measure())
         {
-            evaluationData.Prepare(node);
-            boardValue += evaluationData.WhiteThreats.Count - evaluationData.BlackThreats.Count;
-            boardValue += (evaluationData.WhitePawnThreats.Count * 2) - (evaluationData.BlackPawnThreats.Count * 2);
+            boardValue += evaluationData.White.Threats.Count - evaluationData.Black.Threats.Count;
+            boardValue += (evaluationData.White.PawnThreats.Count * 2) - (evaluationData.Black.PawnThreats.Count * 2);
+            boardValue += evaluationData.White.MaterialValue - evaluationData.Black.MaterialValue;
+
+            var whiteAttacks = evaluationData.Black.Pieces & evaluationData.White.Threats;
+            var blackAttacks = evaluationData.White.Pieces & evaluationData.Black.Threats;
+            boardValue += whiteAttacks.Count - blackAttacks.Count;
+
+            var whiteDefended = evaluationData.White.Pieces & evaluationData.White.Threats;
+            var blackDefended = evaluationData.Black.Pieces & evaluationData.Black.Threats;
+            boardValue += whiteDefended.Count - blackDefended.Count;
+
+            var whiteHangingPieces = blackAttacks & ~evaluationData.White.Threats;
+            var blackHangingPieces = whiteAttacks & ~evaluationData.Black.Threats;
+            boardValue += (blackHangingPieces.Count - whiteHangingPieces.Count) * 100;
         }
 
         return boardValue;
@@ -405,26 +459,26 @@ public class TeriteAI : IHexAI
         switch (piece)
         {
             case FastPiece.King:
-                return 900;
+                return 10000;
 
             case FastPiece.Queen:
-                return 90;
+                return 1000;
 
             case FastPiece.Rook:
-                return 40;
+                return 525;
 
             case FastPiece.Knight:
-                return 30;
+                return 350;
 
             case FastPiece.Bishop:
-                return 50;
+                return 350;
 
             case FastPiece.Squire:
-                return 20;
+                return 300;
 
             case FastPiece.Pawn:
             default:
-                return 10;
+                return 100;
         }
     }
 

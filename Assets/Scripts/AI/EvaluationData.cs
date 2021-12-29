@@ -3,6 +3,24 @@ using System.Collections.Generic;
 
 public class EvaluationData
 {
+    public class BoardCollection
+    {
+        public BitsBoard Pieces;
+        public BitsBoard Pawns;
+        public BitsBoard Threats;
+        public BitsBoard PawnThreats;
+        public int MaterialValue;
+
+        public void Clear()
+        {
+            Pieces = default;
+            Pawns = default;
+            Threats = default;
+            PawnThreats = default;
+            MaterialValue = 0;
+        }
+    }
+
     /*
     Terminology:
     Piece: Anything from king to pawn
@@ -10,69 +28,44 @@ public class EvaluationData
     Attacks: A hex that can be attacked right now
     Defends: A hex that we occupy but also threaten
     */
-    public BitsBoard WhitePieces;
-    public BitsBoard BlackPieces;
 
-    public BitsBoard WhitePawns;
-    public BitsBoard BlackPawns;
-
-    public BitsBoard WhiteThreats;
-    public BitsBoard BlackThreats;
-    public BitsBoard WhitePawnThreats;
-    public BitsBoard BlackPawnThreats;
+    public BoardCollection White = new BoardCollection();
+    public BoardCollection Black = new BoardCollection();
 
     public void Prepare(FastBoardNode node)
     {
-        var whitePieces = new BitsBoard();
-        var blackPieces = new BitsBoard();
-
-        var whitePawns = new BitsBoard();
-        var blackPawns = new BitsBoard();
-
-        var whiteThreats = new BitsBoard();
-        var blackThreats = new BitsBoard();
+        White.Clear();
+        Black.Clear();
 
         for (byte b = 0; b < node.positions.Length; ++b)
         {
             var piece = node.positions[b];
+            BoardCollection board;
             if (piece.team == Team.None)
                 continue;
-
             else if (piece.team == Team.White)
-                whitePieces[b] = true;
+                board = White;
             else
-                blackPieces[b] = true;
+                board = Black;
+
+            board.Pieces[b] = true;
+            board.MaterialValue += GetMaterialValue(piece.piece);
 
             if (piece.piece == FastPiece.Pawn)
             {
-                if (piece.team == Team.White)
-                    whitePawns[b] = true;
-                else
-                    blackPawns[b] = true;
+                board.Pawns[b] = true;
             }
             else
             {
-                if (piece.team == Team.White)
-                    AddThreats(ref whiteThreats, node, b);
-                else
-                    AddThreats(ref blackThreats, node, b);
+                AddThreats(ref board.Threats, node, b);
             }
         }
 
-        var whitePawnThreats = whitePawns.Shift(HexNeighborDirection.UpLeft) | whitePawns.Shift(HexNeighborDirection.UpRight);
-        var blackPawnThreats = blackPawns.Shift(HexNeighborDirection.DownLeft) | blackPawns.Shift(HexNeighborDirection.DownRight);
+        White.PawnThreats = White.Pawns.Shift(HexNeighborDirection.UpLeft) | White.Pawns.Shift(HexNeighborDirection.UpRight);
+        Black.PawnThreats = Black.Pawns.Shift(HexNeighborDirection.DownLeft) | Black.Pawns.Shift(HexNeighborDirection.DownRight);
 
-        WhitePawns = whitePawns;
-        BlackPawns = blackPawns;
-
-        WhitePieces = whitePieces;
-        BlackPieces = blackPieces;
-
-        WhiteThreats = whiteThreats | whitePawnThreats;
-        BlackThreats = blackThreats | blackPawnThreats;
-
-        WhitePawnThreats = whitePawnThreats;
-        BlackPawnThreats = blackPawnThreats;
+        White.Threats = White.Threats | White.PawnThreats;
+        Black.Threats = Black.Threats | Black.PawnThreats;
     }
 
     static void AddThreats(ref BitsBoard threats, FastBoardNode node, byte index)
@@ -121,6 +114,33 @@ public class EvaluationData
                 if (node[move].team != Team.None)
                     break;
             }
+        }
+    }
+    static int GetMaterialValue(FastPiece piece)
+    {
+        switch (piece)
+        {
+            case FastPiece.King:
+                return 0;
+
+            case FastPiece.Queen:
+                return 1000;
+
+            case FastPiece.Rook:
+                return 525;
+
+            case FastPiece.Knight:
+                return 350;
+
+            case FastPiece.Bishop:
+                return 350;
+
+            case FastPiece.Squire:
+                return 300;
+
+            case FastPiece.Pawn:
+            default:
+                return 100;
         }
     }
 }
