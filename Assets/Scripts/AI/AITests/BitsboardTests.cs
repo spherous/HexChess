@@ -199,6 +199,26 @@ public class BitsboardTests
     }
 
     [Test]
+    public void NotOperatorTest()
+    {
+        var board = new BitsBoard();
+
+        board[1] = true;
+        board[20] = true;
+        board[64] = true;
+        board[80] = true;
+
+        BitsBoard mixed = ~board;
+        Assert.IsFalse(mixed[1]);
+        Assert.IsFalse(mixed[20]);
+        Assert.IsFalse(mixed[64]);
+        Assert.IsFalse(mixed[80]);
+
+        Assert.IsTrue(mixed[0]);
+        Assert.IsTrue(mixed[65]);
+    }
+
+    [Test]
     public void ShiftUpTest()
     {
         var index = new FastIndex(5, 'E');

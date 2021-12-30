@@ -6,15 +6,6 @@ public static class FastPossibleMoveGenerator
 {
     public static bool newstuff;
 
-    public static readonly FastPiece[] DefendableTypes = new FastPiece[]
-    {
-        FastPiece.King,
-        FastPiece.Queen,
-        FastPiece.Knight,
-        FastPiece.Bishop,
-        FastPiece.Squire,
-    };
-
     public static void AddAllPossibleMoves(List<FastMove> moves, FastIndex start, FastPiece piece, Team team, FastBoardNode boardNode, bool generateQuiet = true)
     {
         switch (piece)
@@ -135,7 +126,7 @@ public static class FastPossibleMoveGenerator
             {
                 if (boardNode.TryGetPiece(target, out (Team team, FastPiece piece) occupier))
                 {
-                    if (occupier.team == team && Contains(DefendableTypes, occupier.piece))
+                    if (occupier.team == team && IsDefendable(occupier.piece))
                         moves.Add(new FastMove(start, target, MoveType.Defend));
                 }
             }
@@ -239,8 +230,12 @@ public static class FastPossibleMoveGenerator
 
     #endregion
 
-    private static bool Contains(FastPiece[] haystack, FastPiece needle)
+    private static bool IsDefendable(FastPiece needle)
     {
-        return Array.IndexOf(haystack, needle) >= 0;
+        return needle == FastPiece.King
+            || needle == FastPiece.Queen
+            || needle == FastPiece.Knight
+            || needle == FastPiece.Bishop
+            || needle == FastPiece.Squire;
     }
 }

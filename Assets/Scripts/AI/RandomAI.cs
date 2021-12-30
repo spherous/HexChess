@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 public class RandomAI : IHexAI
 {
     Random random = new Random();
+
+    public RandomAI() { }
+
+    public RandomAI(int seed)
+    {
+        random = new Random(seed);
+    }
+
     public Task<HexAIMove> GetMove(Game game)
     {
         var allmoves = HexAIMove.GenerateAllValidMoves(game).ToArray();

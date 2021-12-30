@@ -135,6 +135,10 @@ public struct BitsBoard
     {
         return new BitsBoard(a.lowBits | b.lowBits, a.highBits | b.highBits);
     }
+    public static BitsBoard operator ~(BitsBoard a)
+    {
+        return new BitsBoard(~a.lowBits, ~a.highBits);
+    }
     public static BitsBoard operator <<(BitsBoard self, int shift)
     {
         if (shift > 63)
