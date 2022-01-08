@@ -77,7 +77,7 @@ public class Hexmachina : Agent
             if(pieceObj != null)
             {
                 Piece realPiece = piece;
-                if(piece >= Piece.Pawn1 && !(pieceObj is Pawn))
+                if(piece.IsPawn() && !(pieceObj is Pawn))
                     realPiece = board.currentGame.GetRealPiece((state.currentMove, piece));
 
                 // This needs to have all moves that should not be allowed to be played to be turned to invalid moves
@@ -93,7 +93,7 @@ public class Hexmachina : Agent
                 }
 
                 // Pad pawn or non-queen promoted pawn
-                if(piece >= Piece.Pawn1 && realPiece != Piece.Queen)
+                if(piece.IsPawn() && realPiece != Piece.Queen)
                 {
                     int padAmound = 58 - realPiece.GetMaxMoveCount();
                     for(int i = 0; i < padAmound; i++)
@@ -102,7 +102,7 @@ public class Hexmachina : Agent
             }
             else
             {
-                if(piece >= Piece.Pawn1)
+                if(piece.IsPawn())
                 {
                     for(int i = 0; i < Piece.Queen.GetMaxMoveCount(); i++)
                         ObserveInvalidMove(sensor);

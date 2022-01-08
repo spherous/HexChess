@@ -156,7 +156,7 @@ public static class Notation
     
     private static string GetStringForPiece(Piece potentialPawn, Team team, List<Promotion> promotions, Move move)
     {
-        if(potentialPawn < Piece.Pawn1)
+        if(!potentialPawn.IsPawn())
             return potentialPawn.GetPieceShortString();
 
         // The piece may habe been promoted. If so, we want to return the promoted piece. But only if it's not the turn the promo happened on   

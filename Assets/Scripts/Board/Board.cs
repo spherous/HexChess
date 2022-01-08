@@ -81,7 +81,7 @@ public class Board : SerializedMonoBehaviour
             {
                 piece = activePieces[prefab.Key];
                 // Reset promoted pawn if needed
-                if(prefab.Key.piece >= Piece.Pawn1 && !(piece is Pawn))
+                if(prefab.Key.piece.IsPawn() && !(piece is Pawn))
                     CheckForAndDemoteIPieceIfNeeded(turn, ref piece, prefabTeamedPiece, prefabGO, startLoc, loc);
             }
             else if(jailedPiece != null)
@@ -92,7 +92,7 @@ public class Board : SerializedMonoBehaviour
                 activePieces.Add(prefab.Key, piece);
                 
                 // This IPiece might be promoted, if it is, and is moving out of jail due to crawling history to a point where it wasn't promoted, then the IPiece must be demoted to a pawn
-                if(prefab.Key.piece >= Piece.Pawn1 && !(piece is Pawn))
+                if(prefab.Key.piece.IsPawn() && !(piece is Pawn))
                     CheckForAndDemoteIPieceIfNeeded(turn, ref piece, prefabTeamedPiece, prefabGO, startLoc, loc);
             }
             else
