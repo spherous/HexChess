@@ -38,7 +38,8 @@ public class AIBattleController : MonoBehaviour
             ("Terite (depth 3)", () => new TeriteAI(3)),
             ("Terite (depth 4)", () => new TeriteAI(4)),
             ("Terite (depth 5)", () => new TeriteAI(5)),
-            ("Terite (depth 6)", () => new TeriteAI(6))
+            ("Terite (depth 6)", () => new TeriteAI(6)),
+            ("Terite (depth 7)", () => new TeriteAI(7))
         };
         AINames = AIOptions.Select(ai => ai.name).ToArray();
     }
