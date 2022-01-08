@@ -231,7 +231,7 @@ public class Game
         Move newMove = GetLastMove();
         Piece lastRealPiece = GetRealPiece((newMove.lastTeam, newMove.lastPiece));
 
-        turnsSincePawnMovedOrPieceTaken = newMove.capturedPiece.HasValue || lastRealPiece >= Piece.Pawn1 
+        turnsSincePawnMovedOrPieceTaken = newMove.capturedPiece.HasValue || lastRealPiece.IsPawn() 
             ? 0 
             : turnsSincePawnMovedOrPieceTaken + 1;
 
@@ -262,9 +262,7 @@ public class Game
         for(int i = 0; i < turnHistory.Count - 1; i++)
         {
             Move moveStep = HexachessagonEngine.GetLastMove(turnHistory.Skip(i).Take(2).ToList(), promotions);
-            count = moveStep.capturedPiece.HasValue || moveStep.lastPiece >= Piece.Pawn1 
-                ? 0 
-                : count + 1;
+            count = moveStep.capturedPiece.HasValue || moveStep.lastPiece.IsPawn() ? 0 : count + 1;
         }
         return count;
     }

@@ -30,11 +30,11 @@ public static class MoveGenerator
     public static IEnumerable<(Index target, MoveType moveType)> GetTheroreticalAttacksIncludingInvalid(Index location, Piece piece, Team team, BoardState boardState, IEnumerable<Promotion> promos, bool includeBlocking = false) => piece switch {
         Piece.King => GetAllKingMovesIncludingInvalid(location, team, boardState, includeBlocking),
         Piece.Queen => GetAllQueenMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.KingsRook || p == Piece.QueensRook) => GetAllRookMovesIncludingInvalid(location, team, boardState, promos, includeBlocking),
-        Piece p when (p == Piece.KingsKnight || p == Piece.QueensKnight) => GetAllKnightMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.KingsBishop || p == Piece. QueensBishop) => GetAllBishopMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.BlackSquire || p == Piece.GraySquire || p == Piece.WhiteSquire) => GetAllSquireMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p >= Piece.Pawn1) => GetAllPawnTheoreticalAttacksIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsRook() => GetAllRookMovesIncludingInvalid(location, team, boardState, promos, includeBlocking),
+        Piece p when p.IsKnight() => GetAllKnightMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsBishop() => GetAllBishopMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsSquire() => GetAllSquireMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsPawn() => GetAllPawnTheoreticalAttacksIncludingInvalid(location, team, boardState, includeBlocking),
         _ => throw new ArgumentException($"Unhandled piece type: {piece}", nameof(piece))
     };
 
@@ -44,11 +44,11 @@ public static class MoveGenerator
     public static IEnumerable<(Index target, MoveType moveType)> GetAllMovesIncludingInvalid(Index location, Piece piece, Team team, BoardState boardState, IEnumerable<Promotion> promos, bool includeBlocking = false) => piece switch {
         Piece.King => GetAllKingMovesIncludingInvalid(location, team, boardState, includeBlocking),
         Piece.Queen => GetAllQueenMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.KingsRook || p == Piece.QueensRook) => GetAllRookMovesIncludingInvalid(location, team, boardState, promos, includeBlocking),
-        Piece p when (p == Piece.KingsKnight || p == Piece.QueensKnight) => GetAllKnightMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.KingsBishop || p == Piece. QueensBishop) => GetAllBishopMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p == Piece.BlackSquire || p == Piece.GraySquire || p == Piece.WhiteSquire) => GetAllSquireMovesIncludingInvalid(location, team, boardState, includeBlocking),
-        Piece p when (p >= Piece.Pawn1) => GetAllPawnMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsRook() => GetAllRookMovesIncludingInvalid(location, team, boardState, promos, includeBlocking),
+        Piece p when p.IsKnight() => GetAllKnightMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsBishop() => GetAllBishopMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsSquire() => GetAllSquireMovesIncludingInvalid(location, team, boardState, includeBlocking),
+        Piece p when p.IsPawn() => GetAllPawnMovesIncludingInvalid(location, team, boardState, includeBlocking),
         _ => throw new ArgumentException($"Unhandled piece type: {piece}", nameof(piece))
     };
 

@@ -73,7 +73,7 @@ public class LastMoveTracker : MonoBehaviour
 
     private string GetStringForPiece(Move move, Piece potentialPawn, Team team, List<Promotion> promotions)
     {
-        if(potentialPawn < Piece.Pawn1)
+        if(!potentialPawn.IsPawn())
             return potentialPawn.GetPieceLongString();
 
         // The piece may habe been promoted. If so, we want to return the promoted piece. But only if it's not the turn the promo happened on   

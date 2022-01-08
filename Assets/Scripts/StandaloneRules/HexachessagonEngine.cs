@@ -105,9 +105,9 @@ public static class HexachessagonEngine
                 // In the case of a defend, we may check the piece being defended before the rook doing the defending. 
                 // If this is the case, we need to ensure the piece is the rook and the defended piece is the non-rook, as well as the proper to/from indcies
                 Piece? defendedPiece = previousTeamAtLocation != kvp.Key.team ? null : (Piece?)HexachessagonEngine.GetRealPiece(kvp.Key, promotions);
-                if(defendedPiece != null)
+                if(defendedPiece.HasValue)
                 {
-                    if(defendedPiece == Piece.QueensRook || defendedPiece == Piece.KingsRook)
+                    if(defendedPiece.Value.IsRook())
                         (defendedPiece, piece) = (previousPieceAtLocation, defendedPiece.Value);
                     else
                     {
@@ -218,7 +218,10 @@ public static class HexachessagonEngine
         if(!state.TryGetIndex(teamedPiece, out Index start))
             return (state, promotions);
 
-        var targetPiece = state.allPiecePositions[move.target];
+        // If there isn't a target piece, there is nothing to defend
+        if(!state.TryGetPiece(move.target, out var targetPiece))
+            return (state, promotions);
+            
         var newPositions = state.allPiecePositions.Clone();
         newPositions.Remove(start);
         newPositions.Remove(move.target);
