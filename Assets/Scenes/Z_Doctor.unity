@@ -29307,27 +29307,27 @@ PrefabInstance:
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16
+      value: 17.743458
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.705771
+      value: 1.1680198
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8816746
+      value: 0.8191521
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.47185796
+      value: 0.57357645
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158528, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
@@ -29364,6 +29364,11 @@ PrefabInstance:
       propertyPath: origin.z
       value: 8.7
       objectReference: {fileID: 0}
+    - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
+        type: 3}
+      propertyPath: selectPiece
+      value: 
+      objectReference: {fileID: 748795984228532612}
     - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: temp_rotation.x
@@ -29427,6 +29432,16 @@ PrefabInstance:
     - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: views.Array.data[1].cameraOffset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
+        type: 3}
+      propertyPath: views.Array.data[1].originOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
+        type: 3}
+      propertyPath: views.Array.data[1].originOffset.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158538, guid: 8fd76f948b50e39459a9eff1ef0d957b,

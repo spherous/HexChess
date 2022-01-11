@@ -89,7 +89,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
         void Apply(CameraView view)
         {
-            Vector3 final_position = options.trueOrigin + view.originOffset;
+            Vector3 final_position = options.trueOrigin;
             final_position.y += options.cameraHeight;
 
             transform.position = final_position;
@@ -267,8 +267,6 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     {
         [Tooltip("User friendly name")]
         public string name;
-        [Tooltip("The offset from the true origin that rotations are calculated around")]
-        public Vector3 originOffset;
         [Tooltip("An offset applied to the camera after its position and rotation has been calculated")]
         public Vector3 postCameraOffset;
         [Tooltip("A rotation applied to the camera after its position and rotation has been calculated")]
