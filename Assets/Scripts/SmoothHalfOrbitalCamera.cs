@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SmoothHalfOrbitalCamera : MonoBehaviour
 {
-    // TODO Switch between views
     [SerializeField] Keys keys;
 
     [SerializeField] Team team;
@@ -30,6 +29,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
         }
     }
     [SerializeField] int selectedView;
+    [SerializeField] Vector3 cameraRotation;
 
     public CameraView View => views?[selectedView];
 
@@ -40,19 +40,16 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     public bool FreeLooking { get; private set; }
 
-    #region Rotation variables
-    [SerializeField] Vector3 temp_rotation;
-
+    #region private variables
     float nomalizedElaspedTime;
     float adjustedResetTime;
 
     Vector3 release_rotation;
 
     bool needsReset = false;
-    #endregion
-
     VirtualCursor cursor;
     PieceNameTooltip tooltip;
+    #endregion
 
     public bool IsSandboxMode { get; private set; }
 
@@ -103,24 +100,23 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             var pivot = options.trueOrigin;
             pivot.y += options.cameraHeight;
 
-            if(team == Team.Black)
-                transform.RotateAround(pivot, Vector3.up, 180);
+            cameraRotation.x %= 360;
+            cameraRotation.y %= 360;
+            cameraRotation.z %= 360;
 
-            temp_rotation.x %= 360;
-            temp_rotation.y %= 360;
-            temp_rotation.z %= 360;
+            Vector3 rotation = cameraRotation + view.postCameraRotation;
 
-            Vector3 cameraRotation = temp_rotation + view.postCameraRotation;
-
-            Vector3 clamped = Vector3.Max(cameraRotation, view.minRotation);
+            Vector3 clamped = Vector3.Max(rotation, view.minRotation);
             clamped = Vector3.Min(clamped, view.maxRotation);
 
-            temp_rotation -= cameraRotation - clamped;
+            cameraRotation -= rotation - clamped;
 
             transform.RotateAround(options.trueOrigin, Vector3.left, clamped.x);
             transform.RotateAround(options.trueOrigin, Vector3.up, clamped.y);
             transform.RotateAround(options.trueOrigin, Vector3.forward, clamped.z);
 
+            if(team == Team.Black)
+                transform.RotateAround(pivot, Vector3.up, 180);
         }
 
     }
@@ -216,7 +212,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             tooltip.blockDisplay = false;
 
         nomalizedElaspedTime = 0;
-        release_rotation = temp_rotation;
+        release_rotation = cameraRotation;
         float delta = (Vector3.zero - release_rotation).magnitude / options.minimumRotationMagnitude;
         if(delta >= 1)
             adjustedResetTime = options.cameraResetTime;
@@ -232,14 +228,14 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
         else if(FreeLooking)
         {
             Vector2 delta = Mouse.current.delta.ReadValue() * options.speed;
-            temp_rotation += new Vector3(delta.y, delta.x);
+            cameraRotation += new Vector3(delta.y, delta.x);
             ApplyView();
         }
         else
         {
             if(nomalizedElaspedTime < 1)
             {
-                temp_rotation = Vector3.Slerp(release_rotation, Vector3.zero, nomalizedElaspedTime);
+                cameraRotation = Vector3.Slerp(release_rotation, Vector3.zero, nomalizedElaspedTime);
                 nomalizedElaspedTime += Time.deltaTime / adjustedResetTime;
             }
             else
@@ -250,7 +246,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
                     if(Cursor.lockState != CursorLockMode.None)
                         Cursor.lockState = CursorLockMode.None;
                     needsReset = false;
-                    temp_rotation = Vector3.zero;
+                    cameraRotation = Vector3.zero;
                     // cursor?.Show();
                     StartCoroutine(EndOfFrameWork());
                 }

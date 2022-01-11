@@ -29366,9 +29366,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
-      propertyPath: selectPiece
-      value: 
-      objectReference: {fileID: 748795984228532612}
+      propertyPath: temp_rotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
+        type: 3}
+      propertyPath: temp_rotation.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 748795983797158535, guid: 8fd76f948b50e39459a9eff1ef0d957b,
         type: 3}
       propertyPath: defaultRotation.y

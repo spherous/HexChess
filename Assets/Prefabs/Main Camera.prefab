@@ -344,6 +344,7 @@ MonoBehaviour:
   keys: {fileID: 0}
   team: 1
   selectedView: 1
+  cameraRotation: {x: 0, y: 0, z: 0}
   views:
   - name: Top-Down
     originOffset: {x: 0, y: 0, z: 0}
@@ -366,7 +367,6 @@ MonoBehaviour:
     cameraResetTime: 0.5
     minimumRotationMagnitude: 100
   selectPiece: {fileID: 0}
-  temp_rotation: {x: 0, y: 0, z: 0}
 --- !u!82 &6983169283407362394
 AudioSource:
   m_ObjectHideFlags: 0
