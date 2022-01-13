@@ -47,7 +47,7 @@ public class PieceNameTooltip : MonoBehaviour
         
         if(showAtTime.HasValue && Time.timeSinceLevelLoad >= showAtTime.Value && hoveredTeamedPiece.HasValue)
         {
-            Show(hoveredTeamedPiece.Value.piece.GetPieceLongString());
+            Show(board.currentGame.GetRealPiece(hoveredTeamedPiece.Value).GetPieceLongString());
             showAtTime = null;
         }
 
