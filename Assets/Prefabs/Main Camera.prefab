@@ -34,8 +34,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748795983797158781}
-  m_LocalRotation: {x: 0.7071007, y: 0, z: 0, w: 0.70711297}
-  m_LocalPosition: {x: 6, y: 19, z: 7.7939157}
+  m_LocalRotation: {x: 0.57357645, y: 0, z: -0, w: 0.8191521}
+  m_LocalPosition: {x: 6, y: 17.743458, z: 1.1680198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8117909937866248458}
@@ -116,6 +116,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 2
   m_AntialiasingQuality: 2
@@ -155,6 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -340,17 +342,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: {fileID: 0}
-  selectPiece: {fileID: 0}
   team: 1
-  defaultScroll: 18
-  minScroll: 18
-  maxScroll: 21
-  scrollModifier: 0.5
-  origin: {x: 6, y: 1, z: 7.794229}
-  speed: 0.15
-  defaultRotation: {x: 90, y: 0}
-  cameraResetTime: 0.5
-  minimumRotationMagnitude: 100
+  selectedView: 1
+  cameraRotation: {x: 0, y: 0, z: 0}
+  views:
+  - name: Top-Down
+    postCameraOffset: {x: 0, y: -0.5, z: 0.5}
+    postCameraRotation: {x: 0, y: 0, z: 0}
+    minRotation: {x: 0, y: -360, z: 0}
+    maxRotation: {x: 90, y: 360, z: 0}
+  - name: Frontal View
+    postCameraOffset: {x: 0, y: 0, z: -0.5}
+    postCameraRotation: {x: 20, y: 0, z: 0}
+    minRotation: {x: 0, y: -360, z: 0}
+    maxRotation: {x: 90, y: 360, z: 0}
+  options:
+    trueOrigin: {x: 6, y: 1, z: 7.794229}
+    cameraHeight: 18
+    speed: 0.15
+    minRotationValues: {x: 0, y: 0, z: 0}
+    maxRotationValues: {x: 45, y: 0, z: 0}
+    cameraResetTime: 0.5
+    minimumRotationMagnitude: 100
+  selectPiece: {fileID: 0}
 --- !u!82 &6983169283407362394
 AudioSource:
   m_ObjectHideFlags: 0
@@ -665,6 +679,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2

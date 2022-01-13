@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 public class Multiplayer : MonoBehaviour
@@ -30,7 +31,8 @@ public class Multiplayer : MonoBehaviour
         this.gameParams = gameParams;
 
         SmoothHalfOrbitalCamera cam = GameObject.FindObjectOfType<SmoothHalfOrbitalCamera>();
-        cam?.SetDefaultTeam(gameParams.localTeam);
+        if(cam)
+            cam.Team = gameParams.localTeam;
 
         whiteKeys.SetActive(gameParams.localTeam == Team.White);
         blackKeys.SetActive(gameParams.localTeam == Team.Black);
@@ -94,30 +96,30 @@ public class Multiplayer : MonoBehaviour
         if(board.currentGame.endType == GameEndType.Pending)
             board.currentGame.Surrender(surrenderingTeam, timestamp);
     }
-    public void Surrender(Team surrenderingTeam) => 
+    public void Surrender(Team surrenderingTeam) =>
         Surrender(surrenderingTeam, board.currentGame.CurrentTime);
 
-    public void Draw(float timestamp) => 
+    public void Draw(float timestamp) =>
         board.currentGame.EndGame(GameEndType.Draw, Winner.Draw, timestamp);
     public void ClaimDraw() =>
         networker.RespondToDrawOffer(MessageType.AcceptDraw);
 
-    public void SendGameEnd(float timestamp, MessageType endType) => 
+    public void SendGameEnd(float timestamp, MessageType endType) =>
         networker.SendMessage(new Message(endType, BitConverter.GetBytes(timestamp)));
     public void ReceiveCheckmate(float timestamp) => board.EndGame(
-        timestamp, 
-        GameEndType.Checkmate, 
+        timestamp,
+        GameEndType.Checkmate,
         gameParams.localTeam == Team.White ? Winner.White : Winner.Black
     );
 
-    public void ReceiveStalemate(float timestamp) => 
+    public void ReceiveStalemate(float timestamp) =>
         board.EndGame(timestamp, GameEndType.Stalemate, Winner.None);
 
-    public void SendFlagfall(Flagfall flagfall) => 
+    public void SendFlagfall(Flagfall flagfall) =>
         networker.SendMessage(new Message(MessageType.FlagFall, flagfall.Serialize()));
     public void ReceiveFlagfall(Flagfall flagfall) => board.EndGame(
-        flagfall.timestamp, 
-        GameEndType.Flagfall, 
+        flagfall.timestamp,
+        GameEndType.Flagfall,
         flagfall.flaggedTeam == Team.White ? Winner.Black : Winner.White
     );
 

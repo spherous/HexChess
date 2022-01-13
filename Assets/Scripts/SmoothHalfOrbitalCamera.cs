@@ -1,82 +1,134 @@
 using System.Collections;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SmoothHalfOrbitalCamera : MonoBehaviour
 {
-    [SerializeField] private Keys keys;
-    readonly float hardScrollModifier = 0.01f;
-    [SerializeField] [HideInInspector] SelectPiece selectPiece;
-    public Team team = Team.White;
-    public float defaultScroll = 18;
-    public float minScroll = 18;
-    public float maxScroll = 21;
-    public float scrollModifier = 0.5f;
-    public Vector3 origin;
-    public float speed = 0.2f;
+    [SerializeField] Keys keys;
 
-    public Vector2 defaultRotation = Vector2.right * 90;
-    public float cameraResetTime = 0.5f;
-    // Kind of like rubberbanding so that smaller rotations don't take the same amount of time as big ones
-    public float minimumRotationMagnitude = 100f;
+    [SerializeField] Team team;
+    public Team Team
+    {
+        get => team;
+        set
+        {
+            if(value == team)
+                return;
+            team = value;
+            keys?.SetKeys(value);
+        }
+    }
 
-    Vector3 temp_rotation;
-    public bool rotating {get; private set;}
+    public int SelectedView
+    {
+        get => selectedView; set
+        {
+            selectedView = value;
+            ApplyView();
+        }
+    }
+    [SerializeField] int selectedView;
+    [SerializeField] Vector3 cameraRotation;
 
-    float scroll;
-    float adjustedResetTime;
+    public CameraView View => views?[selectedView];
+
+    [SerializeField] CameraView[] views;
+    [SerializeField] MultiCamOptions options;
+
+    [SerializeField, HideInInspector] SelectPiece selectPiece;
+
+    public bool FreeLooking { get; private set; }
+
+    #region private variables
     float nomalizedElaspedTime;
-    float released_scroll;
-    Vector2 release_rotation;
+    float adjustedResetTime;
+
+    Vector3 release_rotation;
+
+    bool needsReset = false;
+    VirtualCursor cursor;
+    PieceNameTooltip tooltip;
+    #endregion
 
     public bool IsSandboxMode { get; private set; }
 
-    private VirtualCursor cursor;
-
-    public bool needsReset {get; private set;} = false;
-
-    private PieceNameTooltip tooltip;
-
-    private void OnValidate()
+    #region Init Methods
+    void OnValidate()
     {
         selectPiece = FindObjectOfType<SelectPiece>();
-        defaultRotation.x = Mathf.Clamp(defaultRotation.x, 0, 90f);
-        defaultRotation.y %= 360f;
-        scroll = defaultScroll;
-        ResetRotation();
-        LookTowardsOrigin();
-        SetDefaultTeam(team);
+
+        ApplyView();
+
+        if(keys)
+            keys.SetKeys(team);
     }
 
-    private void Awake() {
-        cursor = GameObject.FindObjectOfType<VirtualCursor>();    
+
+    void Awake()
+    {
+        cursor = GameObject.FindObjectOfType<VirtualCursor>();
     }
 
-    private void Start()
+    void Start()
     {
         tooltip = FindObjectOfType<PieceNameTooltip>();
         IsSandboxMode = !FindObjectOfType<Multiplayer>();
-        scroll = defaultScroll;
-        ResetRotation();
+        ApplyView();
     }
 
-    [ContextMenu("Reset Rotation")]
-    public void ResetRotation()
+    #endregion
+
+    void ApplyView()
     {
-        temp_rotation = defaultRotation;
-        StopRotating();
-        LookTowardsOrigin();
+        if(views.Length >= 1)
+        {
+            selectedView = Mathf.Clamp(selectedView, 0, views.Length - 1);
+            Apply(views[selectedView]);
+        }
+
+        void Apply(CameraView view)
+        {
+            Vector3 final_position = options.trueOrigin;
+            final_position.y += options.cameraHeight;
+
+            transform.position = final_position;
+            transform.LookAt(options.trueOrigin);
+
+            transform.position += view.postCameraOffset;
+
+            var pivot = options.trueOrigin;
+            pivot.y += options.cameraHeight;
+
+            cameraRotation.x %= 360;
+            cameraRotation.y %= 360;
+            cameraRotation.z %= 360;
+
+            Vector3 rotation = cameraRotation + view.postCameraRotation;
+
+            Vector3 clamped = Vector3.Max(rotation, view.minRotation);
+            clamped = Vector3.Min(clamped, view.maxRotation);
+
+            cameraRotation -= rotation - clamped;
+
+            transform.RotateAround(options.trueOrigin, Vector3.left, clamped.x);
+            transform.RotateAround(options.trueOrigin, Vector3.up, clamped.y);
+            transform.RotateAround(options.trueOrigin, Vector3.forward, clamped.z);
+
+            if(team == Team.Black)
+                transform.RotateAround(pivot, Vector3.up, 180);
+        }
+
     }
 
     public void SetDefaultTeam(Team team)
     {
         this.team = team;
-        defaultRotation = team == Team.White ? Vector2.right * 90 : new Vector2(90, 180);
     }
 
     public void SetToTeam(Team team)
     {
-        if(rotating)
+        if(FreeLooking)
             return;
 
         needsReset = true;
@@ -88,7 +140,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     public void ToggleTeam()
     {
-        if(rotating)
+        if(FreeLooking)
             return;
 
         team = team switch
@@ -126,9 +178,22 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             StopRotating();
     }
 
+    public void NextView()
+    {
+        selectedView += 1;
+        if(selectedView >= views.Length)
+            selectedView = 0;
+    }
+
+    public void PrevView()
+    {
+        selectedView -= 1;
+        if(selectedView < 0)
+            selectedView = views.Length - 1;
+    }
+
     void StartRotating()
     {
-        rotating = true;
         Cursor.lockState = CursorLockMode.Locked;
         cursor?.SetCursor(CursorType.Default);
         cursor?.Hide();
@@ -138,57 +203,39 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             tooltip.blockDisplay = true;
         }
         needsReset = true;
+        FreeLooking = true;
     }
 
     void StopRotating()
     {
         if(tooltip != null)
             tooltip.blockDisplay = false;
-            
-        rotating = false;
-        
-        release_rotation = temp_rotation;
+
         nomalizedElaspedTime = 0;
-        float delta = (defaultRotation - release_rotation).magnitude / minimumRotationMagnitude;
+        release_rotation = cameraRotation;
+        float delta = (Vector3.zero - release_rotation).magnitude / options.minimumRotationMagnitude;
         if(delta >= 1)
-            adjustedResetTime = cameraResetTime;
+            adjustedResetTime = options.cameraResetTime;
         else
-            adjustedResetTime = cameraResetTime * delta;
-        released_scroll = scroll;
+            adjustedResetTime = options.cameraResetTime * delta;
+        FreeLooking = false;
     }
 
     void Update()
     {
         if(Keyboard.current.escapeKey.wasPressedThisFrame)
             StopRotating();
-        else if(rotating)
+        else if(FreeLooking)
         {
-            scroll -= Mouse.current.scroll.ReadValue().y * scrollModifier * hardScrollModifier;
-            scroll = Mathf.Clamp(scroll, minScroll, maxScroll);
-
-            Vector2 delta = Mouse.current.delta.ReadValue() * speed;
-            temp_rotation += new Vector3(delta.y, delta.x);
-
-            if(!IsSandboxMode)
-                switch(team)
-                {
-                    case Team.White:
-                        temp_rotation.y = Mathf.Clamp(temp_rotation.y, -90, 90);
-                        break;
-                    case Team.Black:
-                        temp_rotation.y = Mathf.Clamp(temp_rotation.y, 90, 270);
-                        break;
-                }
-
-            LookTowardsOrigin();
+            Vector2 delta = Mouse.current.delta.ReadValue() * options.speed;
+            cameraRotation += new Vector3(delta.y, delta.x);
+            ApplyView();
         }
         else
         {
             if(nomalizedElaspedTime < 1)
             {
-                temp_rotation = Vector3.Slerp(release_rotation, defaultRotation, nomalizedElaspedTime);
-                scroll = Mathf.Clamp(Mathf.Lerp(released_scroll, defaultScroll, nomalizedElaspedTime), minScroll, maxScroll);
-
+                cameraRotation = Vector3.Slerp(release_rotation, Vector3.zero, nomalizedElaspedTime);
                 nomalizedElaspedTime += Time.deltaTime / adjustedResetTime;
             }
             else
@@ -199,14 +246,12 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
                     if(Cursor.lockState != CursorLockMode.None)
                         Cursor.lockState = CursorLockMode.None;
                     needsReset = false;
-                    temp_rotation = defaultRotation;
-                    scroll = defaultScroll;
+                    cameraRotation = Vector3.zero;
                     // cursor?.Show();
                     StartCoroutine(EndOfFrameWork());
                 }
             }
-
-            LookTowardsOrigin();
+            ApplyView();
         }
     }
 
@@ -216,18 +261,36 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
         cursor?.Show();
     }
 
-    public void LookTowardsOrigin()
+    #region Classes
+    [System.Serializable]
+    public class CameraView
     {
-        temp_rotation.x = Mathf.Clamp(temp_rotation.x, 0, 89.999f);
-        temp_rotation.y %= 360f;
+        [Tooltip("User friendly name")]
+        public string name;
+        [Tooltip("An offset applied to the camera after its position and rotation has been calculated")]
+        public Vector3 postCameraOffset;
+        [Tooltip("A rotation applied to the camera after its position and rotation has been calculated")]
+        public Vector3 postCameraRotation;
 
-        var rot = Quaternion.identity;
-        rot *= Quaternion.Euler(temp_rotation * Vector2.one);
-        transform.rotation = rot;
-
-        transform.position = origin - transform.forward * scroll;
-
-        transform.LookAt(origin);
+        public Vector3 minRotation;
+        public Vector3 maxRotation;
     }
 
+    [System.Serializable]
+    public class MultiCamOptions
+    {
+        [Tooltip("The center of the board, used to cacluate camera offsets")]
+        public Vector3 trueOrigin = new Vector3(6, 1, 7.794229f);
+        [Tooltip("The height of the camera")]
+        public float cameraHeight = 18;
+        public float speed = 0.15f;
+
+        public Vector3 minRotationValues;
+        public Vector3 maxRotationValues;
+
+        public float cameraResetTime = 0.5f;
+        // Kind of like rubberbanding so that smaller rotations don't take the same amount of time as big ones
+        public float minimumRotationMagnitude = 100f;
+    }
+    #endregion
 }
