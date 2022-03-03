@@ -2,6 +2,7 @@ using System.Collections;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class SmoothHalfOrbitalCamera : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     #endregion
 
     public bool IsSandboxMode { get; private set; }
+
+    [SerializeField] private Camera cam;
 
     #region Init Methods
     void OnValidate()
@@ -117,8 +120,9 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
             if(team == Team.Black)
                 transform.RotateAround(pivot, Vector3.up, 180);
+            
+            cam.rect = new Rect(0, 0, 1, view.viewportHeight);
         }
-
     }
 
     public void SetDefaultTeam(Team team)
@@ -274,6 +278,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
         public Vector3 minRotation;
         public Vector3 maxRotation;
+        public float viewportHeight;
     }
 
     [System.Serializable]

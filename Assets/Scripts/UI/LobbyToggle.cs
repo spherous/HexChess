@@ -9,10 +9,28 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Sprite off;
     public Sprite hovered;
 
+    [SerializeField] private Image icon;
+    [SerializeField] private Image iconBG;
+
+    public Color activeIconColor;
+    public Color inactiveIconColor;
+    public Color activeBGColor;
+    public Color inactiveBGColor;
+
     private void Start() {
         toggle.image.sprite = toggle.isOn ? on : off;
+        
+        if(icon != null)
+            icon.color = toggle.isOn ? activeIconColor : inactiveIconColor;
+        if(iconBG != null)
+            iconBG.color = toggle.isOn ? activeBGColor : inactiveBGColor;
+
         toggle.onValueChanged.AddListener(isOn => {
             toggle.image.sprite = isOn ? on : off;
+            if(icon != null)
+                icon.color = isOn ? activeIconColor : inactiveIconColor;
+            if(iconBG != null)
+                iconBG.color = isOn ? activeBGColor : inactiveBGColor;
         });
     }
 

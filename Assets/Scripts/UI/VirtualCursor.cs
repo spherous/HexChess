@@ -47,6 +47,8 @@ public class VirtualCursor : MonoBehaviour
     private void Update() {
         // The virtual cursor must always be at the position of the mouse
         Vector2 mousePos = Mouse.current.position.ReadValue() + cursors[(int)currentType].hotspotOffset;
+        Vector2 scaledMousePos = new Vector2(mousePos.x / Screen.width, mousePos.y / Screen.height);
+        Shader.SetGlobalVector("_MousePos", scaledMousePos);
         Vector3 pos = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 1), MonoOrStereoscopicEye.Mono);
         transform.position = pos;
         transform.forward = cam.transform.forward;

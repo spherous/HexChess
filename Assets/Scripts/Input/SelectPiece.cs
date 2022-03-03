@@ -280,9 +280,17 @@ public class SelectPiece : MonoBehaviour
             }
             else if(hoveredHex == lastHoveredHexForKeyHighlight)
                 return;
-                
-            keys.HighlightKeys(hoveredHex.index);
-            lastHoveredHexForKeyHighlight = hoveredHex;
+            
+            if(hoveredHex.isGameHex)
+            {
+                keys.HighlightKeys(hoveredHex.index);
+                lastHoveredHexForKeyHighlight = hoveredHex;
+            }
+            else if(lastHoveredHexForKeyHighlight != null)
+            {
+                keys.Clear();
+                lastHoveredHexForKeyHighlight = null;
+            }
         }
         else if(lastHoveredHexForKeyHighlight != null)
         {

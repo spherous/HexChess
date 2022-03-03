@@ -12,6 +12,8 @@ public class Hex : SerializedMonoBehaviour
     [OdinSerialize, ReadOnly] public Index index {get; private set;}
     [SerializeField, ReadOnly] private MeshRenderer meshRenderer;
 
+    public bool isGameHex = false;
+
     public Color outlineColor;
 
     IEnumerable<(Hex neighbor, HexNeighborDirection direction)> NeighborsWithDirection()

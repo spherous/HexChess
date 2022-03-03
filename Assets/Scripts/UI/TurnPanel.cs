@@ -6,6 +6,8 @@ using Extensions;
 public class TurnPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI turnText;
+    [SerializeField] private GameObject turnTextPanel;
+    [SerializeField] private TextMeshProUGUI gameConclusionText;
     [SerializeField] private Transform buttonContainer;
     [SerializeField] private SurrenderButton surrenderButton;
     GameObject mainMenuButton;
@@ -13,11 +15,23 @@ public class TurnPanel : MonoBehaviour
 
     Board board;
     Multiplayer multiplayer;
+
+    [SerializeField] private Color orangeColor;
+
+    [SerializeField] private GroupFader whiteIconFader;
+    [SerializeField] private GroupFader blackIconFader;
+
+    public float onesWidth;
+    public float tensWidth;
+    public float hundredsWidth;
+
     private void Awake() {
         board = GameObject.FindObjectOfType<Board>();
         board.newTurn += NewTurn;
         board.gameOver += GameOver;
         multiplayer = GameObject.FindObjectOfType<Multiplayer>();
+        blackIconFader.Disable();
+        turnText.rectTransform.sizeDelta = new Vector2(onesWidth, turnText.rectTransform.sizeDelta.y);
     }
 
     public void GameOver(Game game)
@@ -30,13 +44,35 @@ public class TurnPanel : MonoBehaviour
 
     public void SetGameEndText(Game game)
     {
-        turnText.color = game.winner switch {
+        if(turnTextPanel.activeSelf)
+            turnTextPanel.SetActive(false);
+        
+        gameConclusionText.color = game.winner switch {
             Winner.White => Color.white,
-            Winner.Black => Color.black,
+            Winner.Black => orangeColor,
             _ => Color.red
         };
 
         Team loser = game.winner == Winner.White ? Team.Black : Team.White;
+
+        if(game.winner == Winner.White && blackIconFader.visible)
+        {
+            blackIconFader.FadeOut();
+            whiteIconFader.FadeIn();
+        }
+        else if(game.winner == Winner.Black && whiteIconFader.visible)
+        {
+            whiteIconFader.FadeOut();
+            blackIconFader.FadeIn();
+        }
+        else if(game.winner == Winner.Draw || game.winner == Winner.None || game.winner == Winner.Pending)
+        {
+            if(whiteIconFader.visible)
+                whiteIconFader.FadeOut();
+            if(blackIconFader.visible)
+                blackIconFader.FadeOut();
+        }
+
         float gameLength = game.GetGameLength();
         string formattedGameLength = TimeSpan.FromSeconds(gameLength).ToString(gameLength.GetStringFromSeconds());
         int turnCount = game.GetTurnCount();
@@ -44,7 +80,7 @@ public class TurnPanel : MonoBehaviour
             ? $"Game over! On turn {turnCount}" 
             : $"Game over! On turn {turnCount} in {formattedGameLength}";
 
-        turnText.text = game.endType switch {
+        gameConclusionText.text = game.endType switch {
             // game.endType was added in v1.0.8 to support flagfalls and stalemates, any game saves from before then will default to Pending
             GameEndType.Pending => SupportOldSaves(game),
             GameEndType.Draw => $"{durationString}, a draw has occured.",
@@ -79,12 +115,31 @@ public class TurnPanel : MonoBehaviour
 
     public void NewTurn(BoardState newState, int turnCount)
     {
+        if(!turnTextPanel.activeSelf)
+            turnTextPanel.SetActive(true);
+
+        gameConclusionText.text = "";
+
         string text = multiplayer == null 
-            ? newState.currentMove == Team.White ? "White's Turn" : "Black's Turn"
-            : newState.currentMove == multiplayer.localTeam ? "Your Turn" : "Opponent's Turn";
+            ? newState.currentMove == Team.White ? "White's" : "Black's"
+            : newState.currentMove == multiplayer.localTeam ? "Your" : "Opponent's";
+
+        float width = turnCount >= 100 ? hundredsWidth : turnCount < 100 && turnCount >= 10 ? tensWidth : onesWidth;        
+        turnText.rectTransform.sizeDelta = new Vector2(width, turnText.rectTransform.sizeDelta.y);
 
         turnText.text = $"{turnCount}:{text}";
-        turnText.color = newState.currentMove == Team.White ? Color.white : Color.black;
+        turnText.color = newState.currentMove == Team.White ? Color.white : orangeColor;
+
+        if(newState.currentMove == Team.White && blackIconFader.visible)
+        {
+            blackIconFader.FadeOut();
+            whiteIconFader.FadeIn();
+        }
+        else if(newState.currentMove != Team.White && whiteIconFader.visible)
+        {
+            whiteIconFader.FadeOut();
+            blackIconFader.FadeIn();
+        }
     }
 
     public void Reset()
