@@ -47,11 +47,11 @@ public class TurnPanel : MonoBehaviour
         if(turnTextPanel.activeSelf)
             turnTextPanel.SetActive(false);
         
-        gameConclusionText.color = game.winner switch {
-            Winner.White => Color.white,
-            Winner.Black => orangeColor,
-            _ => Color.red
-        };
+        // gameConclusionText.color = game.winner switch {
+        //     Winner.White => Color.white,
+        //     Winner.Black => orangeColor,
+        //     _ => Color.red
+        // };
 
         Team loser = game.winner == Winner.White ? Team.Black : Team.White;
 
@@ -77,34 +77,31 @@ public class TurnPanel : MonoBehaviour
         string formattedGameLength = TimeSpan.FromSeconds(gameLength).ToString(gameLength.GetStringFromSeconds());
         int turnCount = game.GetTurnCount();
         string durationString = game.timerDuration == 0 && !game.hasClock 
-            ? $"Game over! On turn {turnCount}" 
-            : $"Game over! On turn {turnCount} in {formattedGameLength}";
+            ? $"On turn {turnCount}" 
+            : $"On turn {turnCount} in {formattedGameLength}";
+
+        string teamColor = game.winner == Winner.White ? "FFFFFF" : game.winner == Winner.Black ? "FF8620" : "939087";
 
         gameConclusionText.text = game.endType switch {
             // game.endType was added in v1.0.8 to support flagfalls and stalemates, any game saves from before then will default to Pending
-            GameEndType.Pending => SupportOldSaves(game),
-            GameEndType.Draw => $"{durationString}, a draw has occured.",
-            GameEndType.Checkmate => $"{durationString} {game.winner} has won by checkmate!",
-            GameEndType.Surrender => $"{durationString} {game.winner} has won by surrender.",
-            GameEndType.Flagfall => $"{durationString} {game.winner} has flagged {loser}.",
-            GameEndType.Stalemate => $"{durationString} a stalemate has occured.",
-            _ => $"{durationString} {game.winner} is victorius!"
+            GameEndType.Pending => SupportOldSaves(game, teamColor),
+            GameEndType.Stalemate => $"<color=#DB0E0E>Game over!</color>\n {durationString} a stalemate has occured.",
+            GameEndType.Draw => $"<color=#DB0E0E>Game over!</color>\n {durationString}, a draw has occured.",
+            _ => $"<color=#DB0E0E>Game over!</color>\n {durationString} <color=#{teamColor}>{game.winner}</color> has won!"
         };
     }
 
-    private string SupportOldSaves(Game game)
+    private string SupportOldSaves(Game game, string teamColor)
     {
-        int turnCount = game.GetTurnCount();
         // We can figure out most of what we need here, including if it actually is a pending game
+        int turnCount = game.GetTurnCount();
         string turnPlurality = turnCount > 1 ? "turns" : "turn";
-        if(game.winner == Winner.Pending)
-            return "";
-        else if(game.winner == Winner.Draw)
-            return $"After {turnCount} {turnPlurality}, both teams have agreed to a draw.";
-        else if(game.turnHistory[game.turnHistory.Count - 1].checkmate > Team.None)
-            return $"After {turnCount} {turnPlurality}, {game.winner} has won by checkmate!";
-        else
-            return $"After {turnCount} {turnPlurality}, {game.winner} has won by surrender.";
+        return game.winner switch {
+            Winner.Pending => "",
+            Winner.None => $"<color=#DB0E0E>Game over!</color>\n After {turnCount} {turnPlurality}, a stalemate has occured.",
+            Winner.Draw => $"<color=#DB0E0E>Game over!</color>\n After {turnCount} {turnPlurality}, a draw has occured.",
+            _ => $"<color=#DB0E0E>Game over!</color>\n After {turnCount} <color=#{teamColor}>{game.winner}</color> has won!"
+        };
     }
 
     public void NewTurn(BoardState newState)

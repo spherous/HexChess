@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using System.Linq;
-using System;
 using TMPro;
-using Extensions;
 using Sirenix.OdinInspector;
 
 public class SelectPiece : MonoBehaviour
@@ -14,6 +12,7 @@ public class SelectPiece : MonoBehaviour
     Multiplayer multiplayer;
     HandicapOverlayToggle singlePlayerHandicapOverlayToggle;
     Camera cam;
+    [SerializeField] SmoothHalfOrbitalCamera smoothHalfOrbitalCamera;
     [SerializeField] private Board board;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private LayerMask hexMask;
@@ -116,6 +115,9 @@ public class SelectPiece : MonoBehaviour
 
     private void ChangeCursorOnHover()
     {
+        if(smoothHalfOrbitalCamera.freeLooking)
+            return;
+
         if(onMouse.isPickedUp || cursor == null)
             return;
 
@@ -144,7 +146,7 @@ public class SelectPiece : MonoBehaviour
                 return;
 
             BoardState currentBoardState = board.GetCurrentBoardState();
-            if(hit.collider.TryGetComponent<Hex>(out Hex clickedHex) && currentBoardState.allPiecePositions.ContainsKey(clickedHex.index))
+            if(hit.collider.TryGetComponent<Hex>(out Hex clickedHex) && currentBoardState.allPiecePositions.ContainsKey(clickedHex.index) && clickedHex.isGameHex)
             {
                 if(currentBoardState.TryGetPiece(clickedHex.index, out (Team team, Piece piece) teamedPiece) && teamedPiece.team == currentBoardState.currentMove)
                 {
@@ -171,6 +173,8 @@ public class SelectPiece : MonoBehaviour
         else if(multiplayer != null && !multiplayer.gameParams.showMovePreviews)
             return;
         else if(singlePlayerHandicapOverlayToggle != null && !singlePlayerHandicapOverlayToggle.toggle.isOn) 
+            return;
+        else if(smoothHalfOrbitalCamera.freeLooking)
             return;
 
 
@@ -257,6 +261,9 @@ public class SelectPiece : MonoBehaviour
 
     private void HighlightKeysOnHoverHex()
     {
+        if(smoothHalfOrbitalCamera.freeLooking)
+            return;
+
         if(Physics.Raycast(cam.ScreenPointToRay(mouse.position.ReadValue()), out RaycastHit hit, 100, hexMask))
         {
             if(hit.collider == null)
@@ -269,7 +276,7 @@ public class SelectPiece : MonoBehaviour
                 return;
             }
             Hex hoveredHex = hit.collider.GetComponent<Hex>();
-            if(hoveredHex == null)
+            if(hoveredHex == null && hoveredHex.isGameHex)
             {
                 if(lastHoveredHexForKeyHighlight != null)
                 {
@@ -301,6 +308,9 @@ public class SelectPiece : MonoBehaviour
 
     private void ColorizeBasedOnMove()
     {
+        if(smoothHalfOrbitalCamera.freeLooking)
+            return;
+
         if(selectedPiece != null && onMouse != null)
         {
             if(Physics.Raycast(cam.ScreenPointToRay(mouse.position.ReadValue()), out RaycastHit hit, 100, layerMask))
@@ -335,7 +345,7 @@ public class SelectPiece : MonoBehaviour
                 else
                 {
                     Hex hitHex = hit.collider.GetComponent<Hex>();
-                    if(hitHex != null)
+                    if(hitHex != null && hitHex.isGameHex)
                     {
                         SetOnMouseColor(hitHex);
                         BoardState currentBoardState = board.GetCurrentBoardState();
@@ -419,7 +429,7 @@ public class SelectPiece : MonoBehaviour
             return;
         else if(singlePlayerHandicapOverlayToggle != null && !singlePlayerHandicapOverlayToggle.toggle.isOn) 
             return;
-        else if(promotionDialogue.gameObject.activeSelf)
+        else if(promotionDialogue.gameObject.activeSelf || smoothHalfOrbitalCamera.freeLooking)
             return;
 
         if(selectedPiece == null)
@@ -430,7 +440,7 @@ public class SelectPiece : MonoBehaviour
                 BoardState currentBoardState = board.GetCurrentBoardState();
                 IPiece hoveredPiece = null;
                 Hex hoveredHex = hit.collider.GetComponent<Hex>();
-                if(hoveredHex != null)
+                if(hoveredHex != null && hoveredHex.isGameHex)
                 {
                     if(lastHoveredHex == hoveredHex)
                         return;
@@ -608,7 +618,7 @@ public class SelectPiece : MonoBehaviour
             if(hexHit.collider == null)
                 return;
 
-            if(hexHit.collider.TryGetComponent<Hex>(out Hex clickedHex) && currentBoardState.allPiecePositions.ContainsKey(clickedHex.index))
+            if(hexHit.collider.TryGetComponent<Hex>(out Hex clickedHex) && currentBoardState.allPiecePositions.ContainsKey(clickedHex.index) && clickedHex.isGameHex)
             {
                 IPiece pieceOnHex = board.activePieces[currentBoardState.allPiecePositions[clickedHex.index]];
                 if(pieceOnHex.team == currentBoardState.currentMove)
@@ -700,7 +710,7 @@ public class SelectPiece : MonoBehaviour
             }
 
             // Hovering on a hex
-            if(hit.collider.TryGetComponent<Hex>(out Hex hitHex) && selectedPiece != null)
+            if(hit.collider.TryGetComponent<Hex>(out Hex hitHex) && selectedPiece != null && hitHex.isGameHex)
             {
                 IPiece otherPiece = currentBoardState.allPiecePositions.ContainsKey(hitHex.index) 
                     ? board.activePieces[currentBoardState.allPiecePositions[hitHex.index]] 

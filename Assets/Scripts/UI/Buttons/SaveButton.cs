@@ -4,14 +4,15 @@ using SFB;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SaveButton : MonoBehaviour
+public class SaveButton : TwigglyButton
 {
     [SerializeField] private Board board;
     [SerializeField] private Timers timers;
     VirtualCursor cursor;
 
-    private void Awake() 
+    private new void Awake() 
     {
+        base.Awake();
         if(board == null)
             board = GameObject.FindObjectOfType<Board>();
         

@@ -8,12 +8,15 @@ public class ViewReader : MonoBehaviour
 
     void Start()
     {
+        int savedView = PlayerPrefs.GetInt("CameraView", orbitalCamera.SelectedView);
+
         text.text = orbitalCamera.View.name;
     }
 
     public void OnClick()
     {
         orbitalCamera.NextView();
+        PlayerPrefs.SetInt("CameraView", orbitalCamera.SelectedView);
         text.text = orbitalCamera.View.name;
     }
 

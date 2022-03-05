@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private ButtonArrowAnim arrowAnim;
     [SerializeField] private Image image;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] protected TextMeshProUGUI text;
+    public Color hoverColor;
     public List<AudioClip> clips = new List<AudioClip>();
     public Sprite normalState;
     public Sprite hoveredState;
@@ -42,6 +45,9 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(text != null)
+            text.color = hoverColor;
+
         // start hover animation
         image.sprite = hoveredState;
         audioSource.PlayOneShot(clips.ChooseRandom());
@@ -50,6 +56,9 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if(text != null)
+            text.color = Color.white;
+
         // stop animation, to go normal or selected depending if clicked
         if(image.sprite != selectedState)
             image.sprite = normalState;
@@ -63,6 +72,9 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void SetNorm()
     {
+        if(image == null)
+            return;
+            
         image.sprite = normalState;
     }
 }

@@ -4,13 +4,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SurrenderButton : MonoBehaviour
+public class SurrenderButton : TwigglyButton
 {
     Board board;
     [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Button resetButtonPrefab;
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
+
         board = GameObject.FindObjectOfType<Board>();
         button.onClick.AddListener(() => {
             Networker networker = GameObject.FindObjectOfType<Networker>();

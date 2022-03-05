@@ -225,6 +225,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 35442}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &35442
 MeshRenderer:
@@ -377,6 +378,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2726386}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2726386
 MeshRenderer:
@@ -529,6 +531,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 4052431}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &4052431
 MeshRenderer:
@@ -681,6 +684,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 9593910}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &9593910
 MeshRenderer:
@@ -833,6 +837,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 14508266}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &14508266
 MeshRenderer:
@@ -985,6 +990,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 24731696}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &24731696
 MeshRenderer:
@@ -1137,6 +1143,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 24952003}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &24952003
 MeshRenderer:
@@ -1264,81 +1271,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41853907}
-  m_CullTransparentMesh: 1
---- !u!1 &45361400
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 45361401}
-  - component: {fileID: 45361403}
-  - component: {fileID: 45361402}
-  m_Layer: 5
-  m_Name: Outline
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &45361401
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45361400}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 392231764}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: 0, y: -1}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &45361402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45361400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9921569, g: 0.53333336, b: 0.12941177, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9b55ae5af166304c861a11440f465e3, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &45361403
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45361400}
   m_CullTransparentMesh: 1
 --- !u!1 &56447099
 GameObject:
@@ -1841,6 +1773,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 59871517}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &59871517
 MeshRenderer:
@@ -2068,6 +2001,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 106522558}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &106522558
 MeshRenderer:
@@ -2295,6 +2229,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 116795244}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &116795244
 MeshRenderer:
@@ -2447,6 +2382,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 120606006}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &120606006
 MeshRenderer:
@@ -2599,6 +2535,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 120925135}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &120925135
 MeshRenderer:
@@ -2751,6 +2688,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 128010567}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &128010567
 MeshRenderer:
@@ -2903,6 +2841,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 128892174}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &128892174
 MeshRenderer:
@@ -3130,6 +3069,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 144605860}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &144605860
 MeshRenderer:
@@ -3282,6 +3222,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 145273068}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &145273068
 MeshRenderer:
@@ -3434,6 +3375,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 150211340}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &150211340
 MeshRenderer:
@@ -3661,6 +3603,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 172488424}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &172488424
 MeshRenderer:
@@ -3813,6 +3756,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 173074015}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &173074015
 MeshRenderer:
@@ -3965,6 +3909,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 174267299}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &174267299
 MeshRenderer:
@@ -4194,6 +4139,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 176619192}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &176619192
 MeshRenderer:
@@ -4346,6 +4292,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 182564302}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &182564302
 MeshRenderer:
@@ -4498,6 +4445,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 183690859}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &183690859
 MeshRenderer:
@@ -4650,6 +4598,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 193196931}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &193196931
 MeshRenderer:
@@ -4890,6 +4839,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 947467460}
   image: {fileID: 214133920}
   audioSource: {fileID: 214133919}
+  text: {fileID: 1407376351}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -5000,6 +4951,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 215680135}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &215680135
 MeshRenderer:
@@ -5392,6 +5344,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 229789646}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &229789646
 MeshRenderer:
@@ -5544,6 +5497,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 230376844}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &230376844
 MeshRenderer:
@@ -5696,6 +5650,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 230674807}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &230674807
 MeshRenderer:
@@ -5848,6 +5803,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 230901470}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &230901470
 MeshRenderer:
@@ -6231,6 +6187,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 269894258}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &269894258
 MeshRenderer:
@@ -6518,6 +6475,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 274534820}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &274534820
 MeshRenderer:
@@ -6670,6 +6628,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 279236712}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &279236712
 MeshRenderer:
@@ -6822,6 +6781,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 296788247}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &296788247
 MeshRenderer:
@@ -6986,6 +6946,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 313445549}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &313445549
 MeshRenderer:
@@ -7138,6 +7099,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 333469603}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &333469603
 MeshRenderer:
@@ -7382,6 +7344,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 338290970}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &338290970
 MeshRenderer:
@@ -7665,6 +7628,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 371158729}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &371158729
 MeshRenderer:
@@ -7817,6 +7781,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 371683465}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &371683465
 MeshRenderer:
@@ -7969,6 +7934,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 382441228}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &382441228
 MeshRenderer:
@@ -8154,83 +8120,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390092501}
   m_CullTransparentMesh: 1
---- !u!1 &392231763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 392231764}
-  - component: {fileID: 392231766}
-  - component: {fileID: 392231765}
-  m_Layer: 5
-  m_Name: YouPlayTeamPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &392231764
+--- !u!224 &392231764 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425081354437624360}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392231763}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.002310991}
-  m_LocalScale: {x: 0.34838396, y: 0.34838396, z: 0.34838396}
-  m_Children:
-  - {fileID: 1775083324}
-  - {fileID: 45361401}
-  m_Father: {fileID: 1919154952}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -216.28998}
-  m_SizeDelta: {x: 620, y: 150}
-  m_Pivot: {x: 0.5, y: 1}
---- !u!114 &392231765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392231763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.26666668, g: 0.25490198, b: 0.2392157, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1b1a84db60286ce45a2f036c7972640d, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &392231766
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392231763}
-  m_CullTransparentMesh: 1
 --- !u!1 &398991112
 GameObject:
   m_ObjectHideFlags: 0
@@ -8333,6 +8228,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 398991117}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &398991117
 MeshRenderer:
@@ -8560,6 +8456,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 407620435}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &407620435
 MeshRenderer:
@@ -8712,6 +8609,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 411654446}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &411654446
 MeshRenderer:
@@ -9079,6 +8977,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 1285852048}
   image: {fileID: 417312252}
   audioSource: {fileID: 417312250}
+  text: {fileID: 1529224288}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -9230,6 +9130,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 423327753}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &423327753
 MeshRenderer:
@@ -9382,6 +9283,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 429889679}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &429889679
 MeshRenderer:
@@ -9921,6 +9823,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 432496886}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &432496886
 MeshRenderer:
@@ -10073,6 +9976,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 434213065}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &434213065
 MeshRenderer:
@@ -10389,6 +10293,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 446557920}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &446557920
 MeshRenderer:
@@ -10541,6 +10446,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 447543989}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &447543989
 MeshRenderer:
@@ -10903,6 +10809,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 473194699}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &473194699
 MeshRenderer:
@@ -11055,6 +10962,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 477393706}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &477393706
 MeshRenderer:
@@ -11282,6 +11190,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 485948956}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &485948956
 MeshRenderer:
@@ -11486,6 +11395,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 495084668}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &495084668
 MeshRenderer:
@@ -11731,6 +11641,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 518494092}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &518494092
 MeshRenderer:
@@ -12594,6 +12505,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 540206843}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &540206843
 MeshRenderer:
@@ -12850,6 +12762,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 543877765}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &543877765
 MeshRenderer:
@@ -13351,6 +13264,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 555936333}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &555936333
 MeshRenderer:
@@ -13503,6 +13417,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 557309399}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &557309399
 MeshRenderer:
@@ -13655,6 +13570,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 559831190}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &559831190
 MeshRenderer:
@@ -13807,6 +13723,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 562443425}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &562443425
 MeshRenderer:
@@ -13959,6 +13876,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 565184797}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &565184797
 MeshRenderer:
@@ -14111,6 +14029,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 580073442}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &580073442
 MeshRenderer:
@@ -14263,6 +14182,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 582557117}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &582557117
 MeshRenderer:
@@ -14369,6 +14289,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 507417630}
   image: {fileID: 587176302}
   audioSource: {fileID: 587176301}
+  text: {fileID: 1552213255}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
@@ -14615,6 +14537,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 589798150}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &589798150
 MeshRenderer:
@@ -14842,6 +14765,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 597842437}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &597842437
 MeshRenderer:
@@ -15353,6 +15277,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 629802458}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &629802458
 MeshRenderer:
@@ -15746,6 +15671,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 672309264}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &672309264
 MeshRenderer:
@@ -15898,6 +15824,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 680703869}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &680703869
 MeshRenderer:
@@ -16050,6 +15977,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 687202825}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &687202825
 MeshRenderer:
@@ -16202,6 +16130,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 689064993}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &689064993
 MeshRenderer:
@@ -16616,6 +16545,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 719054346}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &719054346
 MeshRenderer:
@@ -17028,6 +16958,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 737413348}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &737413348
 MeshRenderer:
@@ -17315,6 +17246,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 760545916}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &760545916
 MeshRenderer:
@@ -17467,6 +17399,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 768275473}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &768275473
 MeshRenderer:
@@ -17619,6 +17552,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 768302350}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &768302350
 MeshRenderer:
@@ -17771,6 +17705,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 771661554}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &771661554
 MeshRenderer:
@@ -17923,6 +17858,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 774643065}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &774643065
 MeshRenderer:
@@ -18480,6 +18416,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 818887888}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &818887888
 MeshRenderer:
@@ -18632,6 +18569,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 821456203}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &821456203
 MeshRenderer:
@@ -18784,6 +18722,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 823331250}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &823331250
 MeshRenderer:
@@ -18936,6 +18875,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 843765916}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &843765916
 MeshRenderer:
@@ -19088,6 +19028,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 847030669}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &847030669
 MeshRenderer:
@@ -19240,6 +19181,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 857710174}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &857710174
 MeshRenderer:
@@ -19392,6 +19334,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 858689718}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &858689718
 MeshRenderer:
@@ -19544,6 +19487,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 872574993}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &872574993
 MeshRenderer:
@@ -20043,6 +19987,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 894751894}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &894751894
 MeshRenderer:
@@ -20195,6 +20140,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 894754753}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &894754753
 MeshRenderer:
@@ -20347,6 +20293,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 897130561}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &897130561
 MeshRenderer:
@@ -20574,6 +20521,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 906037090}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &906037090
 MeshRenderer:
@@ -20698,6 +20646,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 1620855367}
   image: {fileID: 930921147}
   audioSource: {fileID: 930921149}
+  text: {fileID: 469693960}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -21346,6 +21296,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 1304931619}
   image: {fileID: 948543458}
   audioSource: {fileID: 948543457}
+  text: {fileID: 272527394}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -21457,6 +21409,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 948947724}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &948947724
 MeshRenderer:
@@ -21609,6 +21562,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 967302724}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &967302724
 MeshRenderer:
@@ -21761,6 +21715,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 986812275}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &986812275
 MeshRenderer:
@@ -21913,6 +21868,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 989809361}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &989809361
 MeshRenderer:
@@ -22065,6 +22021,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 993393447}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &993393447
 MeshRenderer:
@@ -22487,6 +22444,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1034375812}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1034375812
 MeshRenderer:
@@ -22714,6 +22672,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1041050652}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1041050652
 MeshRenderer:
@@ -22866,6 +22825,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1044707133}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1044707133
 MeshRenderer:
@@ -23440,6 +23400,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1068808347}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1068808347
 MeshRenderer:
@@ -23592,6 +23553,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1069020341}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1069020341
 MeshRenderer:
@@ -23744,6 +23706,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1077904148}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1077904148
 MeshRenderer:
@@ -24007,6 +23970,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1099168508}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1099168508
 MeshRenderer:
@@ -24159,6 +24123,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1107728427}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1107728427
 MeshRenderer:
@@ -24488,6 +24453,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1116537622}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1116537622
 MeshRenderer:
@@ -24832,6 +24798,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1126046542}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1126046542
 MeshRenderer:
@@ -24984,6 +24951,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1136674668}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1136674668
 MeshRenderer:
@@ -25136,6 +25104,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1139329381}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1139329381
 MeshRenderer:
@@ -25288,6 +25257,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1140979251}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1140979251
 MeshRenderer:
@@ -25440,6 +25410,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1141452000}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1141452000
 MeshRenderer:
@@ -25670,6 +25641,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1153212704}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1153212704
 MeshRenderer:
@@ -25822,6 +25794,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1172536718}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1172536718
 MeshRenderer:
@@ -25928,6 +25901,8 @@ MonoBehaviour:
   arrowAnim: {fileID: 1114849133}
   image: {fileID: 1175437948}
   audioSource: {fileID: 1175437950}
+  text: {fileID: 1758618411}
+  hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -26576,6 +26551,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1203876625}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1203876625
 MeshRenderer:
@@ -26728,6 +26704,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1205590712}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1205590712
 MeshRenderer:
@@ -26953,6 +26930,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1214151323}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1214151323
 MeshRenderer:
@@ -27105,6 +27083,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1229644697}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1229644697
 MeshRenderer:
@@ -27257,6 +27236,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1235671522}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1235671522
 MeshRenderer:
@@ -27618,6 +27598,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1245828894}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1245828894
 MeshRenderer:
@@ -27770,6 +27751,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1250028741}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1250028741
 MeshRenderer:
@@ -27922,6 +27904,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1250636178}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1250636178
 MeshRenderer:
@@ -28074,6 +28057,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1257609728}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1257609728
 MeshRenderer:
@@ -28226,6 +28210,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1257846580}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1257846580
 MeshRenderer:
@@ -28378,6 +28363,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1259185044}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1259185044
 MeshRenderer:
@@ -28530,6 +28516,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1264001313}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1264001313
 MeshRenderer:
@@ -28923,6 +28910,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1280318139}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1280318139
 MeshRenderer:
@@ -29304,6 +29292,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1298875064}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1298875064
 MeshRenderer:
@@ -29456,6 +29445,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1300938083}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1300938083
 MeshRenderer:
@@ -29785,6 +29775,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1307640260}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1307640260
 MeshRenderer:
@@ -29937,6 +29928,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1310282358}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1310282358
 MeshRenderer:
@@ -30095,6 +30087,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1328630448}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1328630448
 MeshRenderer:
@@ -30636,6 +30629,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1361997241}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1361997241
 MeshRenderer:
@@ -30937,6 +30931,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1362405157}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1362405157
 MeshRenderer:
@@ -31089,6 +31084,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1369893259}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1369893259
 MeshRenderer:
@@ -31241,6 +31237,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1373489258}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1373489258
 MeshRenderer:
@@ -31393,6 +31390,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1379849997}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1379849997
 MeshRenderer:
@@ -31545,6 +31543,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1386426305}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1386426305
 MeshRenderer:
@@ -31697,6 +31696,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1396812243}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1396812243
 MeshRenderer:
@@ -31849,6 +31849,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1399642913}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1399642913
 MeshRenderer:
@@ -32391,6 +32392,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1411740370}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1411740370
 MeshRenderer:
@@ -32613,6 +32615,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1436566382}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1436566382
 MeshRenderer:
@@ -32765,6 +32768,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1444473231}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1444473231
 MeshRenderer:
@@ -32992,6 +32996,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1459659241}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1459659241
 MeshRenderer:
@@ -33144,6 +33149,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1463873310}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1463873310
 MeshRenderer:
@@ -33296,6 +33302,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1476770467}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1476770467
 MeshRenderer:
@@ -33658,6 +33665,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1499860802}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1499860802
 MeshRenderer:
@@ -33935,6 +33943,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1517872662}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1517872662
 MeshRenderer:
@@ -34087,6 +34096,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1528573288}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1528573288
 MeshRenderer:
@@ -34509,6 +34519,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1543383403}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1543383403
 MeshRenderer:
@@ -34661,6 +34672,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1544406046}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1544406046
 MeshRenderer:
@@ -34948,6 +34960,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1557021791}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1557021791
 MeshRenderer:
@@ -35100,6 +35113,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1563121568}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1563121568
 MeshRenderer:
@@ -35490,6 +35504,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1594628514}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1594628514
 MeshRenderer:
@@ -35892,6 +35907,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1606142687}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1606142687
 MeshRenderer:
@@ -36044,6 +36060,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1618337956}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1618337956
 MeshRenderer:
@@ -36196,6 +36213,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1618541767}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1618541767
 MeshRenderer:
@@ -36736,6 +36754,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1650912374}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1650912374
 MeshRenderer:
@@ -37061,6 +37080,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1665856193}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1665856193
 MeshRenderer:
@@ -37213,6 +37233,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1667024197}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1667024197
 MeshRenderer:
@@ -37365,6 +37386,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1669073353}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1669073353
 MeshRenderer:
@@ -37517,6 +37539,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1670138479}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1670138479
 MeshRenderer:
@@ -37669,6 +37692,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1677259413}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1677259413
 MeshRenderer:
@@ -37821,6 +37845,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1677396627}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1677396627
 MeshRenderer:
@@ -38048,6 +38073,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1681489618}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1681489618
 MeshRenderer:
@@ -38200,6 +38226,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1692615137}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1692615137
 MeshRenderer:
@@ -38352,6 +38379,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1693268231}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1693268231
 MeshRenderer:
@@ -38504,6 +38532,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1693309712}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1693309712
 MeshRenderer:
@@ -38656,6 +38685,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1700429389}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1700429389
 MeshRenderer:
@@ -39032,6 +39062,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1724554288}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1724554288
 MeshRenderer:
@@ -39348,6 +39379,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1742718170}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1742718170
 MeshRenderer:
@@ -39635,6 +39667,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1770554929}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1770554929
 MeshRenderer:
@@ -39732,141 +39765,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774996756}
   m_CullTransparentMesh: 1
---- !u!1 &1775083323
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1775083324}
-  - component: {fileID: 1775083326}
-  - component: {fileID: 1775083325}
-  m_Layer: 5
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1775083324
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775083323}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 392231764}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1775083325
+--- !u!114 &1775083325 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6425081353795018005, guid: 47d68df63b6507d47831c9d3f153da5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6425081354437624360}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775083323}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'team: white'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4624f28474ef8084f8da567463334752, type: 2}
-  m_sharedMaterial: {fileID: -2380034878629974788, guid: 4624f28474ef8084f8da567463334752,
-    type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 16
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 6
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1775083326
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775083323}
-  m_CullTransparentMesh: 1
 --- !u!1 &1781894400
 GameObject:
   m_ObjectHideFlags: 0
@@ -39969,6 +39879,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1781894405}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1781894405
 MeshRenderer:
@@ -40121,6 +40032,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1785378874}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1785378874
 MeshRenderer:
@@ -40309,6 +40221,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1791953358}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1791953358
 MeshRenderer:
@@ -40461,6 +40374,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1810353880}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1810353880
 MeshRenderer:
@@ -40613,6 +40527,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1817773730}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1817773730
 MeshRenderer:
@@ -40765,6 +40680,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1826128803}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1826128803
 MeshRenderer:
@@ -41171,6 +41087,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1832745150}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1832745150
 MeshRenderer:
@@ -41323,6 +41240,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1841390946}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1841390946
 MeshRenderer:
@@ -41475,6 +41393,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1842654862}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1842654862
 MeshRenderer:
@@ -41627,6 +41546,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1884881103}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1884881103
 MeshRenderer:
@@ -42430,6 +42350,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1919434615}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1919434615
 MeshRenderer:
@@ -42582,6 +42503,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1923194157}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1923194157
 MeshRenderer:
@@ -42969,6 +42891,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1929035055}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1929035055
 MeshRenderer:
@@ -43121,6 +43044,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1932533615}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1932533615
 MeshRenderer:
@@ -43408,6 +43332,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1951612381}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1951612381
 MeshRenderer:
@@ -43639,6 +43564,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1962594049}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1962594049
 MeshRenderer:
@@ -43791,6 +43717,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1963097063}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1963097063
 MeshRenderer:
@@ -44151,6 +44078,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1989561200}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1989561200
 MeshRenderer:
@@ -44303,6 +44231,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1990865354}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1990865354
 MeshRenderer:
@@ -44455,6 +44384,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1993605230}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1993605230
 MeshRenderer:
@@ -44607,6 +44537,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1996486703}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1996486703
 MeshRenderer:
@@ -44759,6 +44690,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2001118921}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2001118921
 MeshRenderer:
@@ -44911,6 +44843,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2002259803}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2002259803
 MeshRenderer:
@@ -45310,6 +45243,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2010147759}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2010147759
 MeshRenderer:
@@ -45466,6 +45400,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2013757996}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2013757996
 MeshRenderer:
@@ -45953,6 +45888,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2017858578}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2017858578
 MeshRenderer:
@@ -46105,6 +46041,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2025215721}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2025215721
 MeshRenderer:
@@ -46257,6 +46194,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2030420813}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2030420813
 MeshRenderer:
@@ -46520,6 +46458,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2050651504}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2050651504
 MeshRenderer:
@@ -46776,6 +46715,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2065478034}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2065478034
 MeshRenderer:
@@ -47138,6 +47078,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2094589466}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2094589466
 MeshRenderer:
@@ -47290,6 +47231,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2098364794}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2098364794
 MeshRenderer:
@@ -47597,6 +47539,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2126670531}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2126670531
 MeshRenderer:
@@ -48784,6 +48727,125 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &6425081354437624360
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1919154952}
+    m_Modifications:
+    - target: {fileID: 6425081354825595259, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_Name
+      value: YouPlayTeamPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 620
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.002310991
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -216.28998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425081354825595260, guid: 47d68df63b6507d47831c9d3f153da5e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 47d68df63b6507d47831c9d3f153da5e, type: 3}
 --- !u!1001 &6459098170379950733
 PrefabInstance:
   m_ObjectHideFlags: 0

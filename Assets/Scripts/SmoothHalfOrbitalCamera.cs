@@ -39,7 +39,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     [SerializeField, HideInInspector] SelectPiece selectPiece;
 
-    public bool FreeLooking { get; private set; }
+    public bool freeLooking { get; private set; }
 
     #region private variables
     float nomalizedElaspedTime;
@@ -71,6 +71,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     void Awake()
     {
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
+        selectedView = PlayerPrefs.GetInt("CameraView", selectedView);
     }
 
     void Start()
@@ -132,7 +133,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     public void SetToTeam(Team team)
     {
-        if(FreeLooking)
+        if(freeLooking)
             return;
 
         needsReset = true;
@@ -144,7 +145,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     public void ToggleTeam()
     {
-        if(FreeLooking)
+        if(freeLooking)
             return;
 
         team = team switch
@@ -187,6 +188,8 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
         selectedView += 1;
         if(selectedView >= views.Length)
             selectedView = 0;
+        
+        PlayerPrefs.SetInt("CameraView", selectedView);
     }
 
     public void PrevView()
@@ -207,7 +210,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             tooltip.blockDisplay = true;
         }
         needsReset = true;
-        FreeLooking = true;
+        freeLooking = true;
     }
 
     void StopRotating()
@@ -222,14 +225,14 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
             adjustedResetTime = options.cameraResetTime;
         else
             adjustedResetTime = options.cameraResetTime * delta;
-        FreeLooking = false;
+        freeLooking = false;
     }
 
     void Update()
     {
         if(Keyboard.current.escapeKey.wasPressedThisFrame)
             StopRotating();
-        else if(FreeLooking)
+        else if(freeLooking)
         {
             Vector2 delta = Mouse.current.delta.ReadValue() * options.speed;
             cameraRotation += new Vector3(delta.y, delta.x);

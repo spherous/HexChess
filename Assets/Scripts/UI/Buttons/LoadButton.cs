@@ -3,13 +3,14 @@ using System.Linq;
 using SFB;
 using UnityEngine;
 
-public class LoadButton : MonoBehaviour
+public class LoadButton : TwigglyButton
 {
     [SerializeField] private Board board;
     VirtualCursor cursor;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         if(board == null)
             board = GameObject.FindObjectOfType<Board>();
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
@@ -23,7 +24,6 @@ public class LoadButton : MonoBehaviour
         };
         string path = Application.persistentDataPath + $"/saves";
         
-        // cursor?.SetCursor(CursorType.None);
         Cursor.visible = true;
 
         string[] paths = StandaloneFileBrowser.OpenFilePanel("Open File", path, extensions, false);

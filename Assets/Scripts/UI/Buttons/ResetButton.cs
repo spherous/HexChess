@@ -2,12 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ResetButton : MonoBehaviour
+public class ResetButton : TwigglyButton
 {
     Board board;
     [SerializeField] private Button button;
 
-    private void Awake() {
+    private new void Awake() {
+        base.Awake();
+        
         button.onClick.AddListener(() => {
             board = GameObject.FindObjectOfType<Board>();
             AIBattleController aiBattleController = board?.GetComponent<AIBattleController>();

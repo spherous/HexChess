@@ -19,8 +19,8 @@ public class LastMoveTracker : MonoBehaviour
         if(!gameObject.activeSelf)
             gameObject.SetActive(true);
 
-        string from = move.from.GetKey();
-        string to = move.to.GetKey();
+        string from = $"({move.from.GetKey()})";
+        string to = $"({move.to.GetKey()})";
 
         Team otherTeam = move.lastTeam.Enemy();
         string lastPieceString = GetStringForPiece(move, move.lastPiece, move.lastTeam, board.currentGame.promotions);
@@ -48,27 +48,30 @@ public class LastMoveTracker : MonoBehaviour
             if(move.lastPiece != rp)
                 promoStr = rp.GetPieceLongString();
         }
-        promoStr = string.IsNullOrEmpty(promoStr) ? promoStr : $" promoted to {promoStr}";
+
+        string colorToUse = move.lastTeam == Team.White ? "FFFFFF" : "FF8620";
+
+        promoStr = string.IsNullOrEmpty(promoStr) ? promoStr : $"\n promoted to <color=#{colorToUse}>{promoStr}</color>";
 
         // This is the default text to use
         string textToSet = move.capturedPiece.HasValue
-            ? $"{lastPieceString} {from} takes {capturedPieceString} {to}{promoStr}"
+            ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> takes <color=#ff6357>{capturedPieceString} {to}</color>{promoStr}"
             : move.defendedPiece.HasValue 
-                ? $"{lastPieceString} {from} defends {defendedPiece.GetPieceString()} {to}{promoStr}" 
-                : $"{lastPieceString} {from} to {to}{promoStr}";
+                ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> defends <color=#27932C>{defendedPiece.GetPieceString()} {to}</color>{promoStr}" 
+                : $"<color=#{colorToUse}>{lastPieceString} {from}</color> to <color=#{colorToUse}>{to}</color>{promoStr}";
   
         // No piece was moved - skipped move with free place mode
         if(move.from == Index.invalid && move.to == Index.invalid)
-            textToSet = "Move skipped";
+            textToSet = "<color=#ff6357>Move skipped</color>";
         // Put in jail with free place mode
         else if(move.to == Index.invalid)
-            textToSet = $"{lastPieceString} {from} jailed";
+            textToSet = $"<color=#{colorToUse}>{lastPieceString} {from}</color> jailed";
         // Freed from jail with free place mode
         else if(move.from == Index.invalid)
-            textToSet = $"Freed {lastPieceString} to {to}{promoStr}";
+            textToSet = $"Freed <color=#{colorToUse}>{lastPieceString}</color> to <color=#{colorToUse}>{to}</color>{promoStr}";
 
         text.text = textToSet;
-        text.color = move.lastTeam == Team.White ? Color.white : Color.black;
+        // text.color = move.lastTeam == Team.White ? Color.white : Color.black;
     }
 
     private string GetStringForPiece(Move move, Piece potentialPawn, Team team, List<Promotion> promotions)
