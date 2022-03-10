@@ -229,7 +229,6 @@ public class Board : SerializedMonoBehaviour
         {
             if(currentGame.winner == Winner.Pending)
             {
-                turnPanel?.Reset();
                 newTurn?.Invoke(state);
 
                 if(PlayerPrefs.GetInt("AutoFlipCam", 1).IntToBool())

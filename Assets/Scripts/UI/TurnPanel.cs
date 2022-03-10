@@ -10,8 +10,6 @@ public class TurnPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameConclusionText;
     [SerializeField] private Transform buttonContainer;
     [SerializeField] private SurrenderButton surrenderButton;
-    GameObject mainMenuButton;
-    [SerializeField] private GameObject mainMenuButtonPrefab;
 
     Board board;
     Multiplayer multiplayer;
@@ -34,24 +32,12 @@ public class TurnPanel : MonoBehaviour
         turnText.rectTransform.sizeDelta = new Vector2(onesWidth, turnText.rectTransform.sizeDelta.y);
     }
 
-    public void GameOver(Game game)
-    {
-        SetGameEndText(game);
-        
-        if(mainMenuButton == null)
-            mainMenuButton = Instantiate(mainMenuButtonPrefab, buttonContainer);
-    }
+    public void GameOver(Game game) => SetGameEndText(game);
 
     public void SetGameEndText(Game game)
     {
         if(turnTextPanel.activeSelf)
             turnTextPanel.SetActive(false);
-        
-        // gameConclusionText.color = game.winner switch {
-        //     Winner.White => Color.white,
-        //     Winner.Black => orangeColor,
-        //     _ => Color.red
-        // };
 
         Team loser = game.winner == Winner.White ? Team.Black : Team.White;
 
@@ -137,11 +123,5 @@ public class TurnPanel : MonoBehaviour
             whiteIconFader.FadeOut();
             blackIconFader.FadeIn();
         }
-    }
-
-    public void Reset()
-    {
-        if(mainMenuButton != null)
-            Destroy(mainMenuButton);
     }
 }

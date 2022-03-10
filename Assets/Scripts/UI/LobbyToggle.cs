@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [SerializeField] private Image icon;
     [SerializeField] private Image iconBG;
+
+    [SerializeField] private TextMeshProUGUI text;
 
     public Color activeIconColor;
     public Color inactiveIconColor;
@@ -34,6 +37,18 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         });
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => toggle.image.sprite = hovered;
-    public void OnPointerExit(PointerEventData eventData) => toggle.image.sprite = toggle.isOn ? on : off;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        toggle.image.sprite = hovered;
+
+        if(text != null)
+            text.color = activeBGColor;
+    } 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        toggle.image.sprite = toggle.isOn ? on : off;
+
+        if(text != null)
+            text.color = Color.white;
+    } 
 }

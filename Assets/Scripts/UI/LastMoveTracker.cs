@@ -55,14 +55,14 @@ public class LastMoveTracker : MonoBehaviour
 
         // This is the default text to use
         string textToSet = move.capturedPiece.HasValue
-            ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> takes <color=#ff6357>{capturedPieceString} {to}</color>{promoStr}"
+            ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> takes <color=#dc4131>{capturedPieceString} {to}</color>{promoStr}"
             : move.defendedPiece.HasValue 
-                ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> defends <color=#27932C>{defendedPiece.GetPieceString()} {to}</color>{promoStr}" 
+                ? $"<color=#{colorToUse}>{lastPieceString} {from}</color> defends <color=#4ebc54>{defendedPiece.GetPieceString()} {to}</color>{promoStr}" 
                 : $"<color=#{colorToUse}>{lastPieceString} {from}</color> to <color=#{colorToUse}>{to}</color>{promoStr}";
   
         // No piece was moved - skipped move with free place mode
         if(move.from == Index.invalid && move.to == Index.invalid)
-            textToSet = "<color=#ff6357>Move skipped</color>";
+            textToSet = "<color=#dc4131>Move skipped</color>";
         // Put in jail with free place mode
         else if(move.to == Index.invalid)
             textToSet = $"<color=#{colorToUse}>{lastPieceString} {from}</color> jailed";

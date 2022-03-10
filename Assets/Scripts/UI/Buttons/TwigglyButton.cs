@@ -14,6 +14,7 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private AudioSource audioSource;
     [SerializeField] protected TextMeshProUGUI text;
     public Color hoverColor;
+    public Color normalTextColor = Color.white;
     public List<AudioClip> clips = new List<AudioClip>();
     public Sprite normalState;
     public Sprite hoveredState;
@@ -25,15 +26,17 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     List<TwigglyButton> otherTwigglyButtons = new List<TwigglyButton>();
 
     protected void Awake() {
-        image.sprite = normalState;
+        if(image != null)
+            image.sprite = normalState;
         otherTwigglyButtons = GameObject.FindObjectsOfType<TwigglyButton>().Where(b => b != this).ToList();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         // set selected
-        arrowAnim.Hide();
-        image.sprite = selectedState;
+        arrowAnim?.Hide();
+        if(image != null)
+            image.sprite = selectedState;
         foreach(var tb in otherTwigglyButtons)
             tb.SetNorm();
     }
@@ -49,20 +52,21 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             text.color = hoverColor;
 
         // start hover animation
-        image.sprite = hoveredState;
-        audioSource.PlayOneShot(clips.ChooseRandom());
-        arrowAnim.Show();
+        if(image != null)
+            image.sprite = hoveredState;
+        audioSource?.PlayOneShot(clips.ChooseRandom());
+        arrowAnim?.Show();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if(text != null)
-            text.color = Color.white;
+            text.color = normalTextColor;
 
         // stop animation, to go normal or selected depending if clicked
-        if(image.sprite != selectedState)
+        if(image != null && image.sprite != selectedState)
             image.sprite = normalState;
-        arrowAnim.Hide();
+        arrowAnim?.Hide();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -74,7 +78,8 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if(image == null)
             return;
-            
-        image.sprite = normalState;
+
+        if(image != null)
+            image.sprite = normalState;
     }
 }

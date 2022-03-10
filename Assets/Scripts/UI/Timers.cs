@@ -8,6 +8,10 @@ public class Timers : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI whiteTimerText;
     [SerializeField] private TextMeshProUGUI blackTimerText;
+    [SerializeField] private TextMeshProUGUI timeControlText;
+
+    [SerializeField] private TMP_FontAsset regFont;
+    [SerializeField] private TMP_FontAsset boldFont;
 
     public bool isClock = false;
     public float timerDruation {get; private set;}    
@@ -17,15 +21,21 @@ public class Timers : MonoBehaviour
     private void Awake() {
         board = GameObject.FindObjectOfType<Board>();
         board.newTurn += NewTurn;
-        board.gameOver += GameOver;
+        board.gameOver += GameOver;        
         
         if(isClock)
         {
+            timeControlText.font = regFont;
+            timeControlText.text = "No Time Control";
             UpdateClockUI(0, Team.White);
             UpdateClockUI(0, Team.Black);
         }
         else if(timerDruation > 0)
+        {
+            timeControlText.font = boldFont;
+            timeControlText.text = TimeSpan.FromSeconds(timerDruation).ToString(GetFormat(timerDruation));
             UpdateBothTimers();
+        }
     }
 
     private void GameOver(Game game)
@@ -38,6 +48,9 @@ public class Timers : MonoBehaviour
 
     public void SetClock()
     {
+        timeControlText.font = regFont;
+        timeControlText.text = "No Time Controls";
+        
         if(currentTurn == Team.None)
         {
             if(board == null)
@@ -54,6 +67,8 @@ public class Timers : MonoBehaviour
 
     public void SetTimers(float duration)
     {
+        timeControlText.font = boldFont;
+        timeControlText.text = $"{TimeSpan.FromSeconds(duration).ToString(GetFormat(duration))}";
         if(currentTurn == Team.None)
         {
             if(board == null)
@@ -139,8 +154,8 @@ public class Timers : MonoBehaviour
             return;
         float remaining = timerDruation - seconds;
         string teamTime = TimeSpan.FromSeconds(remaining).ToString(GetFormat(remaining));
-        string td = TimeSpan.FromSeconds(timerDruation).ToString(GetFormat(timerDruation));
+        // string td = TimeSpan.FromSeconds(timerDruation).ToString(GetFormat(timerDruation));
         
-        GetTeamText(team).text = $"{teamTime} / {td}";
+        GetTeamText(team).text = $"{teamTime}";
     }
 }

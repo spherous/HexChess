@@ -8,7 +8,7 @@ public class SurrenderButton : TwigglyButton
 {
     Board board;
     [SerializeField] private Button button;
-    [SerializeField] private Button resetButtonPrefab;
+    // [SerializeField] private Button resetButtonPrefab;
     private new void Awake() {
         base.Awake();
 
@@ -35,12 +35,6 @@ public class SurrenderButton : TwigglyButton
     {
         board.gameOver -= GameOver;
         button.onClick.RemoveAllListeners();
-
-        if(GameObject.FindObjectOfType<Multiplayer>() == null)
-        {
-            Button resetButton = Instantiate(resetButtonPrefab, transform.parent);
-            resetButton.transform.SetSiblingIndex(transform.GetSiblingIndex());
-        }
 
         Destroy(gameObject);
     }
