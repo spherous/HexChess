@@ -13,7 +13,6 @@ public class Board : SerializedMonoBehaviour
 {
     [SerializeField] private PromotionDialogue promotionDialogue;
     [SerializeField] private LastMoveTracker moveTracker;
-    [SerializeField] private TurnPanel turnPanel;
     [SerializeField] private Timers timers;
     [SerializeField] private SmoothHalfOrbitalCamera cam;
     [SerializeField] private FreePlaceModeToggle freePlaceMode;

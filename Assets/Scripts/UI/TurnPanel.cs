@@ -8,8 +8,6 @@ public class TurnPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private GameObject turnTextPanel;
     [SerializeField] private TextMeshProUGUI gameConclusionText;
-    [SerializeField] private Transform buttonContainer;
-    [SerializeField] private SurrenderButton surrenderButton;
 
     Board board;
     Multiplayer multiplayer;
