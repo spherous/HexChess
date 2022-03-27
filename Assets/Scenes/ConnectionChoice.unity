@@ -4459,7 +4459,8 @@ AudioSource:
   m_GameObject: {fileID: 214133917}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4600,7 +4601,9 @@ MonoBehaviour:
   image: {fileID: 214133920}
   audioSource: {fileID: 214133919}
   text: {fileID: 1407376351}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -8377,7 +8380,8 @@ AudioSource:
   m_GameObject: {fileID: 416977872}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -8506,7 +8510,8 @@ MonoBehaviour:
   hovered: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
   icon: {fileID: 4337036038149214716}
   iconBG: {fileID: 4337036038149214717}
-  activeIconColor: {r: 1, g: 0.9803922, b: 0.9294118, a: 1}
+  text: {fileID: 1365943122}
+  activeIconColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
   inactiveIconColor: {r: 0.3921569, g: 0.3647059, b: 0.34117648, a: 1}
   activeBGColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   inactiveBGColor: {r: 0.26666668, g: 0.25882354, b: 0.24313727, a: 1}
@@ -8560,7 +8565,8 @@ AudioSource:
   m_GameObject: {fileID: 417312248}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -8663,7 +8669,9 @@ MonoBehaviour:
   image: {fileID: 417312252}
   audioSource: {fileID: 417312250}
   text: {fileID: 1529224288}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -9206,7 +9214,8 @@ AudioSource:
   m_GameObject: {fileID: 432119459}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -9319,9 +9328,10 @@ AudioSource:
   m_GameObject: {fileID: 432119459}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -11772,7 +11782,8 @@ AudioSource:
   m_GameObject: {fileID: 524042268}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -12463,10 +12474,10 @@ RectTransform:
   m_Father: {fileID: 1210000746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120.625, y: -60}
-  m_SizeDelta: {x: 231.25, y: 40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &553957740
 MonoBehaviour:
@@ -12522,6 +12533,9 @@ MonoBehaviour:
   on: {fileID: 21300000, guid: 08f04f4bd9f1d8c4bbdee4f6c921dc3d, type: 3}
   off: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
   hover: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
+  text: {fileID: 1537170930}
+  textNormalColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
+  textHoveredColor: {r: 0.9960785, g: 0.5294118, b: 0.12941177, a: 1}
 --- !u!114 &553957743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12548,7 +12562,8 @@ AudioSource:
   m_GameObject: {fileID: 553957738}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -12702,8 +12717,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280452863
-  m_fontColor: {r: 1, g: 0.5254902, b: 0.13333334, a: 1}
+    rgba: 4294835966
+  m_fontColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13898,7 +13913,9 @@ MonoBehaviour:
   image: {fileID: 587176302}
   audioSource: {fileID: 587176301}
   text: {fileID: 1552213255}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
@@ -13918,7 +13935,8 @@ AudioSource:
   m_GameObject: {fileID: 587176298}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -14595,6 +14613,9 @@ MonoBehaviour:
   teamChangePanel: {fileID: 309546860}
   button: {fileID: 626061815}
   lobby: {fileID: 1919154957}
+  text: {fileID: 554172711}
+  normalTextColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
+  hoverTextColor: {r: 0.9960785, g: 0.5294118, b: 0.12941177, a: 1}
 --- !u!114 &626061819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14621,7 +14642,8 @@ AudioSource:
   m_GameObject: {fileID: 626061813}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -15015,7 +15037,8 @@ AudioSource:
   m_GameObject: {fileID: 645918977}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -19845,7 +19868,9 @@ MonoBehaviour:
   image: {fileID: 930921147}
   audioSource: {fileID: 930921149}
   text: {fileID: 469693960}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -19903,7 +19928,8 @@ AudioSource:
   m_GameObject: {fileID: 930921144}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -20217,7 +20243,8 @@ AudioSource:
   m_GameObject: {fileID: 948543455}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -20358,7 +20385,9 @@ MonoBehaviour:
   image: {fileID: 948543458}
   audioSource: {fileID: 948543457}
   text: {fileID: 272527394}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -22960,22 +22989,22 @@ PrefabInstance:
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 114.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035516207024, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
@@ -23090,22 +23119,22 @@ PrefabInstance:
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 447.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74741363d82181e46b155e891fd6df84, type: 3}
@@ -24498,7 +24527,9 @@ MonoBehaviour:
   image: {fileID: 1175437948}
   audioSource: {fileID: 1175437950}
   text: {fileID: 1758618411}
+  changeTextColor: 1
   hoverColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
   clips:
   - {fileID: 8300000, guid: 429a17bb596b2cb4c87e24f97fcd4547, type: 3}
   - {fileID: 8300000, guid: 58d54824199746545846bc182c9d27a3, type: 3}
@@ -24553,7 +24584,8 @@ AudioSource:
   m_GameObject: {fileID: 1175437945}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -24977,8 +25009,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294835966
+  m_fontColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -27213,7 +27245,8 @@ AudioSource:
   m_GameObject: {fileID: 1279853345}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -27946,22 +27979,22 @@ PrefabInstance:
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 114.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035516207024, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
@@ -28076,22 +28109,22 @@ PrefabInstance:
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 447.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74741363d82181e46b155e891fd6df84, type: 3}
@@ -28745,7 +28778,8 @@ AudioSource:
   m_GameObject: {fileID: 1335457705}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -29195,7 +29229,8 @@ AudioSource:
   m_GameObject: {fileID: 1362405148}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -29422,6 +29457,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362405148}
   m_Mesh: {fileID: 4300000, guid: a1d2698aa9e67a84e9f97b11e0a3e839, type: 2}
+--- !u!114 &1365943122 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4337036038149214715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1369893254
 GameObject:
   m_ObjectHideFlags: 0
@@ -32789,8 +32836,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294835966
+  m_fontColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -34158,7 +34205,8 @@ AudioSource:
   m_GameObject: {fileID: 1594916411}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -37295,7 +37343,8 @@ AudioSource:
   m_GameObject: {fileID: 1708386560}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -40269,7 +40318,8 @@ AudioSource:
   m_GameObject: {fileID: 1892190048}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -41142,7 +41192,8 @@ AudioSource:
   m_GameObject: {fileID: 1924035598}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -42244,10 +42295,10 @@ RectTransform:
   m_Father: {fileID: 1210000746}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 354.375, y: -60}
-  m_SizeDelta: {x: 231.25, y: 40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973754054
 MonoBehaviour:
@@ -42303,6 +42354,9 @@ MonoBehaviour:
   on: {fileID: 21300000, guid: 08f04f4bd9f1d8c4bbdee4f6c921dc3d, type: 3}
   off: {fileID: 21300000, guid: 9297b8bdee9ea37418c20afe164a2b21, type: 3}
   hover: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
+  text: {fileID: 1193929287}
+  textNormalColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
+  textHoveredColor: {r: 0.9960785, g: 0.5294118, b: 0.12941177, a: 1}
 --- !u!114 &1973754057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42329,7 +42383,8 @@ AudioSource:
   m_GameObject: {fileID: 1973754052}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -43900,7 +43955,8 @@ AudioSource:
   m_GameObject: {fileID: 2013757991}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -46208,6 +46264,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 608001511}
     m_Modifications:
+    - target: {fileID: 239273796520433369, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_text
+      value: 'Toggle Timer
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796520433369, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796520433369, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796520433369, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796520433369, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294835966
+      objectReference: {fileID: 0}
     - target: {fileID: 239273796520433370, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -46217,6 +46300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796520433370, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 158
       objectReference: {fileID: 0}
     - target: {fileID: 239273796520433370, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
@@ -46338,25 +46426,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 239273796848906968, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 801731714}
+    - target: {fileID: 239273796848906968, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: activeIconColor.b
+      value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796848906968, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: activeIconColor.g
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796848906968, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: activeIconColor.r
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273796848906969, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+        type: 2}
     - target: {fileID: 239273797915135042, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 239273797915135042, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 239273797915135042, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 289
       objectReference: {fileID: 0}
     - target: {fileID: 239273797915135042, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273797915135043, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273798099492783, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -10.0000305
+      objectReference: {fileID: 0}
+    - target: {fileID: 239273798099492783, guid: ee19334d1d88c6e41a31f41d47d5a9b4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000015258789
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee19334d1d88c6e41a31f41d47d5a9b4, type: 3}
@@ -46503,8 +46632,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 27.5, y: 0}
-  m_SizeDelta: {x: -65, y: -10}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2438984800807302851
 MonoBehaviour:
@@ -46526,7 +46655,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Toggle Clock (off)
+  m_text: Toggle Clock
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4624f28474ef8084f8da567463334752, type: 2}
   m_sharedMaterial: {fileID: -2380034878629974788, guid: 4624f28474ef8084f8da567463334752,
@@ -46536,8 +46665,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280452863
-  m_fontColor: {r: 1, g: 0.5254902, b: 0.13333334, a: 1}
+    rgba: 4294835966
+  m_fontColor: {r: 0.9960785, g: 0.9960785, b: 0.99215686, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -46730,7 +46859,8 @@ AudioSource:
   m_GameObject: {fileID: 2438984801627295499}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -46835,7 +46965,8 @@ MonoBehaviour:
   hovered: {fileID: 21300000, guid: aba0dbf0c2647054d91e712c5be8f322, type: 3}
   icon: {fileID: 1581783940}
   iconBG: {fileID: 713451558}
-  activeIconColor: {r: 1, g: 0.9803922, b: 0.9294118, a: 1}
+  text: {fileID: 2438984800807302851}
+  activeIconColor: {r: 0.99607843, g: 0.99607843, b: 0.99215686, a: 1}
   inactiveIconColor: {r: 0.3921569, g: 0.3647059, b: 0.34117648, a: 1}
   activeBGColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
   inactiveBGColor: {r: 0.26666668, g: 0.25882354, b: 0.24313727, a: 1}
@@ -46940,17 +47071,17 @@ PrefabInstance:
     - target: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_fontColor.b
-      value: 0.13333334
+      value: 0.99215686
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_fontColor.g
-      value: 0.5254902
+      value: 0.99607843
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_fontColor.r
-      value: 1
+      value: 0.99607843
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
@@ -46971,12 +47102,12 @@ PrefabInstance:
     - target: {fileID: 4337036038122682126, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4280452863
+      value: 4294835966
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682127, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: -65
+      value: -11
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682127, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
@@ -46986,7 +47117,7 @@ PrefabInstance:
     - target: {fileID: 4337036038122682127, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 27.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4337036038122682127, guid: bcc9de67fe11bcb4c933613cd424061f,
         type: 3}
@@ -47415,6 +47546,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1626504059}
     m_Modifications:
+    - target: {fileID: 2094002564208531870, guid: 0b50ff74d9689cb429dbb7d5009f32be,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+        type: 2}
+    - target: {fileID: 5988461960543931768, guid: 0b50ff74d9689cb429dbb7d5009f32be,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+        type: 2}
     - target: {fileID: 7183697246329980637, guid: 0b50ff74d9689cb429dbb7d5009f32be,
         type: 3}
       propertyPath: m_Name
@@ -47651,22 +47794,22 @@ PrefabInstance:
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 114.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035412748440, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316035516207024, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
@@ -47781,22 +47924,22 @@ PrefabInstance:
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 447.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219316036001598707, guid: 74741363d82181e46b155e891fd6df84,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74741363d82181e46b155e891fd6df84, type: 3}

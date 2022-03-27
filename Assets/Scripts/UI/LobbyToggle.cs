@@ -49,6 +49,6 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         toggle.image.sprite = toggle.isOn ? on : off;
 
         if(text != null)
-            text.color = Color.white;
+            text.color = activeIconColor;
     } 
 }

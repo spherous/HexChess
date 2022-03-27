@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class CustomToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     public delegate void OnValueChanged(bool isOn);
     public OnValueChanged onValueChanged;
     public bool isOn {get; private set;} = false;
+
+    [SerializeField] private TextMeshProUGUI text;
+    public Color textNormalColor;
+    public Color textHoveredColor;
+
     private void Start() => image.sprite = isOn ? on : off;
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -29,6 +35,14 @@ public class CustomToggle : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
         onValueChanged?.Invoke(isOn);
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => image.sprite = hover;
-    public void OnPointerExit(PointerEventData eventData) => image.sprite = isOn ? on : off;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        text.color = textHoveredColor;
+        image.sprite = hover;
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        text.color = textNormalColor;
+        image.sprite = isOn ? on : off;    
+    }   
 }

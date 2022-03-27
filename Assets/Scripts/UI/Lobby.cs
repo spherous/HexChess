@@ -69,10 +69,10 @@ public class Lobby : MonoBehaviour
             if(isOn)
             {
                 timerToggle.isOn = false;
-                clockText.text = "Toggle Clock (On)";
+                clockText.text = "Toggle Clock";
             }
             else
-                clockText.text = "Toggle Clock (Off)";
+                clockText.text = "Toggle Clock";
 
             EventSystem.current.Deselect();
         });
@@ -84,15 +84,15 @@ public class Lobby : MonoBehaviour
             if(isOn)
             {
                 clockToggle.isOn = false;
-                timerText.rectTransform.sizeDelta = new Vector2(150, timerText.rectTransform.sizeDelta.y);
+                // timerText.rectTransform.sizeDelta = new Vector2(150, timerText.rectTransform.sizeDelta.y);
                 timerText.text = "Timer (mins)";
                 timerInputField.gameObject.SetActive(true);
                 timerInputField.text = "20";
             }
             else
             {
-                timerText.rectTransform.sizeDelta = new Vector2(223, timerText.rectTransform.sizeDelta.y);
-                timerText.text = "Toggle Timer (off)";
+                // timerText.rectTransform.sizeDelta = new Vector2(223, timerText.rectTransform.sizeDelta.y);
+                timerText.text = "Toggle Timer";
                 timerInputField.gameObject.SetActive(false);
             }
 

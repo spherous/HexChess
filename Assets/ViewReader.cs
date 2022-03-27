@@ -11,10 +11,14 @@ public class ViewReader : MonoBehaviour
         text.text = orbitalCamera.View.name;
     }
 
-    public void OnClick()
+    public void OnClickPrev()
+    {
+        orbitalCamera.PrevView();
+        text.text = orbitalCamera.View.name;
+    }
+    public void OnClickNext()
     {
         orbitalCamera.NextView();
         text.text = orbitalCamera.View.name;
     }
-
 }

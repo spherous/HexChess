@@ -217,7 +217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show Handicap Overlay
+  m_text: Handicap Overlay
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -462,12 +462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 4337036038946868932}
-  icon: {fileID: 4267465989545732490}
-  iconBG: {fileID: 7297248230359007135}
-  activeIconColor: {r: 1, g: 0.9803922, b: 0.9294118, a: 1}
-  inactiveIconColor: {r: 0.3921569, g: 0.3647059, b: 0.34117648, a: 1}
-  activeBGColor: {r: 1, g: 0.5254902, b: 0.1254902, a: 1}
-  inactiveBGColor: {r: 0.26666668, g: 0.25882354, b: 0.24313727, a: 1}
 --- !u!1 &8964140357511787202
 GameObject:
   m_ObjectHideFlags: 0

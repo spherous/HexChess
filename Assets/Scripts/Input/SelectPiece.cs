@@ -23,6 +23,7 @@ public class SelectPiece : MonoBehaviour
     [SerializeField] private TurnHistoryPanel historyPanel;
     [SerializeField] public ArrowTool arrowTool;
     [SerializeField] private AIBattleController aiController;
+    [SerializeField] private GroupFader optionsPanel;
     public AudioClip cancelNoise;
     public AudioClip pickupNoise;
     public IPiece selectedPiece {get; private set;}
@@ -121,6 +122,9 @@ public class SelectPiece : MonoBehaviour
         if(onMouse.isPickedUp || cursor == null)
             return;
 
+        if(optionsPanel != null && optionsPanel.visible)
+            return;
+
         Team currentTurn = board.GetCurrentTurn();
         
         // Not this player's turn
@@ -175,6 +179,8 @@ public class SelectPiece : MonoBehaviour
         else if(singlePlayerHandicapOverlayToggle != null && !singlePlayerHandicapOverlayToggle.toggle.isOn) 
             return;
         else if(smoothHalfOrbitalCamera.freeLooking)
+            return;
+        else if(optionsPanel != null && optionsPanel.visible)
             return;
 
 
@@ -263,6 +269,8 @@ public class SelectPiece : MonoBehaviour
     {
         if(smoothHalfOrbitalCamera.freeLooking)
             return;
+        else if(optionsPanel != null && optionsPanel.visible)
+            return;
 
         if(Physics.Raycast(cam.ScreenPointToRay(mouse.position.ReadValue()), out RaycastHit hit, 100, hexMask))
         {
@@ -309,6 +317,8 @@ public class SelectPiece : MonoBehaviour
     private void ColorizeBasedOnMove()
     {
         if(smoothHalfOrbitalCamera.freeLooking)
+            return;
+        else if(optionsPanel != null && optionsPanel.visible)
             return;
 
         if(selectedPiece != null && onMouse != null)
@@ -430,6 +440,8 @@ public class SelectPiece : MonoBehaviour
         else if(singlePlayerHandicapOverlayToggle != null && !singlePlayerHandicapOverlayToggle.toggle.isOn) 
             return;
         else if(promotionDialogue.gameObject.activeSelf || smoothHalfOrbitalCamera.freeLooking)
+            return;
+        else if(optionsPanel != null && optionsPanel.visible)
             return;
 
         if(selectedPiece == null)
@@ -595,6 +607,10 @@ public class SelectPiece : MonoBehaviour
         Team currentTurn = board.GetCurrentTurn();
         // Later allow players to queue a move, but for now, just prevent even clicking a piece when not their turn
         if(multiplayer != null && multiplayer.gameParams.localTeam != currentTurn)
+            return;
+        
+        // The options panel covers the board, so we don't want to allow selecting a piece if the options panel is open
+        if(optionsPanel != null && optionsPanel.visible)
             return;
         
         // If AI is enabled, return if it's the AI's turn

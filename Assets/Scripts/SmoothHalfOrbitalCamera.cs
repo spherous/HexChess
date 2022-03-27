@@ -1,5 +1,5 @@
 using System.Collections;
-
+using Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -31,9 +31,8 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     }
     [SerializeField] int selectedView;
     [SerializeField] Vector3 cameraRotation;
-
+    
     public CameraView View => views?[selectedView];
-
     [SerializeField] CameraView[] views;
     [SerializeField] MultiCamOptions options;
 
@@ -71,7 +70,8 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     void Awake()
     {
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
-        selectedView = PlayerPrefs.GetInt("CameraView", selectedView);
+        selectedView = PlayerPrefs.GetInt("CameraView", 0);
+        selectedView = Mathf.Clamp(selectedView, 0, views.Length - 1);
     }
 
     void Start()
@@ -185,18 +185,14 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     public void NextView()
     {
-        selectedView += 1;
-        if(selectedView >= views.Length)
-            selectedView = 0;
-        
+        selectedView = (selectedView + 1).Mod(views.Length);
         PlayerPrefs.SetInt("CameraView", selectedView);
     }
 
     public void PrevView()
     {
-        selectedView -= 1;
-        if(selectedView < 0)
-            selectedView = views.Length - 1;
+        selectedView = (selectedView - 1).Mod(views.Length);
+        PlayerPrefs.SetInt("CameraView", selectedView);
     }
 
     void StartRotating()

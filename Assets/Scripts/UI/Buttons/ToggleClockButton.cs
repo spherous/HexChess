@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class ToggleClockButton : MonoBehaviour
 {
-    [SerializeField] private Button button;
+    [SerializeField] private Toggle toggle;
     [SerializeField] private Timers timers;
 
     private void Awake() {
-        button.onClick.AddListener(() => {
+        toggle.onValueChanged.AddListener(isOn => {
             if(timers.isClock)
             {
                 timers.isClock = false;

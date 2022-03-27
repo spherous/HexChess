@@ -291,6 +291,7 @@ MonoBehaviour:
   historyPanel: {fileID: 0}
   arrowTool: {fileID: 2408701817025037731}
   aiController: {fileID: 0}
+  optionsPanel: {fileID: 0}
   cancelNoise: {fileID: 8300000, guid: ba2a0d48902eea04ead3e58e073a88b7, type: 3}
   pickupNoise: {fileID: 8300000, guid: 9c7f611590e186b4a84a7d71a7e9260e, type: 3}
   onMouse: {fileID: 0}
@@ -442,7 +443,7 @@ MonoBehaviour:
     minRotation: {x: 0.001, y: -360, z: 0}
     maxRotation: {x: 90, y: 360, z: 0}
     viewportHeight: 0.85
-  - name: Frontal View
+  - name: First-Person
     postCameraOffset: {x: 0, y: 1.5, z: 0.2}
     postCameraRotation: {x: 26, y: 0, z: 0}
     minRotation: {x: 0, y: -360, z: 0}

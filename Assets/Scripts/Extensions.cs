@@ -13,6 +13,8 @@ namespace Extensions
         public static int Ceil(this float val) => Mathf.CeilToInt(val);
         public static int Saturate(this int val) => (int)Mathf.Clamp01(val);
         public static float Saturate(this float val) => Mathf.Clamp01(val);
+        public static int Mod(this int a, int b) => (a % b + b) % b;
+        public static float Mod(this float a, float b) => (a % b + b) % b;
 
         public static string GetText(this ReadyStartObjectButton.Mode modeToGet) => modeToGet switch{
             ReadyStartObjectButton.Mode.NotReady => "Not Ready",

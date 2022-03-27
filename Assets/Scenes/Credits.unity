@@ -375,6 +375,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 156676433}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &156676433
 MeshRenderer:
@@ -527,6 +528,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 159892972}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &159892972
 MeshRenderer:
@@ -840,6 +842,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 233280083}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
 --- !u!23 &233280083
@@ -985,6 +988,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 320273673}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &320273673
 MeshRenderer:
@@ -1171,7 +1175,8 @@ AudioSource:
   m_GameObject: {fileID: 374878167}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1347,6 +1352,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 374878175}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &374878175
 MeshRenderer:
@@ -1574,6 +1580,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 512598780}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &512598780
 MeshRenderer:
@@ -1726,6 +1733,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 541554060}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &541554060
 MeshRenderer:
@@ -1978,6 +1986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -2039,6 +2048,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -2227,6 +2237,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 762181005}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &762181005
 MeshRenderer:
@@ -2379,6 +2390,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 854125965}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &854125965
 MeshRenderer:
@@ -2531,6 +2543,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 861031435}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &861031435
 MeshRenderer:
@@ -2683,6 +2696,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1115174312}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1115174312
 MeshRenderer:
@@ -3053,6 +3067,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1203160953}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1203160953
 MeshRenderer:
@@ -3205,6 +3220,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1227623104}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1227623104
 MeshRenderer:
@@ -3357,6 +3373,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1269841528}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1269841528
 MeshRenderer:
@@ -3509,6 +3526,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1286818433}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1286818433
 MeshRenderer:
@@ -3661,6 +3679,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1289181933}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1289181933
 MeshRenderer:
@@ -3759,7 +3778,8 @@ AudioSource:
   m_GameObject: {fileID: 1410402464}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3948,6 +3968,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1410402472}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1410402472
 MeshRenderer:
@@ -4185,7 +4206,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 331.33, y: -222.33997}
+  m_AnchoredPosition: {x: 331.33002, y: -222.33997}
   m_SizeDelta: {x: -1324.27, y: -506.34}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1487173776
@@ -4368,6 +4389,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1488908656}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1488908656
 MeshRenderer:
@@ -4954,6 +4976,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1675323372}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1675323372
 MeshRenderer:
@@ -5187,6 +5210,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1798677290}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1798677290
 MeshRenderer:
@@ -5339,6 +5363,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1808730615}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1808730615
 MeshRenderer:
@@ -5491,6 +5516,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1859946134}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1859946134
 MeshRenderer:
@@ -5602,7 +5628,8 @@ AudioSource:
   m_GameObject: {fileID: 1873831389}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5778,6 +5805,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1873831397}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1873831397
 MeshRenderer:
@@ -6065,6 +6093,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 1947438339}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &1947438339
 MeshRenderer:
@@ -6217,6 +6246,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2010562947}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2010562947
 MeshRenderer:
@@ -6449,6 +6479,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2021654498}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2021654498
 MeshRenderer:
@@ -6678,6 +6709,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2076620808}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2076620808
 MeshRenderer:
@@ -6776,7 +6808,8 @@ AudioSource:
   m_GameObject: {fileID: 2116864594}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -6943,6 +6976,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2116864602}
+  isGameHex: 0
   outlineColor: {r: 0.58431375, g: 0.56078434, b: 0.4862745, a: 1}
 --- !u!114 &2116864601
 MonoBehaviour:
@@ -7076,7 +7110,8 @@ AudioSource:
   m_GameObject: {fileID: 2147470796}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 1e6e83bdfb1fa914f88871a1fcfe765e,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -7252,6 +7287,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   meshRenderer: {fileID: 2147470804}
+  isGameHex: 0
   outlineColor: {r: 0.5254902, g: 0.5019608, b: 0.4392157, a: 1}
 --- !u!23 &2147470804
 MeshRenderer:

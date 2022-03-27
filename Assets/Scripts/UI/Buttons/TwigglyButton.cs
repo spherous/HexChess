@@ -13,6 +13,7 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private Image image;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] protected TextMeshProUGUI text;
+    public bool changeTextColor = true;
     public Color hoverColor;
     public Color normalTextColor = Color.white;
     public List<AudioClip> clips = new List<AudioClip>();
@@ -41,15 +42,14 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             tb.SetNorm();
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        // set 
-    }
+    public void OnPointerUp(PointerEventData eventData){}
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(text != null)
+        if(changeTextColor && text != null)
             text.color = hoverColor;
+        else if(!changeTextColor && image != null)
+            image.color = hoverColor;
 
         // start hover animation
         if(image != null)
@@ -60,8 +60,10 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(text != null)
+        if(changeTextColor && text != null)
             text.color = normalTextColor;
+        else if(!changeTextColor && image != null)
+            image.color = normalTextColor;
 
         // stop animation, to go normal or selected depending if clicked
         if(image != null && image.sprite != selectedState)
@@ -69,10 +71,7 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         arrowAnim?.Hide();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        onClick?.Invoke();
-    }
+    public void OnPointerClick(PointerEventData eventData) => onClick?.Invoke();
 
     public void SetNorm()
     {
