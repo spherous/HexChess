@@ -17,6 +17,8 @@ public class SaveButton : TwigglyButton
             board = GameObject.FindObjectOfType<Board>();
         
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
+
+        onClick += Save;
     }
 
     public void Save()

@@ -10,7 +10,7 @@ public static class HexachessagonEngine
         new List<Piece>(){Piece.King, Piece.WhiteSquire},
         new List<Piece>(){Piece.King, Piece.GraySquire},
         new List<Piece>(){Piece.King, Piece.BlackSquire},
-        new List<Piece>(){Piece.King, Piece.WhiteSquire, Piece.BlackSquire},
+        new List<Piece>(){Piece.King, Piece.WhiteSquire, Piece.BlackSquire}, // bug here, if your white or black squire is on a gray hex due to a defend, a checkmate could still be theoretically possible.
     };
     
     public static Index GetStartLocation((Team team, Piece piece) teamedPiece)
@@ -93,7 +93,7 @@ public static class HexachessagonEngine
                 Piece? capturedPiece = previousTeamAtLocation == kvp.Key.team ? null : previousPieceAtLocation;
                 if(piece.IsPawn() && kvp.Value.GetLetter() != nowPos.GetLetter() && capturedPiece == null)
                 {
-                    // Pawns that move sideways are always attacks. If the new location was unoccupied, then did En Passant
+                    // Pawns that move sideways are always attacks. If the new location was unoccupied, then they did En Passant
                     Index? enemyLocation = nowPos.GetNeighborAt(kvp.Key.team == Team.White ? HexNeighborDirection.Down : HexNeighborDirection.Up);
                     if(enemyLocation != null && lastState.TryGetPiece(enemyLocation.Value, out var captured))
                         capturedPiece = captured.piece;

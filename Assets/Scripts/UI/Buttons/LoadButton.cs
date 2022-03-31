@@ -14,6 +14,8 @@ public class LoadButton : TwigglyButton
         if(board == null)
             board = GameObject.FindObjectOfType<Board>();
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
+
+        onClick += Load;
     }
 
     public void Load()

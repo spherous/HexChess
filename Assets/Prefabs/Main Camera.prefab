@@ -295,7 +295,6 @@ MonoBehaviour:
   cancelNoise: {fileID: 8300000, guid: ba2a0d48902eea04ead3e58e073a88b7, type: 3}
   pickupNoise: {fileID: 8300000, guid: 9c7f611590e186b4a84a7d71a7e9260e, type: 3}
   onMouse: {fileID: 0}
-  freePlaceMode: {fileID: 0}
   lastMoveTracker: {fileID: 0}
   moveTypeHighlightColors:
   - {r: 0, g: 1, b: 0, a: 1}

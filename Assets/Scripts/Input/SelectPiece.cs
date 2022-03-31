@@ -28,7 +28,7 @@ public class SelectPiece : MonoBehaviour
     public AudioClip pickupNoise;
     public IPiece selectedPiece {get; private set;}
     [SerializeField] private OnMouse onMouse;
-    [SerializeField] private FreePlaceModeToggle freePlaceMode;
+    private FreePlaceModeToggle freePlaceMode;
     [SerializeField] private LastMoveTracker lastMoveTracker;
     bool isFreeplaced => !multiplayer && freePlaceMode.toggle.isOn;
     private bool hoverExitedInitialHex = false;
@@ -66,6 +66,7 @@ public class SelectPiece : MonoBehaviour
             singlePlayerHandicapOverlayToggle = GameObject.FindObjectOfType<HandicapOverlayToggle>();
         keys = GameObject.FindObjectOfType<Keys>();
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
+        freePlaceMode = GameObject.FindObjectOfType<FreePlaceModeToggle>();
         board.newTurn += NewTurn;
     }
 

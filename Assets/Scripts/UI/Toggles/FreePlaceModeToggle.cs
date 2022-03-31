@@ -4,22 +4,21 @@ using UnityEngine.UI;
 public class FreePlaceModeToggle : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] private Image screenBorderImage;
-    [SerializeField] private Button kingsOnlyButton;
+    [SerializeField] private GroupFader borderFader;
+    [SerializeField] private GroupFader kingsOnlyFader;
     public Toggle toggle;
 
-    public Color uncheckedColor;
-    public Color readyColor;
+    private void Awake() => toggle.onValueChanged.AddListener(newVal => {
+        if(newVal)
+        {
+            borderFader.FadeIn();
+            kingsOnlyFader.FadeIn();
+            return;
+        }
 
-    private void Awake()
-    {
-        toggle.onValueChanged.AddListener(newVal => {
-            image.color = newVal ? readyColor : uncheckedColor;
-
-            screenBorderImage.enabled = newVal;
-            kingsOnlyButton.gameObject.SetActive(newVal);
-        });
-    }
+        borderFader.FadeOut();
+        kingsOnlyFader.FadeOut();
+    });
 
     public void Disable() => gameObject.SetActive(false);
 }

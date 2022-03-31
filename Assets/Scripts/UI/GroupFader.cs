@@ -11,7 +11,6 @@ public class GroupFader : MonoBehaviour
     public TriSign sign {get; private set;} = TriSign.Zero;
     private bool deactivate = false;
 
-    // public bool visible => !(_group != null && _group.alpha < 1);
     public bool visible => isCompletelyVisibileOrFadingIn && !isCompletelyInvisibleOrFadingOut;
     private bool isFadingIn => group.alpha < 1 && sign == TriSign.Positive;
     private bool isFadingOut => group.alpha > 0 && sign == TriSign.Negative;
