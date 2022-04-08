@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class TurnHistoryPanel : MonoBehaviour
     [SerializeField] private LastMoveTracker lastMoveTracker;
     [SerializeField] private TurnPanel turnPanel;
     [SerializeField] private ArrowTool arrowTool;
+    [SerializeField] private NotationFormToggle notationForm;
     MovePanel startPanel;
     MovePanel lastMovePanel;
     [ShowInInspector, ReadOnly] private List<MovePanel> panels = new List<MovePanel>();
@@ -32,14 +34,14 @@ public class TurnHistoryPanel : MonoBehaviour
     FreePlaceModeToggle freePlaceModeToggle;
     bool isFreePlaceMode => freePlaceModeToggle != null && freePlaceModeToggle.toggle.isOn;
 
-    [SerializeField] private Toggle shortFormToggle;
-    public NotationType notationToUse => shortFormToggle != null && shortFormToggle.isOn ? NotationType.ShortForm : NotationType.LongForm;
+    // [SerializeField] private Toggle shortFormToggle;
+    public NotationType notationToUse => PlayerPrefs.GetInt("NotationType", 0).IntToBool() ? NotationType.ShortForm : NotationType.LongForm;
     private void Awake() 
     {
         board.newTurn += NewTurn;
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
         freePlaceModeToggle = GameObject.FindObjectOfType<FreePlaceModeToggle>();
-        shortFormToggle.isOn = PlayerPrefs.GetInt("NotationType", 0) == 1;
+        // shortFormToggle.isOn = PlayerPrefs.GetInt("NotationType", 0) == 1;
     }
     private void Start() 
     {
@@ -53,12 +55,15 @@ public class TurnHistoryPanel : MonoBehaviour
 
             startPanel.SetTimestamp(0, team);
         }
-        if(shortFormToggle != null)
-            shortFormToggle.onValueChanged.AddListener(val => {
-                PlayerPrefs.SetInt("NotationType", val ? 1 : 0);
-                NotationType toUse = val ? NotationType.ShortForm : NotationType.LongForm;
-                panels.ForEach(panel => panel.SetNotation(toUse));
-            });
+        if(notationForm != null)
+            notationForm.onValueChanged += NotationChanged;
+    }
+
+    private void NotationChanged(bool val)
+    {
+        PlayerPrefs.SetInt("NotationType", val ? 1 : 0);
+        NotationType toUse = val ? NotationType.ShortForm : NotationType.LongForm;
+        panels.ForEach(panel => panel.SetNotation(toUse));
     }
 
     private void Update()
@@ -70,7 +75,12 @@ public class TurnHistoryPanel : MonoBehaviour
         }
     }
 
-    private void OnDestroy() => board.newTurn -= NewTurn;
+    private void OnDestroy()
+    {
+        board.newTurn -= NewTurn;
+        if(notationForm != null)
+            notationForm.onValueChanged -= NotationChanged;
+    } 
 
     public bool TryGetCurrentBoardState(out BoardState state)
     {

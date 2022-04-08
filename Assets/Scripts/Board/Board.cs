@@ -189,10 +189,10 @@ public class Board : SerializedMonoBehaviour
         {
             if(currentGame.onGameOver != null)
                 currentGame.onGameOver -= HexChessGameEnded;
-            
+
             currentGame.KillGame();
         }
-        
+
         currentGame = toLoad;
         currentGame.onGameOver += HexChessGameEnded;
 
@@ -221,7 +221,7 @@ public class Board : SerializedMonoBehaviour
             turnHistoryPanel.UpdateMovePanels(lastMoveTurns.Last(), move, Mathf.FloorToInt((float)currentGame.turnHistory.Count / 2f) + currentGame.turnHistory.Count % 2);
             moveTracker.UpdateText(move);
             HighlightMove(move);
-            
+
             gameOver?.Invoke(currentGame);
         }
         else
@@ -237,18 +237,25 @@ public class Board : SerializedMonoBehaviour
                 gameOver?.Invoke(currentGame);
         }
 
-        if(timers != null)
+        UpdateTimers();
+    }
+
+    private void UpdateTimers()
+    {
+        if(timers == null)
+            return;
+
+        if(currentGame.timerDuration <= 0)
         {
-            if(currentGame.timerDuration <= 0)
-            {
-                timers.gameObject.SetActive(currentGame.hasClock);
-                timers.isClock = currentGame.hasClock;
-            }
-            else
-            {
-                timers.gameObject.SetActive(true);
-                timers.SetTimers(currentGame.timerDuration);
-            }
+            bool displayClock = PlayerPrefs.GetInt("ShowClock", 1).IntToBool();
+            timers.Toggle(displayClock);
+            if(displayClock)
+                timers.ClearTimer();
+        }
+        else
+        {
+            timers.Toggle(true);
+            timers.SetTimers(currentGame.timerDuration);
         }
     }
 

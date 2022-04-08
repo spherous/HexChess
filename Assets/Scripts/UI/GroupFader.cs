@@ -2,6 +2,7 @@
 using UnityEngine;
 using Extensions;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class GroupFader : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _group;

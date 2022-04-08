@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Extensions;
 using UnityEngine;
 
 public class Multiplayer : MonoBehaviour
@@ -37,20 +37,23 @@ public class Multiplayer : MonoBehaviour
         whiteKeys.SetActive(gameParams.localTeam == Team.White);
         blackKeys.SetActive(gameParams.localTeam == Team.Black);
 
-        board.currentGame.ChangeTimeParams(gameParams.showClock, gameParams.timerDuration);
+        board.currentGame.ChangeTimeParams(gameParams.timerDuration);
 
-        if(gameParams.timerDuration <= 0)
-        {
-            // Game has no timer, but might have a clock
-            timers.gameObject.SetActive(gameParams.showClock);
-            timers.isClock = gameParams.showClock;
-        }
-        else
+        if(gameParams.timerDuration > 0)
         {
             // Game has a timer
-            timers.gameObject.SetActive(true);
+            timers.Toggle(true);
             timers.SetTimers(gameParams.timerDuration);
+            
         }
+        else if(PlayerPrefs.GetInt("ShowClock", true.BoolToInt()).IntToBool())
+        {
+            // Game has no timer, fall back to user clock preferences
+            timers.Toggle(true);
+            timers.SetClock();
+        }
+        else
+            timers.Toggle(false);
 
         if(gameParams.localTeam == Team.White)
             turnChangePanel.Display(gameParams.localTeam);

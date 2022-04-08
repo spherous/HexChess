@@ -7,15 +7,13 @@ public struct GameParams
     public Team localTeam;
     public bool showMovePreviews;
     public float timerDuration;
-    public bool showClock;
     
 
-    public GameParams(Team localTeam, bool showMovePreviews, float timerDuration = 0, bool showClock = false)
+    public GameParams(Team localTeam, bool showMovePreviews, float timerDuration = 0)
     {
         this.localTeam = localTeam;
         this.showMovePreviews = showMovePreviews;
         this.timerDuration = timerDuration;
-        this.showClock = timerDuration > 0 ? false : showClock;
     }
 
     public byte[] Serialize() => Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(this));

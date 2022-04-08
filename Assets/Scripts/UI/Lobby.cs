@@ -30,10 +30,6 @@ public class Lobby : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI opponentName;
 
-    public Toggle clockToggle;
-    [SerializeField] private GameObject clockObj;
-    [SerializeField] private TextMeshProUGUI clockText;
-
     public Toggle timerToggle;
     [SerializeField] private GameObject timerObj;
     [SerializeField] private TextMeshProUGUI timerText;
@@ -59,23 +55,7 @@ public class Lobby : MonoBehaviour
     {
         timerInputField.gameObject.SetActive(false);
 
-        ListenForClock();
         ListenForTimer();
-    }
-
-    private void ListenForClock()
-    {
-        clockToggle.onValueChanged.AddListener((isOn) => {
-            if(isOn)
-            {
-                timerToggle.isOn = false;
-                clockText.text = "Toggle Clock";
-            }
-            else
-                clockText.text = "Toggle Clock";
-
-            EventSystem.current.Deselect();
-        });
     }
 
     private void ListenForTimer()
@@ -83,15 +63,12 @@ public class Lobby : MonoBehaviour
         timerToggle.onValueChanged.AddListener((isOn) => {
             if(isOn)
             {
-                clockToggle.isOn = false;
-                // timerText.rectTransform.sizeDelta = new Vector2(150, timerText.rectTransform.sizeDelta.y);
                 timerText.text = "Timer (mins)";
                 timerInputField.gameObject.SetActive(true);
                 timerInputField.text = "20";
             }
             else
             {
-                // timerText.rectTransform.sizeDelta = new Vector2(223, timerText.rectTransform.sizeDelta.y);
                 timerText.text = "Toggle Timer";
                 timerInputField.gameObject.SetActive(false);
             }
@@ -105,7 +82,6 @@ public class Lobby : MonoBehaviour
         this.lobbyType = lobbyType;
 
         timerObj.SetActive(lobbyType == Type.Host || lobbyType == Type.AI);
-        clockObj.SetActive(lobbyType == Type.Host || lobbyType == Type.AI);
 
         Action lobbyAction = lobbyType switch {
             Type.Host => OpponentSearching,
@@ -179,6 +155,10 @@ public class Lobby : MonoBehaviour
             aiController.SetAI(0, aiDifficultySlider.AILevel);
         else // If AITeam somehow comes in as Team.None, there is nothing to do here.
             return;
+
+        // todo: configure time controls
+        
+        
 
         aiController.StartGame();
 

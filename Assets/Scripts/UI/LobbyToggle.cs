@@ -20,7 +20,7 @@ public class LobbyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Color activeBGColor;
     public Color inactiveBGColor;
 
-    private void Start() {
+    private void Awake() {
         toggle.image.sprite = toggle.isOn ? on : off;
         
         if(icon != null)

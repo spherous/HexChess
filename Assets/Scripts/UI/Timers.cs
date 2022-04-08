@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using Extensions;
 
 public class Timers : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Timers : MonoBehaviour
     [SerializeField] private TextMeshProUGUI whiteTimerText;
     [SerializeField] private TextMeshProUGUI blackTimerText;
     [SerializeField] private TextMeshProUGUI timeControlText;
+    [SerializeField] private GroupFader fader;
 
     [SerializeField] private TMP_FontAsset regFont;
     [SerializeField] private TMP_FontAsset boldFont;
@@ -33,7 +35,7 @@ public class Timers : MonoBehaviour
         else if(timerDruation > 0)
         {
             timeControlText.font = boldFont;
-            timeControlText.text = TimeSpan.FromSeconds(timerDruation).ToString(GetFormat(timerDruation));
+            timeControlText.text = TimeSpan.FromSeconds(timerDruation).ToString(timerDruation.GetStringFromSeconds());
             UpdateBothTimers();
         }
     }
@@ -48,6 +50,18 @@ public class Timers : MonoBehaviour
 
     public void SetClock()
     {
+        // clocks are only displayed when the game does not have time controls
+        if(timerDruation > 0)
+            return;
+        
+        if(!PlayerPrefs.GetInt("ShowClock", 1).IntToBool())
+        {
+            isClock = false;
+            fader.FadeOut();
+            return;
+        }
+
+        isClock = true;
         timeControlText.font = regFont;
         timeControlText.text = "No Time Controls";
         
@@ -58,17 +72,19 @@ public class Timers : MonoBehaviour
             currentTurn = board.GetCurrentTurn();
         }
 
-        board.currentGame.ChangeTimeParams(true, 0);
-
-        isClock = true;
-        timerDruation = 0;
         UpdateBothUI();
+    }
+
+    public void ClearTimer()
+    {
+        timerDruation = 0;
+        SetClock();
     }
 
     public void SetTimers(float duration)
     {
         timeControlText.font = boldFont;
-        timeControlText.text = $"{TimeSpan.FromSeconds(duration).ToString(GetFormat(duration))}";
+        timeControlText.text = $"{TimeSpan.FromSeconds(duration).ToString(duration.GetStringFromSeconds())}";
         if(currentTurn == Team.None)
         {
             if(board == null)
@@ -76,7 +92,7 @@ public class Timers : MonoBehaviour
             currentTurn = board.GetCurrentTurn();
         }
 
-        board.currentGame.ChangeTimeParams(false, duration);
+        board.currentGame.ChangeTimeParams(duration);
 
         isClock = false;
         timerDruation = duration;
@@ -118,12 +134,6 @@ public class Timers : MonoBehaviour
         else if(timerDruation > 0)
             UpdateTimerUI(GetTeamTime(currentTurn), currentTurn);
     }
-
-    string GetFormat(float seconds) => seconds < 60 
-        ? @"%s\.f" 
-        : seconds < 3600
-            ? @"%m\:ss\.f"
-            : @"%h\:mm\:ss\.f";
         
     TextMeshProUGUI GetTeamText(Team team) => team == Team.White ? whiteTimerText : blackTimerText;
     float GetTeamTime(Team team)
@@ -145,7 +155,7 @@ public class Timers : MonoBehaviour
         if(team == Team.None)
             return;
 
-        GetTeamText(team).text = TimeSpan.FromSeconds(seconds).ToString(GetFormat(seconds));
+        GetTeamText(team).text = TimeSpan.FromSeconds(seconds).ToString(seconds.GetStringFromSeconds());
     }
 
     private void UpdateTimerUI(float seconds, Team team)
@@ -153,9 +163,18 @@ public class Timers : MonoBehaviour
         if(team == Team.None)
             return;
         float remaining = timerDruation - seconds;
-        string teamTime = TimeSpan.FromSeconds(remaining).ToString(GetFormat(remaining));
-        // string td = TimeSpan.FromSeconds(timerDruation).ToString(GetFormat(timerDruation));
+        string teamTime = TimeSpan.FromSeconds(remaining).ToString(remaining.GetStringFromSeconds());
         
         GetTeamText(team).text = $"{teamTime}";
     }
+
+    public void Toggle(bool isOn)
+    {
+        if(isOn && !fader.visible)
+            fader.FadeIn();
+        else if(!isOn && fader.visible)
+            fader.FadeOut();
+    }
+
+    public void Disable() => fader.Disable();
 }

@@ -528,21 +528,19 @@ public class Networker : MonoBehaviour
 
         HandicapOverlayToggle previewToggle = GameObject.FindObjectOfType<HandicapOverlayToggle>();
         bool previewOn = previewToggle == null ? false : previewToggle.toggle.isOn;
-        
-        if(!lobby.clockToggle.isOn && !lobby.timerToggle.isOn)
+
+        if(lobby.timerToggle.isOn)
+            gameParams = new GameParams(host.team, previewOn, lobby.GetTimeInSeconds());
+        else
             gameParams = new GameParams(host.team, previewOn);
-        else if(lobby.clockToggle.isOn)
-            gameParams = new GameParams(host.team, previewOn, 0, true);
-        else if(lobby.timerToggle.isOn)
-            gameParams = new GameParams(host.team, previewOn, lobby.GetTimeInSeconds(), false);
+
 
         SendMessage(new Message(
             type: MessageType.StartMatch,
             data: new GameParams(
                 host.team == Team.White ? Team.Black : Team.White, 
                 gameParams.showMovePreviews, 
-                gameParams.timerDuration, 
-                gameParams.showClock
+                gameParams.timerDuration
             ).Serialize()
         ));
 

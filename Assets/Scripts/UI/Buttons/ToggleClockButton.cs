@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +8,29 @@ public class ToggleClockButton : MonoBehaviour
     [SerializeField] private Timers timers;
 
     private void Awake() {
+        bool shouldBeOn = PlayerPrefs.GetInt("ShowClock", true.BoolToInt()).IntToBool();
+        if(!shouldBeOn)
+        {
+            toggle.isOn = false;
+            timers.Disable();
+        }
+
         toggle.onValueChanged.AddListener(isOn => {
-            if(timers.isClock)
+            PlayerPrefs.SetInt("ShowClock", isOn.BoolToInt());
+            
+            if(timers.isClock && !isOn)
             {
                 timers.isClock = false;
-                timers.gameObject.SetActive(false);
+                timers.Toggle(false);
             }
-            else
+            else if(!timers.isClock && isOn)
             {
-                timers.gameObject.SetActive(true);
+                timers.Toggle(true);
                 timers.SetClock();
             }
         });
+
+        if(toggle.isOn != shouldBeOn)
+            toggle.isOn = shouldBeOn;
     }
 }

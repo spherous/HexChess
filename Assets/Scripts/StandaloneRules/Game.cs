@@ -10,7 +10,6 @@ public class Game
     public List<BoardState> turnHistory {get; private set;}
     public List<Promotion> promotions {get; private set;}
     public float timerDuration;
-    public bool hasClock;
     public int turnsSincePawnMovedOrPieceTaken;
     float timeOffset;
     public float CurrentTime => whiteTimekeeper.elapsed + blackTimekeeper.elapsed + timeOffset;
@@ -26,8 +25,7 @@ public class Game
         List<Promotion> promotions = null, 
         Winner winner = Winner.Pending, 
         GameEndType endType = GameEndType.Pending, 
-        float timerDuration = 0, 
-        bool hasClock = false
+        float timerDuration = 0
     )
     {
         turnHistory = history;
@@ -35,22 +33,32 @@ public class Game
         this.promotions = promotions == null ? new List<Promotion>() : promotions;
         this.endType = endType;
         this.timerDuration = timerDuration;
-        this.hasClock = hasClock;
         turnsSincePawnMovedOrPieceTaken = 0;
 
         timeOffset = GetCurrentBoardState().executedAtTime;
 
         // When loading a game that has already ended, we do not need to start the time keepers
         StartTimekeeper();
-        if(endType != GameEndType.Pending)
+        RecalculateTimekeepers();
+        whiteTimekeeper.Pause();
+        blackTimekeeper.Pause();
+        if(endType == GameEndType.Pending && GetTurnCount() > 0)
         {
-            RecalculateTimekeepers();
-            whiteTimekeeper.Pause();
-            blackTimekeeper.Pause();
+            Team currentTurn = GetCurrentTurn();
+            if(currentTurn == Team.White)
+                whiteTimekeeper.Play();
+            else if(currentTurn == Team.Black)
+                blackTimekeeper.Play();
         }
+        // if(endType != GameEndType.Pending)
+        // {
+        //     RecalculateTimekeepers();
+        //     whiteTimekeeper.Pause();
+        //     blackTimekeeper.Pause();
+        // }
     }
 
-    public Game(SerializeableGame fromGame) : this(fromGame.GetHistory(), fromGame.promotions, fromGame.winner, fromGame.endType, fromGame.timerDuration, fromGame.hasClock){}
+    public Game(SerializeableGame fromGame) : this(fromGame.GetHistory(), fromGame.promotions, fromGame.winner, fromGame.endType, fromGame.timerDuration){}
     ~Game() => KillGame();
 
     public string Serialize() => new SerializeableGame(this).Serialize();
@@ -58,19 +66,18 @@ public class Game
 
     public static Game CreateNewGame() => new Game(SerializeableGame.defaultGame);
 
-    public void ChangeTimeParams(bool showClock, float timerDuration)
+    public void ChangeTimeParams(float timerDuration)
     {
-        hasClock = showClock;
         this.timerDuration = timerDuration;
 
-        whiteTimekeeper.duration = !hasClock ? timerDuration > 0 ? timerDuration : (float?)null : (float?)null;
-        blackTimekeeper.duration = !hasClock ? timerDuration > 0 ? timerDuration : (float?)null : (float?)null;
+        whiteTimekeeper.duration = timerDuration > 0 ? timerDuration : (float?)null;
+        blackTimekeeper.duration = timerDuration > 0 ? timerDuration : (float?)null;
     }
 
     public void StartTimekeeper()
     {
-        whiteTimekeeper = new Timekeeper(!hasClock ? timerDuration > 0 ? timerDuration : (float?)null : (float?)null);
-        blackTimekeeper = new Timekeeper(!hasClock ? timerDuration > 0 ? timerDuration : (float?)null : (float?)null);
+        whiteTimekeeper = new Timekeeper(timerDuration > 0 ? timerDuration : (float?)null);
+        blackTimekeeper = new Timekeeper(timerDuration > 0 ? timerDuration : (float?)null);
 
         whiteTimekeeper.onTimerElapsed += () => Flagfall(Team.White);
         blackTimekeeper.onTimerElapsed += () => Flagfall(Team.Black);
@@ -166,8 +173,10 @@ public class Game
         
         if(updateTime)
             newState.executedAtTime = timestamp;
-        
-        if(newState.currentMove != Team.None)
+
+        if(newState.currentMove == Team.Black && GetTurnCount() == 0)
+            blackTimekeeper.Play();
+        else if(newState.currentMove != Team.None)
         {
             Timekeeper toPlay = newState.currentMove == Team.White ? whiteTimekeeper : blackTimekeeper;
             Timekeeper toPause = newState.currentMove == Team.White ? blackTimekeeper : whiteTimekeeper;

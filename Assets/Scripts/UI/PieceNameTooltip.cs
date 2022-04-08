@@ -11,6 +11,7 @@ public class PieceNameTooltip : MonoBehaviour
     [SerializeField] private GroupFader fader;
     [SerializeField] private Board board;
     [SerializeField] private TextMeshProUGUI pieceNameText;
+    OptionsPanel options;
     private Multiplayer multiplayer;
     private HandicapOverlayToggle singlePlayerHandicapOverlayToggle;
     public Vector2 offset;
@@ -31,6 +32,7 @@ public class PieceNameTooltip : MonoBehaviour
         multiplayer = GameObject.FindObjectOfType<Multiplayer>();
         if(multiplayer == null)
             singlePlayerHandicapOverlayToggle = GameObject.FindObjectOfType<HandicapOverlayToggle>();
+        options = GameObject.FindObjectOfType<OptionsPanel>();
     }
 
     private void Update() {
@@ -41,6 +43,13 @@ public class PieceNameTooltip : MonoBehaviour
 
         if(blockDisplay)
             return;
+        
+        if(options != null && options.visible)
+        {
+            if(visible)
+                Hide();
+            return;
+        }
 
         if(fader.visible)
             UpdatePosition();

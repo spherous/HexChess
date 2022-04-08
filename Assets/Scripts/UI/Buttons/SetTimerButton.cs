@@ -10,9 +10,13 @@ public class SetTimerButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TMP_InputField minuteInput;
     [SerializeField] private Timers timers;
+    [SerializeField] private Board board;
     public int defaultTimerLength;
 
     private void Awake() {
+        board.newTurn += OnNewTurn;
+        board.gameOver += OnGameOver;
+
         minuteInput.gameObject.SetActive(false);
         timerText.rectTransform.sizeDelta = new Vector2(131, timerText.rectTransform.sizeDelta.y);
         
@@ -33,8 +37,7 @@ public class SetTimerButton : MonoBehaviour
                 if(string.IsNullOrEmpty(minuteInput.text))
                     minuteInput.text = $"{defaultTimerLength}";
                 
-                if(!timers.gameObject.activeSelf)
-                    timers.gameObject.SetActive(true);
+                timers.Toggle(true);
 
                 UpdateTimers(int.Parse(minuteInput.text));
             }
@@ -44,11 +47,33 @@ public class SetTimerButton : MonoBehaviour
                 timerText.text = "Timer (off)";
                 minuteInput.gameObject.SetActive(false);
 
-                timers.SetClock();
+                timers.ClearTimer();
             }
 
             EventSystem.current.Deselect();
         });
+    }
+
+    private void OnGameOver(Game game)
+    {
+        if(gameObject.activeSelf)
+        {
+            timerToggle.isOn = false;
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnNewTurn(BoardState newState)
+    {
+        int? turnCount = board.currentGame?.GetTurnCount();
+        if(turnCount.HasValue && turnCount >= 1)
+            gameObject.SetActive(false);
+        else if(turnCount.HasValue && turnCount == 0)
+        {
+            // reset because default board is loaded
+            gameObject.SetActive(true);
+            timerToggle.isOn = false;
+        }
     }
 
     public void UpdateTimers(int minutes)

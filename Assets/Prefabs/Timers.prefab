@@ -417,6 +417,8 @@ GameObject:
   - component: {fileID: 1688065792899743478}
   - component: {fileID: 1688065792899743479}
   - component: {fileID: 5444349334522011137}
+  - component: {fileID: 2580016782338161520}
+  - component: {fileID: 1354646802873283180}
   m_Layer: 5
   m_Name: Timers
   m_TagString: Untagged
@@ -500,9 +502,37 @@ MonoBehaviour:
   whiteTimerText: {fileID: 1688065792800381493}
   blackTimerText: {fileID: 1688065792873169888}
   timeControlText: {fileID: 1779896923919403875}
+  fader: {fileID: 1354646802873283180}
   regFont: {fileID: 11400000, guid: 4624f28474ef8084f8da567463334752, type: 2}
   boldFont: {fileID: 11400000, guid: 96eb8ac7d62b3c64cb77185a3843de8a, type: 2}
   isClock: 0
+--- !u!225 &2580016782338161520
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688065792899743474}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1354646802873283180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688065792899743474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f952a8369694bf42a43c0cffae1eec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _group: {fileID: 2580016782338161520}
+  fadeDuration: 0.15
+  visibleOnStart: 1
 --- !u!1 &1688065794077775172
 GameObject:
   m_ObjectHideFlags: 0

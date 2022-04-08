@@ -14,7 +14,6 @@ public struct SerializeableGame
     public Winner winner;
     public GameEndType endType;
     public float timerDuration;
-    public bool hasClock;
 
     public SerializeableGame(Game game)
     {
@@ -29,7 +28,6 @@ public struct SerializeableGame
         this.winner = game.winner;
         this.endType = game.endType;
         this.timerDuration = game.timerDuration;
-        this.hasClock = game.hasClock;
     }
 
     public string Serialize() => JsonConvert.SerializeObject(this);

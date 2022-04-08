@@ -26,6 +26,8 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     List<TwigglyButton> otherTwigglyButtons = new List<TwigglyButton>();
 
+    bool hovered = false;
+
     protected void Awake() {
         if(image != null)
             image.sprite = normalState;
@@ -42,10 +44,19 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             tb.SetNorm();
     }
 
-    public void OnPointerUp(PointerEventData eventData){}
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(image != null)    
+            image.sprite = hovered ? hoveredState : normalState;
+        
+        if(hovered)
+            arrowAnim?.Show();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        hovered = true;
+
         if(changeTextColor && text != null)
             text.color = hoverColor;
         else if(!changeTextColor && image != null)
@@ -60,6 +71,8 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        hovered = false;
+
         if(changeTextColor && text != null)
             text.color = normalTextColor;
         else if(!changeTextColor && image != null)

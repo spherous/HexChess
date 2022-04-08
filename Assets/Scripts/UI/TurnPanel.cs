@@ -60,7 +60,7 @@ public class TurnPanel : MonoBehaviour
         float gameLength = game.GetGameLength();
         string formattedGameLength = TimeSpan.FromSeconds(gameLength).ToString(gameLength.GetStringFromSeconds());
         int turnCount = game.GetTurnCount();
-        string durationString = game.timerDuration == 0 && !game.hasClock 
+        string durationString = game.timerDuration == 0 && !PlayerPrefs.GetInt("ShowClock", 1).IntToBool()
             ? $"On turn {turnCount}" 
             : $"On turn {turnCount} in {formattedGameLength}";
 
