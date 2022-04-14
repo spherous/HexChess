@@ -3,6 +3,7 @@ using System.Linq;
 using Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -10,7 +11,6 @@ public class TurnHistoryPanel : MonoBehaviour
 {
     [SerializeField] private Scrollbar scrollBar;
     [SerializeField] private MovePanel movePanelPrefab;
-    [SerializeField] private MovePanel startPanelPrefab;
     [SerializeField] private RectTransform collectionContainer;
     [SerializeField] private Board board;
     [SerializeField] private SelectPiece selectPiece;
@@ -18,12 +18,8 @@ public class TurnHistoryPanel : MonoBehaviour
     [SerializeField] private TurnPanel turnPanel;
     [SerializeField] private ArrowTool arrowTool;
     [SerializeField] private NotationFormToggle notationForm;
-    MovePanel startPanel;
     MovePanel lastMovePanel;
     [ShowInInspector, ReadOnly] private List<MovePanel> panels = new List<MovePanel>();
-
-    private float whiteTotal = 0;
-    private float blackTotal = 0;
 
     public (int index, Team team) panelPointer {get; private set;} = (0, Team.None);
     public (int index, Team team) currentTurnPointer {get; private set;} = (0, Team.None);
@@ -34,27 +30,15 @@ public class TurnHistoryPanel : MonoBehaviour
     FreePlaceModeToggle freePlaceModeToggle;
     bool isFreePlaceMode => freePlaceModeToggle != null && freePlaceModeToggle.toggle.isOn;
 
-    // [SerializeField] private Toggle shortFormToggle;
     public NotationType notationToUse => PlayerPrefs.GetInt("NotationType", 0).IntToBool() ? NotationType.ShortForm : NotationType.LongForm;
     private void Awake() 
     {
         board.newTurn += NewTurn;
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
         freePlaceModeToggle = GameObject.FindObjectOfType<FreePlaceModeToggle>();
-        // shortFormToggle.isOn = PlayerPrefs.GetInt("NotationType", 0) == 1;
     }
     private void Start() 
     {
-        startPanel = Instantiate(startPanelPrefab, collectionContainer);
-        startPanel.SetDark();
-        startPanel.ClearHighlight();
-        foreach(Team team in EnumArray<Team>.Values)
-        {
-            if(team == Team.None)
-                continue;
-
-            startPanel.SetTimestamp(0, team);
-        }
         if(notationForm != null)
             notationForm.onValueChanged += NotationChanged;
     }
@@ -71,7 +55,12 @@ public class TurnHistoryPanel : MonoBehaviour
         if(traverseDir.HasValue && Time.timeSinceLevelLoad >= traverseAtTime)
         {
             traverseAtTime = Time.timeSinceLevelLoad + traverseDelay;
-            HistoryStep(traverseDir.Value);
+            if(traverseDir.Value > 1)
+                JumpForwardTen();
+            else if(traverseDir.Value < -1)
+                JumpBackwardTen();
+            else
+                HistoryStep(traverseDir.Value);
         }
     }
 
@@ -160,9 +149,6 @@ public class TurnHistoryPanel : MonoBehaviour
             lastMovePanel.ClearTimestamp(Team.Black);
             lastMovePanel.ClearDeltaTime(Team.Black);
 
-            whiteTotal += lastMove.duration;
-            startPanel.SetTimestamp(whiteTotal, Team.White);
-
             lastMovePanel.HighlightTeam(Team.White);
             panelPointer = (panels.Count - 1, Team.White);
             currentTurnPointer = panelPointer;
@@ -171,9 +157,6 @@ public class TurnHistoryPanel : MonoBehaviour
         {
             lastMovePanel?.SetMove(newState, lastMove, notationToUse);
             lastMovePanel?.SetTimestamp(newState.executedAtTime, Team.Black);
-
-            blackTotal += lastMove.duration;
-            startPanel?.SetTimestamp(blackTotal, Team.Black);
 
             lastMovePanel?.HighlightTeam(Team.Black);
             panelPointer = (panels.Count - 1, Team.Black);
@@ -204,28 +187,27 @@ public class TurnHistoryPanel : MonoBehaviour
         else if(val > 0 && panelPointer.team == Team.White && panelPointer.index == currentTurnPointer.index && currentTurnPointer.team == Team.White)
             return;
 
-        (int index, Team team) previousPointer = panelPointer;
+        (int index, Team team) targetPointer = panelPointer;
+
         // Calculate the new index based on the button pressed and the previous index
-        int newIndex = (previousPointer.team == Team.White && val == -1) || (previousPointer.team == Team.Black && val == 1)
-            ? Mathf.Clamp(previousPointer.index + val, 0, panels.Count - 1)
-            : previousPointer.index;
+        if((panelPointer.team == Team.White && val == -1) || (panelPointer.team == Team.Black && val == 1))
+            targetPointer.index = Mathf.Clamp(panelPointer.index + val, 0, panels.Count - 1);
 
-        Team newTeam = previousPointer.team == Team.White ? Team.Black : Team.White;
+        targetPointer.team = panelPointer.team.Enemy();
 
-        HistoryJump((newIndex, newTeam));
+        HistoryJump(targetPointer);
     }
 
     public void HistoryStep(CallbackContext context)
     {
         // This is called when the user presses left/right arrows
-
         if(panels.Count == 0)
             return;
 
         // Will be 1, 0, or -1
         int val = (int)context.ReadValue<float>();
         if(context.started)
-            traverseDir = val;
+            traverseDir = Keyboard.current.shiftKey.isPressed ? val * 10 : val;
         else if(context.canceled)
         {
             traverseDir = null;
@@ -291,4 +273,21 @@ public class TurnHistoryPanel : MonoBehaviour
 
     public void JumpToFirst() => HistoryJump((0, Team.White), 0);
     public void JumpToPresent() => HistoryJump(currentTurnPointer, 1);
+
+    public void JumpForwardTen()
+    {
+        (int index, Team team) target = (panelPointer.index + 10, panelPointer.team);
+        if(target.index > currentTurnPointer.index && currentTurnPointer.team == Team.Black && panelPointer.team == Team.White)
+            target.team = Team.Black;
+        else if(target.index >= currentTurnPointer.index && currentTurnPointer.team == Team.White && panelPointer.team == Team.Black)
+            target.team = Team.White;
+        target.index = Mathf.Clamp(target.index, 0, currentTurnPointer.index);
+        HistoryJump(target);
+    }
+    public void JumpBackwardTen()
+    {
+        int targetIndex = panelPointer.index - 10;
+        Team targetTeam = targetIndex < 0 && panelPointer.team == Team.Black ? Team.White : panelPointer.team;
+        HistoryJump((Mathf.Clamp(targetIndex, 0, currentTurnPointer.index), targetTeam));
+    }
 }

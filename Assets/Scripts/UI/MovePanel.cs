@@ -14,11 +14,15 @@ public class MovePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI blackTimestamp;
     [SerializeField] private TextMeshProUGUI whiteDeltaTime;
     [SerializeField] private TextMeshProUGUI blackDeltaTime;
-    [SerializeField] private Image background;
+    // [SerializeField] private Image background;
     [SerializeField] private Image whiteBG;
     [SerializeField] private Image blackBG;
-    public Color darkColor;
-    public Color lightColor;
+    [SerializeField] private Image whiteHighlighter;
+    [SerializeField] private Image blackHighlighter;
+    public Color darkA;
+    public Color darkB;
+    public Color lightA;
+    public Color lightB;
     Board board;
     TurnHistoryPanel historyPanel;
     public BoardState whiteState {get; private set;}
@@ -92,23 +96,35 @@ public class MovePanel : MonoBehaviour
     }
 
     public void SetTurnNumber(int val) => turnNumberText.text = $"{val}";
-    public void SetDark() => background.color = darkColor;
-    public void SetLight() => background.color = lightColor;
-    public void FlipColor() => background.color = background.color == darkColor ? lightColor : darkColor;
+    public void SetDark()
+    {
+        whiteBG.color = lightB;
+        blackBG.color = darkB;
+    }
+    public void SetLight()
+    {
+        whiteBG.color = lightA;
+        blackBG.color = darkA;
+    }
+    public void FlipColor()
+    {
+        whiteBG.color = whiteBG.color == lightA ? lightB : lightA;
+        blackBG.color = blackBG.color == darkA ? darkB : darkA;
+    }
     public void HighlightTeam(Team team)
     {
-        Image toChange = team == Team.White ? whiteBG : blackBG;
-        Image other = team == Team.White ? blackBG : whiteBG;
+        Image toChange = team == Team.White ? whiteHighlighter : blackHighlighter;
+        Image other = team == Team.White ? blackHighlighter : whiteHighlighter;
         toChange.enabled = true;
         other.enabled = false;
     }
 
     public void ClearHighlight()
     {
-        if(whiteBG == null || blackBG == null)
+        if(whiteHighlighter == null || blackHighlighter == null)
             return;
-        whiteBG.enabled = false;
-        blackBG.enabled = false;
+        whiteHighlighter.enabled = false;
+        blackHighlighter.enabled = false;
     }
     public BoardState GetState(Team team) => team == Team.White ? whiteState : blackState;
     public bool TryGetState(Team team, out BoardState state)

@@ -65,7 +65,10 @@ public class SetTimerButton : MonoBehaviour
 
     private void OnNewTurn(BoardState newState)
     {
-        int? turnCount = board.currentGame?.GetTurnCount();
+        // Note we use currentGame.GetTurnCount instead of board.GetTurnCount.
+        // Because board.GetTurnCount accounts for what turn the player may be looking at in history
+        // But we don't care about the history, only the most current turn count.
+        int? turnCount = board.currentGame?.GetTurnCount(); 
         if(turnCount.HasValue && turnCount >= 1)
             gameObject.SetActive(false);
         else if(turnCount.HasValue && turnCount == 0)

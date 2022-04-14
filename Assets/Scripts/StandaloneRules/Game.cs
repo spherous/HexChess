@@ -37,11 +37,13 @@ public class Game
 
         timeOffset = GetCurrentBoardState().executedAtTime;
 
-        // When loading a game that has already ended, we do not need to start the time keepers
         StartTimekeeper();
         RecalculateTimekeepers();
         whiteTimekeeper.Pause();
         blackTimekeeper.Pause();
+
+        // When loading a game that has already ended, we do not need to start the timekeepers.
+        // But if the game has not ended, as long as white has played their first move, we want to start the correct timekeeper.
         if(endType == GameEndType.Pending && GetTurnCount() > 0)
         {
             Team currentTurn = GetCurrentTurn();
@@ -50,12 +52,6 @@ public class Game
             else if(currentTurn == Team.Black)
                 blackTimekeeper.Play();
         }
-        // if(endType != GameEndType.Pending)
-        // {
-        //     RecalculateTimekeepers();
-        //     whiteTimekeeper.Pause();
-        //     blackTimekeeper.Pause();
-        // }
     }
 
     public Game(SerializeableGame fromGame) : this(fromGame.GetHistory(), fromGame.promotions, fromGame.winner, fromGame.endType, fromGame.timerDuration){}
