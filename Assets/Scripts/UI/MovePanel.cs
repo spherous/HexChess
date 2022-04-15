@@ -14,11 +14,12 @@ public class MovePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI blackTimestamp;
     [SerializeField] private TextMeshProUGUI whiteDeltaTime;
     [SerializeField] private TextMeshProUGUI blackDeltaTime;
-    // [SerializeField] private Image background;
     [SerializeField] private Image whiteBG;
     [SerializeField] private Image blackBG;
     [SerializeField] private Image whiteHighlighter;
     [SerializeField] private Image blackHighlighter;
+    public Color lightOrange;
+    public Color darkOrange;
     public Color darkA;
     public Color darkB;
     public Color lightA;
@@ -117,12 +118,21 @@ public class MovePanel : MonoBehaviour
         Image other = team == Team.White ? blackHighlighter : whiteHighlighter;
         toChange.enabled = true;
         other.enabled = false;
+
+        if(team == Team.White)
+            whiteDeltaTime.color = lightOrange;
+        else if(team == Team.Black && whiteDeltaTime.color == lightOrange)
+            whiteDeltaTime.color = darkOrange;
     }
 
     public void ClearHighlight()
     {
         if(whiteHighlighter == null || blackHighlighter == null)
             return;
+        
+        if(whiteDeltaTime.color != darkOrange)
+            whiteDeltaTime.color = darkOrange;
+            
         whiteHighlighter.enabled = false;
         blackHighlighter.enabled = false;
     }

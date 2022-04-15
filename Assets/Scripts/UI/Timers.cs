@@ -154,7 +154,7 @@ public class Timers : MonoBehaviour
     {
         if(team == Team.None)
             return;
-
+        
         GetTeamText(team).text = TimeSpan.FromSeconds(seconds).ToString(seconds.GetStringFromSeconds());
     }
 
@@ -162,10 +162,9 @@ public class Timers : MonoBehaviour
     {
         if(team == Team.None)
             return;
+            
         float remaining = timerDruation - seconds;
-        string teamTime = TimeSpan.FromSeconds(remaining).ToString(remaining.GetStringFromSeconds());
-        
-        GetTeamText(team).text = $"{teamTime}";
+        GetTeamText(team).text = $"{TimeSpan.FromSeconds(remaining).ToString(remaining.GetStringFromSeconds())}";
     }
 
     public void Toggle(bool isOn)

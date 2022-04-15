@@ -378,8 +378,7 @@ public class Networker : MonoBehaviour
                 string localName = PlayerPrefs.GetString("PlayerName", "GUEST");
                 player = new Player(localName, Team.Black, false);
 
-                mainThreadActions.Enqueue(() => 
-                {
+                mainThreadActions.Enqueue(() => {
                     LoadLobby(Lobby.Type.Client);
                     lobby?.UpdatePlayerName(host);
                 });

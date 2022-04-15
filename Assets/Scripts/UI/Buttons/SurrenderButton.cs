@@ -1,8 +1,6 @@
 using System.Text;
 using Newtonsoft.Json;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SurrenderButton : TwigglyButton
 {
@@ -13,6 +11,7 @@ public class SurrenderButton : TwigglyButton
         board = GameObject.FindObjectOfType<Board>();
         onClick += Surrender;
         board.gameOver += GameOver;
+        board.newTurn += NewTurn;
     }
 
     private void Surrender()
@@ -32,11 +31,19 @@ public class SurrenderButton : TwigglyButton
             board.currentGame.Surrender(board.GetCurrentTurn());
     }
 
+    private void NewTurn(BoardState newState)
+    {
+        if(!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+            onClick += Surrender;
+        }
+    }
+
     private void GameOver(Game game)
     {
-        board.gameOver -= GameOver;
         onClick -= Surrender;
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

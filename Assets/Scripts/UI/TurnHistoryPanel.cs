@@ -3,6 +3,7 @@ using System.Linq;
 using Extensions;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.InputAction;
@@ -174,6 +175,8 @@ public class TurnHistoryPanel : MonoBehaviour
 
     public void HistoryStep(int val)
     {
+        EventSystem.current.Deselect();
+        
         if(panels.Count == 0)
             return;
         
@@ -195,7 +198,7 @@ public class TurnHistoryPanel : MonoBehaviour
 
         targetPointer.team = panelPointer.team.Enemy();
 
-        HistoryJump(targetPointer);
+        HistoryJump(targetPointer, (float)targetPointer.index / (float)currentTurnPointer.index);
     }
 
     public void HistoryStep(CallbackContext context)
@@ -230,6 +233,8 @@ public class TurnHistoryPanel : MonoBehaviour
 
     public void HistoryJump((int index, Team team) pointer, float? scrollBarVal = null)
     {
+        EventSystem.current.Deselect();
+
         if(panels.Count == 0)
             return;
         
@@ -282,12 +287,12 @@ public class TurnHistoryPanel : MonoBehaviour
         else if(target.index >= currentTurnPointer.index && currentTurnPointer.team == Team.White && panelPointer.team == Team.Black)
             target.team = Team.White;
         target.index = Mathf.Clamp(target.index, 0, currentTurnPointer.index);
-        HistoryJump(target);
+        HistoryJump(target, (float)target.index / (float)currentTurnPointer.index);
     }
     public void JumpBackwardTen()
     {
         int targetIndex = panelPointer.index - 10;
         Team targetTeam = targetIndex < 0 && panelPointer.team == Team.Black ? Team.White : panelPointer.team;
-        HistoryJump((Mathf.Clamp(targetIndex, 0, currentTurnPointer.index), targetTeam));
+        HistoryJump((Mathf.Clamp(targetIndex, 0, currentTurnPointer.index), targetTeam), (float)targetIndex / (float)currentTurnPointer.index);
     }
 }

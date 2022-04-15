@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LeaveScenePanel : MonoBehaviour
@@ -10,10 +7,14 @@ public class LeaveScenePanel : MonoBehaviour
 
     private void Awake() {
         board.gameOver += GameOver;
+        board.newTurn += NewTurn;
     }
 
-    private void GameOver(Game game)
+    private void NewTurn(BoardState newState)
     {
-        fader?.FadeIn();
+        if(fader.visible)
+            fader.FadeOut();
     }
+
+    private void GameOver(Game game) => fader?.FadeIn();
 }

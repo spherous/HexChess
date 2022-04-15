@@ -11,11 +11,14 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     [SerializeField] private ButtonArrowAnim arrowAnim;
     [SerializeField] private Image image;
+    [SerializeField] private Image icon;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] protected TextMeshProUGUI text;
     public bool changeTextColor = true;
+    public bool changeColorOnPress = false;
     public Color hoverColor;
     public Color normalTextColor = Color.white;
+    public Color pressedColor;
     public List<AudioClip> clips = new List<AudioClip>();
     public Sprite normalState;
     public Sprite hoveredState;
@@ -39,15 +42,25 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         // set selected
         arrowAnim?.Hide();
         if(image != null)
+        {
             image.sprite = selectedState;
+
+            if(changeColorOnPress)
+                image.color = pressedColor;
+        }
         foreach(var tb in otherTwigglyButtons)
             tb.SetNorm();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(image != null)    
+        if(image != null)
+        {
             image.sprite = hovered ? hoveredState : normalState;
+
+            if(changeColorOnPress)
+                image.color = hovered ? hoverColor : normalTextColor;
+        }  
         
         if(hovered)
             arrowAnim?.Show();
@@ -60,7 +73,11 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if(changeTextColor && text != null)
             text.color = hoverColor;
         else if(!changeTextColor && image != null)
+        {
             image.color = hoverColor;
+            if(icon != null)
+                icon.color = normalTextColor;
+        }
 
         // start hover animation
         if(image != null)
@@ -76,7 +93,11 @@ public class TwigglyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if(changeTextColor && text != null)
             text.color = normalTextColor;
         else if(!changeTextColor && image != null)
+        {
             image.color = normalTextColor;
+            if(icon != null)
+                icon.color = hoverColor;
+        }
 
         // stop animation, to go normal or selected depending if clicked
         if(image != null && image.sprite != selectedState)
