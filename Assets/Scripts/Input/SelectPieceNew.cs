@@ -22,7 +22,6 @@ public class SelectPieceNew : MonoBehaviour
     private FreePlaceModeToggle freePlaceMode;
     [SerializeField] private LastMoveTracker lastMoveTracker;
     bool isFreeplaced => !multiplayer && freePlaceMode.toggle.isOn;
-    private bool hoverExitedInitialHex = false;
     List<(Hex, MoveType)> pieceMoves = new List<(Hex, MoveType)>();
     List<(Hex, MoveType)> previewMoves = new List<(Hex, MoveType)>();
     public List<Color> moveTypeHighlightColors = new List<Color>();
@@ -84,30 +83,25 @@ public class SelectPieceNew : MonoBehaviour
         if(hoveredHex == null)
             return;
 
-        if(board.TryGetIPieceFromIndex(hoveredHex.index, out IPiece hoveredPiece))
+        if(board.TryGetIPieceFromIndex(hoveredHex.index, out IPiece hoveredPiece) && hoveredPiece != selectedPiece)
         {
-            if(hoveredPiece != selectedPiece)
-            {
-                if(hoveredPiece == lastChangedPiece)
-                    return;
+            if(hoveredPiece == lastChangedPiece)
+                return;
 
-                if(lastChangedPiece != null)
-                    ResetLastChangedRenderer();
-
-                Color toSet = hoveredPiece.team == Team.White ? whiteColor : blackColor;
-
-                // colorize for attack
-                if(pieceMoves.Contains((hoveredHex, MoveType.Attack)) || pieceMoves.Contains((hoveredHex, MoveType.EnPassant)))
-                    toSet = redColor;
-                // colorize for defend or move
-                else if(pieceMoves.Contains((hoveredHex, MoveType.Defend)) || pieceMoves.Contains((hoveredHex, MoveType.Move)))
-                    toSet = greenColor;
-
-                hoveredPiece.HighlightWithColor(toSet);
-                lastChangedPiece = hoveredPiece;
-            }
-            else if(lastChangedPiece != null)
+            if(lastChangedPiece != null)
                 ResetLastChangedRenderer();
+
+            Color toSet = hoveredPiece.team == Team.White ? whiteColor : blackColor;
+
+            // colorize for attack
+            if(pieceMoves.Contains((hoveredHex, MoveType.Attack)) || pieceMoves.Contains((hoveredHex, MoveType.EnPassant)))
+                toSet = redColor;
+            // colorize for defend or move
+            else if(pieceMoves.Contains((hoveredHex, MoveType.Defend)) || pieceMoves.Contains((hoveredHex, MoveType.Move)))
+                toSet = greenColor;
+
+            hoveredPiece.HighlightWithColor(toSet);
+            lastChangedPiece = hoveredPiece;
         }
         else if(lastChangedPiece != null)
             ResetLastChangedRenderer();
@@ -118,7 +112,6 @@ public class SelectPieceNew : MonoBehaviour
         if(hex == null)
         {
             onMouse.SetColor(redColor);
-            hoverExitedInitialHex = true;
             return;
         }
 
@@ -126,17 +119,12 @@ public class SelectPieceNew : MonoBehaviour
             || pieceMoves.Contains((hex, MoveType.Move))
             || pieceMoves.Contains((hex, MoveType.Defend))
             || pieceMoves.Contains((hex, MoveType.EnPassant))
-        ){
+        )
             onMouse.SetColor(greenColor);
-            hoverExitedInitialHex = true;
-        }
-        else if(selectedPiece.location == hex.index && !hoverExitedInitialHex)
+        else if(selectedPiece.location == hex.index)
             onMouse.SetColor(selectedPiece.team == Team.White ? whiteColor : blackColor);
         else
-        {
             onMouse.SetColor(redColor);
-            hoverExitedInitialHex = true;
-        }
     }
 
     private void ResetLastChangedRenderer()
@@ -472,7 +460,6 @@ public class SelectPieceNew : MonoBehaviour
             board.GetHexIfInBounds(fromIndex).ToggleSelect();
 
         onMouse.PutDown();
-        hoverExitedInitialHex = false;
         
         selectedPiece = null;
     }

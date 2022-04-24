@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class FoldoutPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class FoldoutPanel : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private RectTransform panel;
     [SerializeField] private RectTransform arrow;
@@ -54,19 +51,8 @@ public class FoldoutPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Clicked");
         arrow.localScale = new Vector3(1, arrow.localScale.y * -1, 1);
         changing = isOpen ? TriSign.Negative : TriSign.Positive;
         ellapsed = 0f;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        Debug.Log("Exit");
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        Debug.Log("Enter");
     }
 }
