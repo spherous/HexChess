@@ -12,6 +12,13 @@ public class VirtualCursor : MonoBehaviour
     public bool visible {get; private set;} = true;
 
     Camera cam;
+    MouseData mouseData;
+    SmoothHalfOrbitalCamera smoothCamera;
+    OnMouse onMouse;
+    OptionsPanel optionsPanel;
+    Board board;
+    TurnHistoryPanel historyPanel;
+
     public CursorType currentType {get; private set;}
 
     private void Awake()
@@ -21,10 +28,18 @@ public class VirtualCursor : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         else
             Destroy(gameObject);
-    } 
+
+        TryFetchData();
+    }
+
+    private void Start() => SetCursor(CursorType.Default);
+    
     private void OnEnable() => SceneManager.sceneLoaded += SceneChanged;
     private void OnDisable() => SceneManager.sceneLoaded -= SceneChanged;
-    private void Start() => SetCursor(CursorType.Default);
+    private void OnDestroy() {
+        if(mouseData != null)
+            mouseData.onHoverIPiece -= OnHoverIPiece;
+    }
 
     public void Hide()
     {
@@ -36,12 +51,66 @@ public class VirtualCursor : MonoBehaviour
     {
         visible = true;
         SetCursor(CursorType.Default, true);
-    } 
+    }
 
-    private void SceneChanged(Scene arg0, LoadSceneMode arg1)
+    private void SceneChanged(Scene arg0, LoadSceneMode arg1) => TryFetchData();
+
+    private void TryFetchData()
+    {
+        TryFetchMouseData();
+        TryFetchCamera();
+        optionsPanel ??= GameObject.FindObjectOfType<OptionsPanel>();
+        board ??= GameObject.FindObjectOfType<Board>();
+        historyPanel ??= GameObject.FindObjectOfType<TurnHistoryPanel>();
+    }
+
+    private void TryFetchMouseData()
+    {
+        if(mouseData == null)
+        {
+            mouseData = GameObject.FindObjectOfType<MouseData>();
+            if(mouseData != null)
+                mouseData.onHoverIPiece += OnHoverIPiece;
+        }
+
+        onMouse ??= GameObject.FindObjectOfType<OnMouse>();
+    }
+
+    private void TryFetchCamera()
     {
         Camera mainCam = Camera.main;
         cam = mainCam.transform.childCount == 0 ? mainCam : mainCam.transform.GetChild(0).GetComponent<Camera>();
+        smoothCamera ??= GameObject.FindObjectOfType<SmoothHalfOrbitalCamera>();
+    }
+
+    private void OnHoverIPiece(IPiece hoveredIPiece)
+    {
+        // No cursor is being shown then, maybe later add a sphere spinny icon?
+        if(smoothCamera != null && smoothCamera.freeLooking)
+            return;
+        // Player is already holding a piece, so should be using grabby hand, lets not change that to an open hand
+        else if(onMouse != null && onMouse.isPickedUp)
+            return;
+        // Options covers the board, so don't change based on board info while it's open
+        else if(optionsPanel != null && optionsPanel.visible)
+            return;
+        // While viewing moves that have already happened, do not change the cursor to a hand.
+        // When implementing lines, this will change.
+        else if(historyPanel != null && !historyPanel.isShowingCurrentTurn)
+            return;
+        // When the player is drawing an arrow, we do not want to change the cursor
+        else if(currentType != CursorType.Pencil) 
+            return;
+        else if(board == null)
+            return;
+        else if(!board.IsPlayerTurn())
+            return;
+
+        // If the piece is on our team, become hand
+        if(hoveredIPiece != null && hoveredIPiece.team == board.GetCurrentTurn())
+            SetCursor(CursorType.Hand);
+        else
+            SetCursor(CursorType.Default);
     }
 
     private void Update() {

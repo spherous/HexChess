@@ -7,7 +7,6 @@ using UnityEngine.Rendering.Universal;
 public class SmoothHalfOrbitalCamera : MonoBehaviour
 {
     [SerializeField] Keys keys;
-
     [SerializeField] Team team;
     public Team Team
     {
@@ -37,6 +36,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
     [SerializeField] MultiCamOptions options;
 
     [SerializeField, HideInInspector] SelectPiece selectPiece;
+    
 
     public bool freeLooking { get; private set; }
 
@@ -48,6 +48,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     bool needsReset = false;
     VirtualCursor cursor;
+    OnMouse onMouse;
     PieceNameTooltip tooltip;
     #endregion
 
@@ -69,6 +70,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     void Awake()
     {
+        onMouse = GameObject.FindObjectOfType<OnMouse>();
         cursor = GameObject.FindObjectOfType<VirtualCursor>();
         selectedView = PlayerPrefs.GetInt("CameraView", 0);
         selectedView = Mathf.Clamp(selectedView, 0, views.Length - 1);
@@ -175,6 +177,9 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
         if(context.started)
         {
+            if(onMouse != null && onMouse.isPickedUp)
+                return;
+                
             var mousePos = Mouse.current.position.ReadValue();
             if(mousePos.x >= 0 && mousePos.x <= Screen.width && mousePos.y >= 0 && mousePos.y <= Screen.height)
                 StartRotating();
@@ -197,6 +202,7 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
 
     void StartRotating()
     {
+        keys.Clear();
         Cursor.lockState = CursorLockMode.Locked;
         cursor?.SetCursor(CursorType.Default);
         cursor?.Hide();
@@ -250,7 +256,6 @@ public class SmoothHalfOrbitalCamera : MonoBehaviour
                         Cursor.lockState = CursorLockMode.None;
                     needsReset = false;
                     cameraRotation = Vector3.zero;
-                    // cursor?.Show();
                     StartCoroutine(EndOfFrameWork());
                 }
             }

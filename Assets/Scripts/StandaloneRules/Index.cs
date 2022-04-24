@@ -29,6 +29,8 @@ public struct Index
 
     public Index(int rank, char file)
     {
+        file = char.ToUpper(file);
+
         if(rank < 1 || rank > 10)
             throw new ArgumentOutOfRangeException(nameof(rank), "Rank must be between 1-10 inclusive");
         if(file < 'A' || file > 'I')
@@ -54,7 +56,6 @@ public struct Index
 
         var startingRow = tallFile ? 0 : 1;
         this.row = startingRow + ((rank - 1) * 2);
-
     }
     public Index(int row, int col)
     {
@@ -93,11 +94,11 @@ public struct Index
         bool isEven = row % 2 == 0;
 
         return col switch {
-            0 when !isEven => 'A', 0 when isEven => 'B',
-            1 when !isEven => 'C', 1 when isEven => 'D',
-            2 when !isEven => 'E', 2 when isEven => 'F',
-            3 when !isEven => 'G', 3 when isEven => 'H',
-            4 => 'I', _ => 'J'
+            0 when !isEven => 'a', 0 when isEven => 'b',
+            1 when !isEven => 'c', 1 when isEven => 'd',
+            2 when !isEven => 'e', 2 when isEven => 'f',
+            3 when !isEven => 'g', 3 when isEven => 'h',
+            4 => 'i', _ => 'j'
         };
     }
 

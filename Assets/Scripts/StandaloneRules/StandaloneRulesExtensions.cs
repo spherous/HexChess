@@ -23,13 +23,13 @@ namespace Extensions
         public static bool IsPawn(this Piece piece) => piece >= Piece.Pawn1;
 
         public static string GetPieceShortString(this Piece piece) => piece switch{
-            Piece.King => "k", 
-            Piece.Queen => "q",
-            Piece p when p.IsRook() => "r",
-            Piece p when p.IsKnight() => "n",
-            Piece p when p.IsBishop() => "b",
-            Piece p when p.IsSquire() => "s",
-            Piece p when p.IsPawn() => "p",
+            Piece.King => "K", 
+            Piece.Queen => "Q",
+            Piece p when p.IsRook() => "R",
+            Piece p when p.IsKnight() => "N",
+            Piece p when p.IsBishop() => "B",
+            Piece p when p.IsSquire() => "S",
+            Piece p when p.IsPawn() => "P",
             _ => ""
         };
 

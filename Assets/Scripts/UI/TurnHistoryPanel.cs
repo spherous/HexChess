@@ -24,6 +24,9 @@ public class TurnHistoryPanel : MonoBehaviour
 
     public (int index, Team team) panelPointer {get; private set;} = (0, Team.None);
     public (int index, Team team) currentTurnPointer {get; private set;} = (0, Team.None);
+
+    public bool isShowingCurrentTurn => panelPointer == currentTurnPointer;
+
     int? traverseDir = null;
     public float traverseDelay = 0.25f;
     private float traverseAtTime;
@@ -187,7 +190,7 @@ public class TurnHistoryPanel : MonoBehaviour
         else if(panelPointer.index == 0 && val < 0 && panelPointer.team == Team.White)
             return;
         // Prevent moving to the current pending move
-        else if(val > 0 && panelPointer.team == Team.White && panelPointer.index == currentTurnPointer.index && currentTurnPointer.team == Team.White)
+        else if(val > 0 && panelPointer.team == Team.White && isShowingCurrentTurn && currentTurnPointer.team == Team.White)
             return;
 
         (int index, Team team) targetPointer = panelPointer;
@@ -269,7 +272,7 @@ public class TurnHistoryPanel : MonoBehaviour
             lastMoveTracker.UpdateText(move);
 
             // Determine if it's game over or not. If so, call turnPanel.GameOver
-            if(board.currentGame.endType == GameEndType.Pending || panelPointer != currentTurnPointer)
+            if(board.currentGame.endType == GameEndType.Pending || !isShowingCurrentTurn)
                 turnPanel.NewTurn(state, move.lastTeam == Team.Black ? move.turn + 1 : move.turn);
             else
                 turnPanel.SetGameEndText(board.currentGame);

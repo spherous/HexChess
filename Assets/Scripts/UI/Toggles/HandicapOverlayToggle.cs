@@ -10,7 +10,7 @@ public class HandicapOverlayToggle : MonoBehaviour
 
     private void Awake()
     {
-        toggle.isOn = PlayerPrefs.GetInt("HandicapOverlay", 1).IntToBool();
+        toggle.isOn = PlayerPrefs.GetInt("HandicapOverlay", true.BoolToInt()).IntToBool();
 
         networker = GameObject.FindObjectOfType<Networker>();
 

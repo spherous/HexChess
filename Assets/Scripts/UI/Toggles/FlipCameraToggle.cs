@@ -9,7 +9,7 @@ public class FlipCameraToggle : MonoBehaviour
 
     private void Awake()
     {
-        toggle.isOn = PlayerPrefs.GetInt("AutoFlipCam", 1).IntToBool();
+        toggle.isOn = PlayerPrefs.GetInt("AutoFlipCam", true.BoolToInt()).IntToBool();
         toggle.onValueChanged.AddListener(newVal => 
             PlayerPrefs.SetInt("AutoFlipCam", newVal.BoolToInt())
         );

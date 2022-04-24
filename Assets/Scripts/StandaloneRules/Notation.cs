@@ -4,6 +4,12 @@ using Extensions;
 
 public static class Notation
 {
+    public const string defendNotation = "-";
+    public const string swapNotation = "~";
+    public const string moveNotation = "m";
+    public const string captureNotation = "x";
+    public const string checkNotation = "+";
+    public const string checkmateNotation = "#";
     public static string Get(BoardState boardState, Move move, List<Promotion> promotions, NotationType notationType = NotationType.LongForm)
     {
         if(move.lastTeam == Team.None)
@@ -12,15 +18,15 @@ public static class Notation
         string fromIndex = move.from.GetKey();
         string toIndex = move.to.GetKey();
         string piece = GetStringForPiece(move.lastPiece, move.lastTeam, promotions, move);
-        string type = move.capturedPiece.HasValue ? "x" : move.defendedPiece.HasValue ? "d" : "m";
+        string type = move.capturedPiece.HasValue ? captureNotation : move.defendedPiece.HasValue ? defendNotation : moveNotation;
         
         // When using freeplace mode, you can swap non-rook pieces, we want to clearly label that as a swap and not a defend unless a rook is involved
-        if(type == "d" && !HexachessagonEngine.GetRealPiece((move.lastTeam, move.lastPiece), promotions).IsRook())
-            type = "-";
+        if(type == defendNotation && !HexachessagonEngine.GetRealPiece((move.lastTeam, move.lastPiece), promotions).IsRook())
+            type = swapNotation;
 
         string otherPiece = type switch{
-            "x" => GetStringForPiece(move.capturedPiece.Value, move.lastTeam.Enemy(), promotions, move),
-            string t when (t == "d" || t == "-") => GetStringForPiece(move.defendedPiece.Value, move.lastTeam, promotions, move),
+            captureNotation => GetStringForPiece(move.capturedPiece.Value, move.lastTeam.Enemy(), promotions, move),
+            string t when (t == defendNotation || t == swapNotation) => GetStringForPiece(move.defendedPiece.Value, move.lastTeam, promotions, move),
             _ => ""
         };
 
@@ -71,7 +77,7 @@ public static class Notation
                 : "";
         }
         
-        string check = boardState.checkmate != Team.None ? "#" : boardState.check != Team.None ? "+" : "";
+        string check = boardState.checkmate != Team.None ? checkmateNotation : boardState.check != Team.None ? checkNotation : "";
 
         // modify for shortform
         if(notationType == NotationType.ShortForm && shortFormMod)
@@ -79,11 +85,11 @@ public static class Notation
             if(piece == "p")
             {
                 piece = "";
-                if(type != "-")
+                if(type != swapNotation)
                 {
                     otherPiece = "";
-                    type = type == "x" ? type : "";
-                    fromIndex = type == "x" ? $"{fromIndex.First()}" : "";
+                    type = type == captureNotation ? type : "";
+                    fromIndex = type == captureNotation ? $"{fromIndex.First()}" : "";
                 }
             }
             else
@@ -111,7 +117,7 @@ public static class Notation
                     }
                 }
 
-                type = type == "m" ? "" : type;
+                type = type == moveNotation ? "" : type;
 
                 if(alternatePieces.Count > 0)
                 {

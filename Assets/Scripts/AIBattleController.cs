@@ -27,6 +27,9 @@ public class AIBattleController : MonoBehaviour
     private (string name, Func<IHexAI> factory)[] AIOptions = Array.Empty<(string, Func<IHexAI>)>();
     private string[] AINames = Array.Empty<string>();
 
+
+    public bool isAITurn => (WhiteAIEnabled() && currentMoveFor == Team.White) || (BlackAIEnabled() && currentMoveFor == Team.Black);
+
     private void Awake()
     {
         AIOptions = new (string, Func<IHexAI>)[] {

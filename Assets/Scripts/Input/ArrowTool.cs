@@ -59,6 +59,15 @@ public class ArrowTool : MonoBehaviour
             EndDrawArrow();
     }
 
+    public void LeftClick(CallbackContext context)
+    {
+        if(!context.started)
+            return;
+
+        if(arrowsVisible)
+            ClearArrows();
+    }
+
     private void StartDrawArrow()
     {
         if(Physics.Raycast(cam.ScreenPointToRay(mouse.position.ReadValue()), out RaycastHit hit, 100, hexMask))

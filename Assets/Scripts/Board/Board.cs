@@ -16,6 +16,8 @@ public class Board : SerializedMonoBehaviour
     [SerializeField] private Timers timers;
     [SerializeField] private SmoothHalfOrbitalCamera cam;
     [SerializeField] private FreePlaceModeToggle freePlaceMode;
+    [SerializeField] private Multiplayer multiplayer;
+    [SerializeField] private AIBattleController aiController;
     bool isFreeplaced => freePlaceMode != null && freePlaceMode.toggle.isOn;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private TurnHistoryPanel turnHistoryPanel;
@@ -49,6 +51,15 @@ public class Board : SerializedMonoBehaviour
     object lockObj = new object();
     bool hexGameOver = false;
 
+    Hex checkedKingHex = null;
+    public Color redColor;
+    public Color yellowColor;
+
+    public bool IsPlayerTurn() => !(
+        (multiplayer != null && multiplayer.gameParams.localTeam != GetCurrentTurn()) ||
+        (aiController != null && aiController.isAITurn)
+    );
+
     private void Awake() => ResetPieces(Game.CreateNewGame());
     private void Start() => newTurn?.Invoke(currentGame.GetCurrentBoardState());
     private void Update()
@@ -61,6 +72,16 @@ public class Board : SerializedMonoBehaviour
                 ProcessEndGame();
             }
         }
+    }
+
+    public bool TryGetIPieceFromIndex(Index index, out IPiece iPiece)
+    {
+        iPiece = null;
+
+        if(GetCurrentBoardState().TryGetPiece(index, out (Team team, Piece piece) teamedPiece))
+            return activePieces.TryGetValue(teamedPiece, out iPiece);
+        else
+            return false;
     }
 
     public void SetBoardState(BoardState newState, int? turn = null)
@@ -229,6 +250,7 @@ public class Board : SerializedMonoBehaviour
             if(currentGame.winner == Winner.Pending)
             {
                 newTurn?.Invoke(state);
+                HighlightPotentialCheckOrMate(state);
 
                 if(PlayerPrefs.GetInt("AutoFlipCam", 1).IntToBool())
                     cam.SetToTeam(state.currentMove);
@@ -305,12 +327,42 @@ public class Board : SerializedMonoBehaviour
         }
 
         newTurn?.Invoke(newState);
+        HighlightPotentialCheckOrMate(newState);
 
         // In sandbox mode, flip the camera when the turn passes if the toggle is on
         if(multiplayer == null)
         {
-            if(PlayerPrefs.GetInt("AutoFlipCam", 1).IntToBool())
+            if(PlayerPrefs.GetInt("AutoFlipCam", true.BoolToInt()).IntToBool())
                 cam.SetToTeam(newState.currentMove);
+        }
+    }
+
+    private void ClearCheckOrMateHighlight()
+    {
+        if(checkedKingHex == null)
+            return;
+        
+        Move lastMove = currentGame.GetLastMove(isFreeplaced);
+        
+        if(lastMove.from != checkedKingHex.index && lastMove.to != checkedKingHex.index)
+            checkedKingHex.Unhighlight();
+        
+        checkedKingHex = null;
+    }
+
+    private void HighlightPotentialCheckOrMate(BoardState state)
+    {
+        ClearCheckOrMateHighlight();
+
+        if(state.TryGetIndex((state.checkmate, Piece.King), out Index matedIndex))
+        {
+            checkedKingHex = GetHexIfInBounds(matedIndex);
+            checkedKingHex.Highlight(redColor);
+        }
+        else if(state.TryGetIndex((state.check, Piece.King), out Index checkedIndex))
+        {
+            checkedKingHex = GetHexIfInBounds(checkedIndex);
+            checkedKingHex.Highlight(yellowColor);
         }
     }
 
@@ -322,7 +374,7 @@ public class Board : SerializedMonoBehaviour
 
     void ProcessEndGame()
     {
-        Multiplayer multiplayer = GameObject.FindObjectOfType<Multiplayer>();
+        multiplayer ??= GameObject.FindObjectOfType<Multiplayer>();
         BoardState finalState = currentGame.GetCurrentBoardState();
 
         switch(currentGame.endType)
@@ -447,7 +499,7 @@ public class Board : SerializedMonoBehaviour
     {
         // We don't want to display the query promote screen if we're not the team making the promote
         // That information will arrive to us across the network
-        Multiplayer multiplayer = GameObject.FindObjectOfType<Multiplayer>();
+        multiplayer ??= GameObject.FindObjectOfType<Multiplayer>();
         if(multiplayer != null && multiplayer.localTeam != GetCurrentTurn())
             return;
             
@@ -564,8 +616,8 @@ public class Board : SerializedMonoBehaviour
     public void EndGame(float timestamp, GameEndType endType = GameEndType.Pending, Winner winner = Winner.Pending)
     {
         BoardState currentState = GetCurrentBoardState();
+        multiplayer ??= GameObject.FindObjectOfType<Multiplayer>();
 
-        Multiplayer multiplayer = GameObject.FindObjectOfType<Multiplayer>();
         if(multiplayer)
         {
             Team winningTeam = Team.None;

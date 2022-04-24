@@ -96,11 +96,13 @@ GameObject:
   - component: {fileID: 748795983797158533}
   - component: {fileID: 748795983797158532}
   - component: {fileID: 748795983797158538}
+  - component: {fileID: 5147813413825413593}
   - component: {fileID: 748795983797158534}
   - component: {fileID: 748795983797158535}
   - component: {fileID: 2408701817025037731}
   - component: {fileID: 6983169283407362394}
   - component: {fileID: 6212646007835518826}
+  - component: {fileID: 8471408109104386816}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -269,7 +271,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748795983797158781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a948675971343242b9ce8a29250e1a2, type: 3}
   m_Name: 
@@ -308,6 +310,39 @@ MonoBehaviour:
   whiteColor: {r: 1, g: 1, b: 1, a: 1}
   blackColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 1}
   yellowColor: {r: 0.9528302, g: 0.8132051, b: 0, a: 1}
+--- !u!114 &5147813413825413593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748795983797158781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d7ab0a37423b04d9cf23e53bf5577c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothHalfOrbitalCamera: {fileID: 748795983797158535}
+  board: {fileID: 0}
+  audioSource: {fileID: 6983169283407362394}
+  promotionDialogue: {fileID: 0}
+  historyPanel: {fileID: 0}
+  optionsPanel: {fileID: 0}
+  cancelNoise: {fileID: 8300000, guid: ba2a0d48902eea04ead3e58e073a88b7, type: 3}
+  pickupNoise: {fileID: 8300000, guid: 9c7f611590e186b4a84a7d71a7e9260e, type: 3}
+  onMouse: {fileID: 0}
+  lastMoveTracker: {fileID: 0}
+  moveTypeHighlightColors:
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
+  selectedColor: {r: 0.3137255, g: 0.7490196, b: 0.85882354, a: 1}
+  greenColor: {r: 0.15472588, g: 0.5754717, b: 0.17287652, a: 1}
+  redColor: {r: 0.6603774, g: 0.109024554, b: 0.109024554, a: 1}
+  orangeColor: {r: 0.8773585, g: 0.42442012, b: 0.086908154, a: 1}
+  whiteColor: {r: 1, g: 1, b: 1, a: 1}
+  blackColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 1}
 --- !u!114 &748795983797158534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,8 +371,20 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 748795983797158538}
-        m_TargetAssemblyTypeName: SelectPiece, Assembly-CSharp
+      - m_Target: {fileID: 5147813413825413593}
+        m_TargetAssemblyTypeName: SelectPieceNew, GameAssembly
+        m_MethodName: LeftClick
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2408701817025037731}
+        m_TargetAssemblyTypeName: ArrowTool, GameAssembly
         m_MethodName: LeftClick
         m_Mode: 0
         m_Arguments:
@@ -675,6 +722,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8471408109104386816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748795983797158781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594b63f0c62a1e64f978abe568aefbf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 320
 --- !u!1 &6660755067511224270
 GameObject:
   m_ObjectHideFlags: 0

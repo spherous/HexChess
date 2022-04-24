@@ -34,7 +34,7 @@ public class CheckText : MonoBehaviour
 
         text.text = game.endType switch {
             GameEndType.Pending => SupportOldSaves(game),
-            GameEndType.Draw => "",
+            GameEndType.Draw => "Draw", // differentiate between 5fold rep, 50 move rule, and agreement to draw
             GameEndType.Checkmate => "Checkmate",
             GameEndType.Surrender => $"{loser}\n surrendered",
             GameEndType.Flagfall => $"{loser}\n flagfell",
