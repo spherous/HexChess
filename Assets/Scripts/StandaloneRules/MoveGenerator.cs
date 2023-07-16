@@ -218,7 +218,7 @@ public static class MoveGenerator
                 blocked = !RayCanMove(team, boardState, row, col, possible, includeBlocking);
             else
                 possible.Add((Index.invalid, MoveType.None));
-
+                
             if(i % 2 != offset)
                 col++;
         }

@@ -583,11 +583,12 @@ public class SelectPiece : MonoBehaviour
     public void LeftClick(CallbackContext context)
     {
         if(promotionDialogue != null && promotionDialogue.gameObject.activeSelf)
-            return;
-        
+            return;     
+
         BoardState currentBoardState = board.GetCurrentBoardState();
         if(context.started)
         {
+            Debug.Log("Left click started");
             if(arrowTool.arrowsVisible)
                 arrowTool.ClearArrows();
                 
@@ -596,6 +597,7 @@ public class SelectPiece : MonoBehaviour
         }
         else if(context.canceled)
         {
+            Debug.Log("Left click canceled");
             if(historyPanel.panelPointer != historyPanel.currentTurnPointer && selectedPiece != null)
                 historyPanel.JumpToPresent();
 

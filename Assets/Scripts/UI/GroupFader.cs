@@ -3,8 +3,7 @@ using UnityEngine;
 using Extensions;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class GroupFader : MonoBehaviour
-{
+public class GroupFader : MonoBehaviour {
     [SerializeField] private CanvasGroup _group;
     public CanvasGroup group => _group;
     [SerializeField] private float fadeDuration;
@@ -19,8 +18,7 @@ public class GroupFader : MonoBehaviour
     public bool isCompletelyInvisibleOrFadingOut => group != null && (isFadingOut || (group.alpha <= 0.02f && sign == TriSign.Zero));
     public bool visibleOnStart = true;
 
-    private void Awake()
-    {
+    private void Awake() {
         if(group == null)
             _group = gameObject.GetComponent<CanvasGroup>();
 
@@ -34,8 +32,7 @@ public class GroupFader : MonoBehaviour
             FadeStep();
     }
 
-    private void FadeStep()
-    {
+    private void FadeStep() {
         _group.alpha = Mathf.Clamp01(_group.alpha + (sbyte)sign * (Time.unscaledDeltaTime / fadeDuration));
         
         // If clicked too quickly (within the epsilon), the fader may think it has more work to do than it really does. 
@@ -54,8 +51,7 @@ public class GroupFader : MonoBehaviour
     }
 
     [Button]
-    public void FadeOut(bool deactivateOnComplete = false)
-    {
+    public void FadeOut(bool deactivateOnComplete = false) {
         if(group == null)
             return;
         // Debug.Log($"Closing {gameObject.name}.");
@@ -69,8 +65,7 @@ public class GroupFader : MonoBehaviour
     }
 
     [Button]
-    public void FadeIn()
-    {
+    public void FadeIn() {
         // Debug.Log($"Opening {gameObject.name}.");
         // group.alpha = 0;
         sign = TriSign.Positive;
@@ -79,8 +74,7 @@ public class GroupFader : MonoBehaviour
         group.interactable = true;
     }
 
-    public void Disable()
-    {
+    public void Disable() {
         group.alpha = 0;
         sign = TriSign.Zero;
         startFadeTime = null;

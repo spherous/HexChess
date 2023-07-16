@@ -13,5 +13,5 @@ public class AudioUI : MonoBehaviour, IPointerEnterHandler
     {
         if(canPlay)
             source.PlayOneShot(clips.ChooseRandom());
-    } 
+    }
 }

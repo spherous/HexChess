@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-public class SceneNavigation : EditorWindow
+public sealed class SceneNavigation : EditorWindow
 {    
     [MenuItem("Scenes/MainMenu")]
     public static void GoToMainMenu() => EditorSceneManager.OpenScene("Assets/Scenes/MainMenu.unity");
